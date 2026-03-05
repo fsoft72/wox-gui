@@ -7,7 +7,7 @@ const STYLES = `
     .trigger { color: var(--wox-text-primary, #eee); padding: 3px 8px; border-radius: var(--wox-radius-sm, 3px); cursor: pointer; font-size: var(--wox-font-size-base, 12px); display: block; user-select: none; }
     .trigger:hover { background: var(--wox-bg-hover, #2a2a2e); color: var(--wox-text-hi, #fff); }
     .dropdown {
-        display: none; position: absolute; top: 100%; left: 0; z-index: var(--wox-z-dropdown, 1000);
+        display: none; position: fixed; z-index: var(--wox-z-dropdown, 1000);
         background: var(--wox-bg-panel, #17171a); min-width: 160px;
         box-shadow: var(--wox-shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.6));
         border: 1px solid var(--wox-border, #333); border-radius: var(--wox-radius-lg, 8px);
@@ -40,6 +40,7 @@ class WoxMenu extends WoxElement {
             if (!dd) return;
             if (this.hasAttribute('open')) {
                 dd.classList.add('open');
+                this._positionDropdown();
                 this.emit('wox-open', {});
             } else {
                 dd.classList.remove('open');
@@ -101,18 +102,38 @@ class WoxMenu extends WoxElement {
     /** @private */
     _open = () => {
         this.setAttribute('open', '');
-        // Viewport flip
+        this._positionDropdown();
+    };
+
+    /** @private — Position the fixed dropdown relative to the trigger, flipping if needed. */
+    _positionDropdown = () => {
         requestAnimationFrame(() => {
+            const trigger = this.$('.trigger');
             const dd = this.$('.dropdown');
-            if (!dd) return;
-            const rect = dd.getBoundingClientRect();
-            if (rect.right > window.innerWidth) {
-                dd.style.left = 'auto';
-                dd.style.right = '0';
+            if (!trigger || !dd) return;
+
+            const rect = trigger.getBoundingClientRect();
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const ddRect = dd.getBoundingClientRect();
+
+            // Horizontal: align left, flip right if clipped
+            if (rect.left + ddRect.width > vw) {
+                dd.style.left = `${rect.right - ddRect.width}px`;
+            } else {
+                dd.style.left = `${rect.left}px`;
             }
-            if (rect.bottom > window.innerHeight) {
-                dd.style.top = 'auto';
-                dd.style.bottom = '100%';
+
+            // Vertical: place below, flip above if insufficient space
+            const spaceBelow = vh - rect.bottom;
+            const spaceAbove = rect.top;
+
+            if (spaceBelow >= ddRect.height || spaceBelow >= spaceAbove) {
+                dd.style.top = `${rect.bottom}px`;
+                dd.style.bottom = '';
+            } else {
+                dd.style.top = '';
+                dd.style.bottom = `${vh - rect.top}px`;
             }
         });
     };

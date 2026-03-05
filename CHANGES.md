@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-05 — Fix menu dropdown clipped by container overflow
+
+### Fixed
+- **`<wox-menu>`**: Switched dropdown from `position: absolute` to `position: fixed` with dynamic positioning via `getBoundingClientRect()`. Menus no longer get clipped by parent containers with `overflow: hidden/auto`. Auto-flips horizontally and vertically when near viewport edges.
+
 ## 2026-03-05 — Expand glow/pulse FX to icon, slider, swatch, modal
 
 ### Added
