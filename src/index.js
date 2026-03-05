@@ -26,3 +26,4 @@ export { WoxDatagrid } from './wox-datagrid.js';
 export { WoxToast } from './wox-toast.js';
 export { WoxContextMenu } from './wox-context-menu.js';
 export { WoxGradientEditor, gradientToCSS, cssToGradient } from './wox-gradient-editor.js';
+export { WoxGradientSelector } from './wox-gradient-selector.js';
