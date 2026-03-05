@@ -12,14 +12,14 @@ const STYLES = `
     }
     .track-wrap { flex: 1; position: relative; height: 20px; display: flex; align-items: center; cursor: pointer; }
     .track { width: 100%; height: 4px; background: var(--wox-border, #333); border-radius: 2px; position: relative; overflow: hidden; }
-    .fill { height: 100%; background: var(--wox-accent, #00e5ff); border-radius: 2px; transition: width 0.05s; }
+    .fill { height: 100%; background: var(--wox-accent, #00e5ff); border-radius: 2px; }
     .thumb {
         position: absolute; top: 50%; width: 14px; height: 14px; border-radius: 50%;
         background: var(--wox-text-hi, #fff); border: 2px solid var(--wox-accent, #00e5ff);
         transform: translate(-50%, -50%); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         transition: box-shadow 0.15s; pointer-events: none;
     }
-    .thumb:hover, .thumb.dragging { box-shadow: 0 0 8px rgba(0, 229, 255, 0.4); }
+    .thumb.dragging { box-shadow: 0 0 8px rgba(0, 229, 255, 0.4); }
     .value {
         font-size: var(--wox-font-size-base, 12px); color: var(--wox-text-secondary, #999);
         font-weight: 600; min-width: 35px; text-align: right; user-select: none;
@@ -41,30 +41,60 @@ const STYLES = `
 class WoxSlider extends WoxElement {
     static observedAttributes = ['value', 'min', 'max', 'step', 'label', 'unit', 'show-value'];
 
+    constructor() {
+        super();
+        this._dragging = false;
+    }
+
     connectedCallback() {
-        this._render();
+        this._build();
     }
 
-    attributeChangedCallback() {
-        if (this.isConnected) this._render();
+    attributeChangedCallback(name) {
+        if (!this.isConnected) return;
+        if (this._dragging) return;
+        if (name === 'value') {
+            this._updateVisuals();
+        } else {
+            this._build();
+        }
     }
 
-    /** @private */
-    _render = () => {
-        const min = parseFloat(this.getAttribute('min') ?? 0);
-        const max = parseFloat(this.getAttribute('max') ?? 100);
-        const step = parseFloat(this.getAttribute('step') ?? 1);
+    /** @private — Reads config attrs (not value) */
+    _getConfig = () => ({
+        min: parseFloat(this.getAttribute('min') ?? 0),
+        max: parseFloat(this.getAttribute('max') ?? 100),
+        step: parseFloat(this.getAttribute('step') ?? 1),
+        unit: this.getAttribute('unit') || '',
+    });
+
+    /** @private — Format a numeric value for display */
+    _formatVal = (v) => {
+        const { unit, step } = this._getConfig();
+        if (unit === '%') return Math.round(v * 100) + '%';
+        return step < 1 ? v.toFixed(2) : String(v);
+    };
+
+    /** @private — Update fill/thumb/value text without rebuilding DOM */
+    _updateVisuals = () => {
+        const { min, max } = this._getConfig();
+        const value = parseFloat(this.getAttribute('value') ?? min);
+        const pct = ((value - min) / (max - min)) * 100;
+        const fill = this.$('.fill');
+        const thumb = this.$('.thumb');
+        const valueEl = this.$('.value');
+        if (fill) fill.style.width = pct + '%';
+        if (thumb) thumb.style.left = pct + '%';
+        if (valueEl) valueEl.textContent = this._formatVal(value);
+    };
+
+    /** @private — Full DOM build (only on structural attr changes or first connect) */
+    _build = () => {
+        const { min, max } = this._getConfig();
         const value = parseFloat(this.getAttribute('value') ?? min);
         const label = this.getAttribute('label') || '';
-        const unit = this.getAttribute('unit') || '';
         const showValue = this.hasAttribute('show-value');
         const pct = ((value - min) / (max - min)) * 100;
-
-        const formatVal = () => {
-            const v = parseFloat(this.getAttribute('value') ?? min);
-            if (unit === '%') return Math.round(v * 100) + '%';
-            return step < 1 ? v.toFixed(2) : String(v);
-        };
 
         this.render(STYLES, `
             <div class="wrapper">
@@ -73,10 +103,16 @@ class WoxSlider extends WoxElement {
                     <div class="track"><div class="fill" style="width:${pct}%"></div></div>
                     <div class="thumb" style="left:${pct}%"></div>
                 </div>
-                ${showValue ? `<span class="value">${formatVal()}</span>` : ''}
+                ${showValue ? `<span class="value">${this._formatVal(value)}</span>` : ''}
             </div>
         `);
 
+        this._attachDrag();
+    };
+
+    /** @private — Wire up drag interaction on the track */
+    _attachDrag = () => {
+        const { min, max, step, unit } = this._getConfig();
         const trackWrap = this.$('.track-wrap');
         const fill = this.$('.fill');
         const thumb = this.$('.thumb');
@@ -96,7 +132,6 @@ class WoxSlider extends WoxElement {
                 if (unit === '%') valueEl.textContent = Math.round(newVal * 100) + '%';
                 else valueEl.textContent = step < 1 ? newVal.toFixed(2) : String(newVal);
             }
-            this.setAttribute('value', newVal);
             return newVal;
         };
 
@@ -106,14 +141,17 @@ class WoxSlider extends WoxElement {
         };
 
         const onUp = (e) => {
+            this._dragging = false;
             thumb.classList.remove('dragging');
             document.removeEventListener('mousemove', onMove);
             document.removeEventListener('mouseup', onUp);
             const v = update(e.clientX);
+            this.setAttribute('value', v);
             this.emit('wox-change', { value: v });
         };
 
         trackWrap.addEventListener('mousedown', (e) => {
+            this._dragging = true;
             thumb.classList.add('dragging');
             const v = update(e.clientX);
             this.emit('wox-input', { value: v });
