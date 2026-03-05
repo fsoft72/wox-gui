@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOX-GUI — WebComponent Library</title>
+    <link rel="stylesheet" href="css/wox-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--wox-bg-app); color: var(--wox-text-primary); font-family: var(--wox-font); display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .container { text-align: center; max-width: 480px; }
+        h1 { color: var(--wox-accent); font-size: 28px; margin-bottom: 8px; letter-spacing: 1px; }
+        .sub { color: var(--wox-text-secondary); font-size: 14px; margin-bottom: 32px; }
+        .links { display: flex; gap: 16px; justify-content: center; }
+        a {
+            display: inline-block; padding: 12px 24px; background: var(--wox-bg-toolbar);
+            border: 1px solid var(--wox-border); border-radius: 8px; color: var(--wox-text-primary);
+            text-decoration: none; font-size: 14px; font-weight: 500;
+            transition: all 0.2s;
+        }
+        a:hover { background: var(--wox-bg-hover); border-color: var(--wox-accent); color: var(--wox-accent); }
+        .info { margin-top: 32px; font-size: 12px; color: var(--wox-text-secondary); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WOX-GUI</h1>
+        <p class="sub">A dark-themed WebComponent library extracted from VectorWebGPU.<br>Vanilla JS, ES modules, no build step.</p>
+        <div class="links">
+            <a href="demo/catalog.html">Component Catalog</a>
+            <a href="demo/editor.html">Editor Layout</a>
+        </div>
+        <p class="info">21 components &middot; Dark theme &middot; CSS custom properties &middot; Shadow DOM</p>
+    </div>
+</body>
+</html>

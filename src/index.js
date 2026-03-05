@@ -1,0 +1,24 @@
+// index.js — Barrel file: imports and re-exports all WOX components
+
+export { WoxElement } from './wox-base.js';
+export { WoxIcon } from './wox-icon.js';
+export { WoxSeparator } from './wox-separator.js';
+export { WoxBadge } from './wox-badge.js';
+export { WoxButton } from './wox-button.js';
+export { WoxInput } from './wox-input.js';
+export { WoxSlider } from './wox-slider.js';
+export { WoxColorSwatch } from './wox-color-swatch.js';
+export { WoxTooltip } from './wox-tooltip.js';
+export { WoxColorPicker } from './wox-color-picker.js';
+export { WoxMenuItem } from './wox-menu-item.js';
+export { WoxMenu } from './wox-menu.js';
+export { WoxLayerItem } from './wox-layer-item.js';
+export { WoxSection } from './wox-section.js';
+export { WoxTab } from './wox-tab.js';
+export { WoxTabs } from './wox-tabs.js';
+export { WoxToolbarGroup } from './wox-toolbar-group.js';
+export { WoxToolbar } from './wox-toolbar.js';
+export { WoxPanel } from './wox-panel.js';
+export { WoxMenubar } from './wox-menubar.js';
+export { WoxStatusbar } from './wox-statusbar.js';
+export { WoxModal } from './wox-modal.js';

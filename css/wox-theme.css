@@ -1,0 +1,81 @@
+/* wox-theme.css — Global CSS custom properties for the WOX component library */
+/* Dark theme only. All components reference these via CSS vars (inherit through shadow DOM). */
+
+:root {
+    /* ── Backgrounds ── */
+    --wox-bg-app: #121214;
+    --wox-bg-panel: #17171a;
+    --wox-bg-toolbar: #1e1e22;
+    --wox-bg-input: #1a1a1d;
+    --wox-bg-hover: #2a2a2e;
+    --wox-bg-canvas: #505050;
+    --wox-bg-section-header: #22222a;
+
+    /* ── Text ── */
+    --wox-text-primary: #eee;
+    --wox-text-secondary: #999;
+    --wox-text-hi: #fff;
+
+    /* ── Accent ── */
+    --wox-accent: #00e5ff;
+
+    /* ── Borders ── */
+    --wox-border: #333;
+    --wox-border-light: #444;
+    --wox-border-section: #2e2e2e;
+
+    /* ── Semantic colors ── */
+    --wox-danger: #f72585;
+    --wox-success: #4cc9f0;
+    --wox-unite: #4cc9f0;
+    --wox-subtract: #f72585;
+    --wox-intersect: #4361ee;
+    --wox-exclude: #7209b7;
+
+    /* ── Spacing scale ── */
+    --wox-space-xs: 2px;
+    --wox-space-sm: 4px;
+    --wox-space-md: 8px;
+    --wox-space-lg: 12px;
+    --wox-space-xl: 16px;
+    --wox-space-2xl: 24px;
+
+    /* ── Radius scale ── */
+    --wox-radius-sm: 3px;
+    --wox-radius-md: 6px;
+    --wox-radius-lg: 8px;
+    --wox-radius-xl: 10px;
+    --wox-radius-2xl: 12px;
+    --wox-radius-round: 50%;
+
+    /* ── Font ── */
+    --wox-font: 'Inter', 'Segoe UI', sans-serif;
+    --wox-font-mono: 'Courier New', monospace;
+    --wox-font-size-xs: 9px;
+    --wox-font-size-sm: 10px;
+    --wox-font-size-md: 11px;
+    --wox-font-size-base: 12px;
+    --wox-font-size-lg: 13px;
+    --wox-font-size-xl: 14px;
+    --wox-font-size-2xl: 16px;
+
+    /* ── Z-index layers ── */
+    --wox-z-base: 1;
+    --wox-z-dropdown: 1000;
+    --wox-z-overlay: 10000;
+    --wox-z-modal: 20000;
+
+    /* ── Transitions ── */
+    --wox-transition-fast: 0.12s ease;
+    --wox-transition-normal: 0.2s ease;
+    --wox-transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ── Shadows ── */
+    --wox-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --wox-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --wox-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+    --wox-shadow-xl: 0 24px 80px rgba(0, 0, 0, 0.8);
+    --wox-shadow-input: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    --wox-shadow-section: inset 0 -12px 24px -12px rgba(0, 0, 0, 0.5);
+    --wox-shadow-accent: 0 0 10px rgba(0, 229, 255, 0.3);
+}

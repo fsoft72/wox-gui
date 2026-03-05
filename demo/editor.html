@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOX-GUI Editor Layout Replica</title>
+    <link rel="stylesheet" href="../css/wox-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="module" src="../src/index.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--wox-bg-app); color: var(--wox-text-primary); font-family: var(--wox-font); font-size: 12px; user-select: none; overflow: hidden; height: 100vh; }
+        .app { display: flex; flex-direction: column; height: 100vh; width: 100vw; overflow: hidden; }
+        .workspace { display: flex; flex: 1; overflow: hidden; }
+        .canvas-area { flex: 1; background: var(--wox-bg-canvas); position: relative; display: flex; align-items: center; justify-content: center; }
+        .canvas-placeholder { color: var(--wox-text-secondary); font-size: 14px; opacity: 0.5; }
+        .logo { display: flex; align-items: center; gap: 6px; margin-right: 18px; }
+        .logo-mark { font-size: 16px; color: var(--wox-accent); }
+        .logo-name { font-weight: 600; font-size: 13px; color: var(--wox-text-hi); }
+        .logo-version { font-size: 10px; color: var(--wox-text-secondary); }
+        .swatch-area { margin-top: auto; padding: 12px 0 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .swatch-pair { display: flex; gap: 10px; align-items: center; }
+    </style>
+</head>
+<body>
+    <div class="app">
+
+        <!-- Menu Bar -->
+        <wox-menubar>
+            <div class="logo">
+                <span class="logo-mark">&loz;</span>
+                <span class="logo-name">VectorWebGPU</span>
+                <span class="logo-version">v0.0.6</span>
+            </div>
+            <wox-menu label="File">
+                <wox-menu-item label="New" shortcut="Ctrl+N"></wox-menu-item>
+                <wox-menu-item label="Open" shortcut="Ctrl+O"></wox-menu-item>
+                <wox-menu-item label="Save (SVG)" shortcut="Ctrl+S"></wox-menu-item>
+                <wox-menu-item label="Save As (Project)" shortcut="Ctrl+Shift+S"></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="Edit">
+                <wox-menu-item label="Undo" shortcut="Ctrl+Z"></wox-menu-item>
+                <wox-menu-item label="Redo" shortcut="Ctrl+Shift+Z"></wox-menu-item>
+                <wox-menu-item type="separator"></wox-menu-item>
+                <wox-menu-item label="Cut" shortcut="Ctrl+X"></wox-menu-item>
+                <wox-menu-item label="Copy" shortcut="Ctrl+C"></wox-menu-item>
+                <wox-menu-item label="Paste" shortcut="Ctrl+V"></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="Object">
+                <wox-menu-item label="Group" shortcut="Ctrl+G"></wox-menu-item>
+                <wox-menu-item label="Ungroup" shortcut="Ctrl+Shift+G"></wox-menu-item>
+                <wox-menu-item type="separator"></wox-menu-item>
+                <wox-menu-item label="Bring to Front"></wox-menu-item>
+                <wox-menu-item label="Send to Back"></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="Type">
+                <wox-menu-item label="Coming soon..." disabled></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="Effect">
+                <wox-menu-item label="Coming soon..." disabled></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="View">
+                <wox-menu-item label="Zoom In" shortcut="Ctrl++"></wox-menu-item>
+                <wox-menu-item label="Zoom Out" shortcut="Ctrl+-"></wox-menu-item>
+                <wox-menu-item label="Fit to Canvas" shortcut="Ctrl+0"></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="Help">
+                <wox-menu-item label="About"></wox-menu-item>
+                <wox-menu-item label="Shortcuts" shortcut="?"></wox-menu-item>
+            </wox-menu>
+        </wox-menubar>
+
+        <!-- Workspace: toolbar + canvas + panel -->
+        <div class="workspace">
+
+            <!-- Left Toolbar -->
+            <wox-toolbar>
+                <wox-toolbar-group>
+                    <wox-tooltip text="Selection Tool (V)" position="right">
+                        <wox-button variant="icon" icon="near_me" active></wox-button>
+                    </wox-tooltip>
+                </wox-toolbar-group>
+                <wox-toolbar-group>
+                    <wox-tooltip text="Pen Tool (P)" position="right">
+                        <wox-button variant="icon" icon="edit"></wox-button>
+                    </wox-tooltip>
+                </wox-toolbar-group>
+                <wox-toolbar-group>
+                    <wox-tooltip text="Rectangle Tool (R)" position="right">
+                        <wox-button variant="icon" icon="crop_square"></wox-button>
+                    </wox-tooltip>
+                    <wox-tooltip text="Ellipse Tool (E)" position="right">
+                        <wox-button variant="icon" icon="radio_button_unchecked"></wox-button>
+                    </wox-tooltip>
+                    <wox-tooltip text="Image Tool (I)" position="right">
+                        <wox-button variant="icon" icon="image"></wox-button>
+                    </wox-tooltip>
+                </wox-toolbar-group>
+                <div class="swatch-area">
+                    <wox-color-swatch id="fill-swatch" color="#4cc9f0" size="24"></wox-color-swatch>
+                    <wox-color-swatch id="stroke-swatch" color="#000000" size="24"></wox-color-swatch>
+                </div>
+            </wox-toolbar>
+
+            <!-- Canvas Area -->
+            <div class="canvas-area">
+                <span class="canvas-placeholder">Canvas Area (WebGPU viewport would render here)</span>
+            </div>
+
+            <!-- Right Sidebar -->
+            <wox-panel width="280px" resizable>
+                <wox-tabs active="properties">
+                    <wox-tab name="properties" label="Properties">
+                        <!-- Header Section -->
+                        <wox-section title="No Selection">
+                            <div class="field-grid">
+                                <wox-input type="number" label="X" unit="px" value="0" step="1"></wox-input>
+                                <wox-input type="number" label="Y" unit="px" value="0" step="1"></wox-input>
+                                <wox-input type="number" label="W" unit="px" value="0" step="1"></wox-input>
+                                <wox-input type="number" label="H" unit="px" value="0" step="1"></wox-input>
+                            </div>
+                        </wox-section>
+
+                        <!-- Style Section -->
+                        <wox-section title="Style">
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div style="display: flex; gap: 16px; align-items: center;">
+                                    <div class="swatch-pair">
+                                        <wox-color-swatch color="#4cc9f0" size="42" selected></wox-color-swatch>
+                                        <wox-color-swatch color="#000000" size="42"></wox-color-swatch>
+                                    </div>
+                                    <wox-separator direction="v" style="height: 36px;"></wox-separator>
+                                    <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 8px; justify-content: flex-end;">
+                                            <span style="font-size: 10px; color: #444; font-weight: 800; letter-spacing: 0.5px;">WIDTH</span>
+                                            <wox-input type="number" value="1" min="0" step="0.5" style="width: 70px;"></wox-input>
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: repeat(2, 42px); gap: 6px; justify-content: flex-end;">
+                                            <wox-button variant="dash" dash="solid" active></wox-button>
+                                            <wox-button variant="dash" dash="dotted"></wox-button>
+                                            <wox-button variant="dash" dash="dashed"></wox-button>
+                                            <wox-button variant="dash" dash="longdash"></wox-button>
+                                            <wox-button variant="dash" dash="dotdash"></wox-button>
+                                            <wox-button variant="dash" dash="zigzag"></wox-button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <wox-slider label="OPACITY" value="1" min="0" max="1" step="0.01" unit="%" show-value></wox-slider>
+                            </div>
+                        </wox-section>
+
+                        <!-- Action Section -->
+                        <wox-section title="Action">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                                <wox-button variant="tile" icon="flip_to_front" label="Front"></wox-button>
+                                <wox-button variant="tile" icon="flip_to_back" label="Back"></wox-button>
+                                <wox-button variant="tile" icon="delete" label="Delete"></wox-button>
+                            </div>
+                        </wox-section>
+                    </wox-tab>
+
+                    <wox-tab name="layers" label="Layers">
+                        <wox-layer-item name="Layer 1" type="layer" visible selected></wox-layer-item>
+                        <wox-layer-item name="Rectangle 1" type="rectangle" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Ellipse 1" type="ellipse" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Layer 2" type="layer" visible></wox-layer-item>
+                        <wox-layer-item name="Path 1" type="path" visible depth="1"></wox-layer-item>
+                    </wox-tab>
+                </wox-tabs>
+            </wox-panel>
+        </div>
+
+        <!-- Status Bar -->
+        <wox-statusbar>
+            <span slot="left">Selection: 0 Objects</span>
+            <span slot="center">Tool: Select</span>
+            <span slot="right">X: 0 Y: 0</span>
+        </wox-statusbar>
+
+    </div>
+
+    <!-- Color Picker (shared) -->
+    <wox-color-picker id="editor-picker"></wox-color-picker>
+
+    <script type="module">
+        const fillSwatch = document.getElementById('fill-swatch');
+        const strokeSwatch = document.getElementById('stroke-swatch');
+        const picker = document.getElementById('editor-picker');
+        let activeSwatch = null;
+
+        const openPicker = (swatch) => {
+            activeSwatch = swatch;
+            picker.setAttribute('color', swatch.getAttribute('color'));
+            picker.showAt(swatch);
+        };
+
+        fillSwatch.addEventListener('wox-click', () => openPicker(fillSwatch));
+        strokeSwatch.addEventListener('wox-click', () => openPicker(strokeSwatch));
+
+        picker.addEventListener('wox-color-change', (e) => {
+            if (!activeSwatch) return;
+            const [r, g, b] = e.detail.color.map(v => Math.round(v * 255));
+            const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+            activeSwatch.setAttribute('color', hex);
+        });
+    </script>
+</body>
+</html>

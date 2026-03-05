@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOX-GUI Component Catalog</title>
+    <link rel="stylesheet" href="../css/wox-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="module" src="../src/index.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--wox-bg-app); color: var(--wox-text-primary); font-family: var(--wox-font); font-size: 13px; padding: 24px; overflow-y: auto; }
+        h1 { color: var(--wox-accent); font-size: 22px; margin-bottom: 8px; }
+        .subtitle { color: var(--wox-text-secondary); font-size: 13px; margin-bottom: 32px; }
+        h2 { color: var(--wox-text-hi); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--wox-border); }
+        .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+        .col { display: flex; flex-direction: column; gap: 8px; }
+        .label { font-size: 10px; color: var(--wox-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .card { background: var(--wox-bg-panel); border: 1px solid var(--wox-border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+        .wide { grid-column: span 2; }
+        #event-log { background: var(--wox-bg-input); border: 1px solid var(--wox-border); border-radius: 6px; padding: 8px 12px; font-family: monospace; font-size: 11px; color: var(--wox-accent); max-height: 120px; overflow-y: auto; margin-top: 16px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>WOX-GUI Component Catalog</h1>
+    <p class="subtitle">All components with interactive states. Open devtools console for events.</p>
+    <div id="event-log">Event log:</div>
+
+    <!-- ICONS -->
+    <h2>wox-icon</h2>
+    <div class="row">
+        <wox-icon name="near_me"></wox-icon>
+        <wox-icon name="crop_square"></wox-icon>
+        <wox-icon name="radio_button_unchecked"></wox-icon>
+        <wox-icon name="image" size="24"></wox-icon>
+        <wox-icon name="layers" size="32"></wox-icon>
+        <wox-icon name="delete" size="20"></wox-icon>
+    </div>
+
+    <!-- SEPARATORS -->
+    <h2>wox-separator</h2>
+    <div class="card">
+        <p style="margin-bottom: 8px;">Horizontal:</p>
+        <wox-separator spacing="8px"></wox-separator>
+        <p style="margin-top: 8px; margin-bottom: 8px;">Vertical (inline):</p>
+        <div class="row">
+            <span>Left</span>
+            <wox-separator direction="v" spacing="8px" style="height: 24px;"></wox-separator>
+            <span>Right</span>
+        </div>
+    </div>
+
+    <!-- BADGES -->
+    <h2>wox-badge</h2>
+    <div class="row">
+        <span class="label">Dot</span>
+        <wox-badge></wox-badge>
+        <wox-badge color="#f72585"></wox-badge>
+        <wox-badge color="#4361ee"></wox-badge>
+
+        <span class="label" style="margin-left: 16px;">Diamond</span>
+        <wox-badge variant="diamond"></wox-badge>
+        <wox-badge variant="diamond" color="#f72585"></wox-badge>
+
+        <span class="label" style="margin-left: 16px;">Text</span>
+        <wox-badge variant="text" text="Rectangle"></wox-badge>
+        <wox-badge variant="text" text="Path" color="#f72585"></wox-badge>
+    </div>
+
+    <!-- BUTTONS -->
+    <h2>wox-button</h2>
+    <div class="demo-grid">
+        <div class="card">
+            <p class="label">Icon Variant</p>
+            <div class="row" style="margin-top: 8px;">
+                <wox-button variant="icon" icon="near_me"></wox-button>
+                <wox-button variant="icon" icon="crop_square" active></wox-button>
+                <wox-button variant="icon" icon="image" disabled></wox-button>
+            </div>
+        </div>
+        <div class="card">
+            <p class="label">Text Variant</p>
+            <div class="row" style="margin-top: 8px;">
+                <wox-button variant="text" label="Save"></wox-button>
+                <wox-button variant="text" icon="add" label="New"></wox-button>
+                <wox-button variant="text" label="Disabled" disabled></wox-button>
+            </div>
+        </div>
+        <div class="card">
+            <p class="label">Tile Variant</p>
+            <div class="row" style="margin-top: 8px;">
+                <wox-button variant="tile" icon="flip_to_front" label="Front"></wox-button>
+                <wox-button variant="tile" icon="flip_to_back" label="Back"></wox-button>
+                <wox-button variant="tile" icon="delete" label="Delete" class="delete"></wox-button>
+            </div>
+        </div>
+        <div class="card">
+            <p class="label">Dash Variant</p>
+            <div class="row" style="margin-top: 8px;">
+                <wox-button variant="dash" dash="solid" active></wox-button>
+                <wox-button variant="dash" dash="dotted"></wox-button>
+                <wox-button variant="dash" dash="dashed"></wox-button>
+                <wox-button variant="dash" dash="longdash"></wox-button>
+                <wox-button variant="dash" dash="dotdash"></wox-button>
+                <wox-button variant="dash" dash="zigzag"></wox-button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INPUTS -->
+    <h2>wox-input</h2>
+    <div class="demo-grid">
+        <div class="card">
+            <p class="label">Text Input</p>
+            <wox-input type="text" placeholder="Enter text..." style="margin-top: 8px; width: 200px;"></wox-input>
+        </div>
+        <div class="card">
+            <p class="label">Number with Label + Unit (drag label to scrub)</p>
+            <div class="row" style="margin-top: 8px;">
+                <wox-input type="number" label="X" unit="px" value="120" step="1" style="width: 100px;"></wox-input>
+                <wox-input type="number" label="Y" unit="px" value="80" step="1" style="width: 100px;"></wox-input>
+            </div>
+        </div>
+        <div class="card">
+            <p class="label">Disabled</p>
+            <wox-input type="number" label="W" unit="px" value="0" disabled style="margin-top: 8px; width: 100px;"></wox-input>
+        </div>
+    </div>
+
+    <!-- SLIDERS -->
+    <h2>wox-slider</h2>
+    <div class="demo-grid">
+        <div class="card">
+            <p class="label">Opacity Slider</p>
+            <wox-slider label="OPACITY" value="0.75" min="0" max="1" step="0.01" unit="%" show-value style="margin-top: 8px;"></wox-slider>
+        </div>
+        <div class="card">
+            <p class="label">Stroke Width</p>
+            <wox-slider label="WIDTH" value="3" min="0" max="20" step="0.5" show-value style="margin-top: 8px;"></wox-slider>
+        </div>
+    </div>
+
+    <!-- COLOR SWATCHES -->
+    <h2>wox-color-swatch</h2>
+    <div class="row">
+        <wox-color-swatch color="#4cc9f0" selected></wox-color-swatch>
+        <wox-color-swatch color="#000000"></wox-color-swatch>
+        <wox-color-swatch color="#f72585"></wox-color-swatch>
+        <wox-color-swatch color="rgba(76, 201, 240, 0.5)"></wox-color-swatch>
+        <wox-color-swatch color="transparent"></wox-color-swatch>
+        <wox-color-swatch color="#7209b7" size="32"></wox-color-swatch>
+    </div>
+
+    <!-- TOOLTIPS -->
+    <h2>wox-tooltip</h2>
+    <div class="row">
+        <wox-tooltip text="Selection Tool (V)" position="top">
+            <wox-button variant="icon" icon="near_me"></wox-button>
+        </wox-tooltip>
+        <wox-tooltip text="Rectangle Tool (R)" position="bottom">
+            <wox-button variant="icon" icon="crop_square"></wox-button>
+        </wox-tooltip>
+        <wox-tooltip text="To the right" position="right">
+            <wox-button variant="text" label="Hover me"></wox-button>
+        </wox-tooltip>
+    </div>
+
+    <!-- COLOR PICKER -->
+    <h2>wox-color-picker</h2>
+    <div class="card">
+        <p class="label">Click the swatch to open:</p>
+        <div class="row" style="margin-top: 8px;">
+            <wox-color-swatch id="picker-trigger" color="#4cc9f0" size="42"></wox-color-swatch>
+            <span id="picker-value" style="font-family: monospace; font-size: 12px; color: var(--wox-text-secondary);">#4cc9f0</span>
+        </div>
+        <wox-color-picker id="demo-picker" color="#4cc9f0"></wox-color-picker>
+    </div>
+
+    <!-- MENU ITEMS & MENUS -->
+    <h2>wox-menu &amp; wox-menu-item</h2>
+    <div class="card">
+        <div class="row">
+            <wox-menu label="File">
+                <wox-menu-item label="New" shortcut="Ctrl+N" icon="add"></wox-menu-item>
+                <wox-menu-item label="Open" shortcut="Ctrl+O" icon="folder_open"></wox-menu-item>
+                <wox-menu-item type="separator"></wox-menu-item>
+                <wox-menu-item label="Save (SVG)" shortcut="Ctrl+S"></wox-menu-item>
+                <wox-menu-item label="Save As (Project)" shortcut="Ctrl+Shift+S"></wox-menu-item>
+                <wox-menu-item type="separator"></wox-menu-item>
+                <wox-menu-item label="Disabled Item" disabled></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="Edit">
+                <wox-menu-item label="Undo" shortcut="Ctrl+Z"></wox-menu-item>
+                <wox-menu-item label="Redo" shortcut="Ctrl+Shift+Z"></wox-menu-item>
+                <wox-menu-item type="separator"></wox-menu-item>
+                <wox-menu-item label="Cut" shortcut="Ctrl+X"></wox-menu-item>
+                <wox-menu-item label="Copy" shortcut="Ctrl+C"></wox-menu-item>
+                <wox-menu-item label="Paste" shortcut="Ctrl+V"></wox-menu-item>
+            </wox-menu>
+            <wox-menu label="View">
+                <wox-menu-item type="header" label="Zoom"></wox-menu-item>
+                <wox-menu-item label="Zoom In" shortcut="Ctrl++"></wox-menu-item>
+                <wox-menu-item label="Zoom Out" shortcut="Ctrl+-"></wox-menu-item>
+                <wox-menu-item label="Fit to Canvas" shortcut="Ctrl+0"></wox-menu-item>
+            </wox-menu>
+        </div>
+    </div>
+
+    <!-- LAYER ITEMS -->
+    <h2>wox-layer-item</h2>
+    <div class="card" style="max-width: 300px;">
+        <wox-layer-item name="Background" type="layer" visible selected></wox-layer-item>
+        <wox-layer-item name="Rectangle 1" type="rectangle" visible depth="1"></wox-layer-item>
+        <wox-layer-item name="Ellipse 1" type="ellipse" visible depth="1"></wox-layer-item>
+        <wox-layer-item name="Locked Path" type="path" visible locked></wox-layer-item>
+        <wox-layer-item name="Hidden Layer" type="layer"></wox-layer-item>
+    </div>
+
+    <!-- SECTIONS -->
+    <h2>wox-section</h2>
+    <div class="card" style="max-width: 300px; padding: 0;">
+        <wox-section title="Properties">
+            <div style="padding: 8px;">
+                <wox-input type="number" label="X" unit="px" value="120" step="1" style="width: 100%;"></wox-input>
+            </div>
+        </wox-section>
+        <wox-section title="Style">
+            <div style="padding: 8px;">
+                <wox-slider label="OPACITY" value="1" min="0" max="1" step="0.01" unit="%" show-value></wox-slider>
+            </div>
+        </wox-section>
+        <wox-section title="Collapsed" collapsed>
+            <p>Hidden content here.</p>
+        </wox-section>
+    </div>
+
+    <!-- TABS -->
+    <h2>wox-tabs</h2>
+    <div class="card" style="max-width: 300px; padding: 0; height: 200px; display: flex; flex-direction: column;">
+        <wox-tabs active="properties" style="flex: 1;">
+            <wox-tab name="properties" label="Properties">
+                <div style="padding: 16px;">
+                    <wox-input type="number" label="Width" unit="px" value="200" step="1" style="width: 100%;"></wox-input>
+                </div>
+            </wox-tab>
+            <wox-tab name="layers" label="Layers">
+                <div style="padding: 8px 0;">
+                    <wox-layer-item name="Layer 1" type="layer" visible selected></wox-layer-item>
+                    <wox-layer-item name="Layer 2" type="layer" visible></wox-layer-item>
+                </div>
+            </wox-tab>
+        </wox-tabs>
+    </div>
+
+    <!-- MODAL -->
+    <h2>wox-modal</h2>
+    <div class="card">
+        <wox-button variant="text" label="Open Modal" id="modal-trigger"></wox-button>
+        <wox-modal id="demo-modal" title="Confirm Action">
+            <p>Are you sure you want to delete this object?</p>
+        </wox-modal>
+    </div>
+
+    <script type="module">
+        // Event logging
+        const log = document.getElementById('event-log');
+        const logEvent = (name, detail) => {
+            const line = `${name}: ${JSON.stringify(detail)}\n`;
+            log.textContent += line;
+            log.scrollTop = log.scrollHeight;
+            console.log(name, detail);
+        };
+
+        document.addEventListener('wox-click', (e) => logEvent('wox-click', e.detail));
+        document.addEventListener('wox-input', (e) => logEvent('wox-input', e.detail));
+        document.addEventListener('wox-change', (e) => logEvent('wox-change', e.detail));
+        document.addEventListener('wox-select', (e) => logEvent('wox-select', e.detail));
+        document.addEventListener('wox-toggle', (e) => logEvent('wox-toggle', e.detail));
+        document.addEventListener('wox-tab-change', (e) => logEvent('wox-tab-change', e.detail));
+        document.addEventListener('wox-visibility', (e) => logEvent('wox-visibility', e.detail));
+        document.addEventListener('wox-lock', (e) => logEvent('wox-lock', e.detail));
+        document.addEventListener('wox-color-change', (e) => logEvent('wox-color-change', e.detail));
+        document.addEventListener('wox-close', (e) => logEvent('wox-close', e.detail));
+        document.addEventListener('wox-confirm', (e) => logEvent('wox-confirm', e.detail));
+        document.addEventListener('wox-cancel', (e) => logEvent('wox-cancel', e.detail));
+
+        // Color picker toggle
+        const pickerTrigger = document.getElementById('picker-trigger');
+        const demoPicker = document.getElementById('demo-picker');
+        const pickerValue = document.getElementById('picker-value');
+
+        pickerTrigger.addEventListener('wox-click', () => {
+            demoPicker.showAt(pickerTrigger);
+        });
+
+        demoPicker.addEventListener('wox-color-change', (e) => {
+            const [r, g, b] = e.detail.color.map(v => Math.round(v * 255));
+            const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+            pickerValue.textContent = hex;
+            pickerTrigger.setAttribute('color', hex);
+        });
+
+        // Modal toggle
+        document.getElementById('modal-trigger').addEventListener('wox-click', () => {
+            document.getElementById('demo-modal').setAttribute('open', '');
+        });
+    </script>
+</body>
+</html>
