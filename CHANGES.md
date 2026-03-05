@@ -1,5 +1,23 @@
 # CHANGES.md
 
+## 2026-03-05 — Glow buttons & super showcase
+
+### Added
+- **Glow button support** (`src/wox-button.js`): New `glow` attribute and `color` attribute for tile variant. When `glow` is set, tiles render with animated neon box-shadow, text-shadow, and SVG drop-shadow using the specified color. Hover-only color accent also supported via `color` without `glow`. Animated via `glow-pulse` keyframes.
+- **Super Showcase demo** (`demo/showcase.html`): Comprehensive page with:
+  - Glow button gallery (active glow, hover-only, Material Icons glow)
+  - Full icon zoo and badge collection
+  - All button variants with tooltips
+  - Input/slider grid with 8 fields and 4 sliders
+  - Color palette (16 colors), alpha swatches, and color picker integration
+  - Full menubar with 5 menus and keyboard shortcuts
+  - Toolbar + canvas mockup layout
+  - Deep nested layers panel (3 levels)
+  - UI patterns: pill toggles, progress bars, stat cards, notification banners, kbd tags
+  - Two modal dialogs (delete confirm, export settings with form)
+  - Right panel: exact replica of the VectorWebGPU Properties/Layers panel with tabs, sections, field grid, swatches, dash buttons, opacity slider, action tiles, and path operations with clickable glow toggle
+- Updated `index.html` to link the Super Showcase page.
+
 ## 2026-03-05 — Initial implementation
 
 ### Added

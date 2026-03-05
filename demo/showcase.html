@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOX-GUI Super Showcase</title>
+    <link rel="stylesheet" href="../css/wox-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="module" src="../src/index.js"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--wox-bg-app); color: var(--wox-text-primary); font-family: var(--wox-font); font-size: 12px; overflow: hidden; height: 100vh; }
+
+        /* ─── Page Layout ─── */
+        .page { display: flex; flex-direction: column; height: 100vh; }
+        .top-bar {
+            height: 40px; background: var(--wox-bg-toolbar); border-bottom: 1px solid var(--wox-border);
+            display: flex; align-items: center; padding: 0 16px; gap: 12px; flex-shrink: 0;
+        }
+        .top-bar .title { font-size: 14px; font-weight: 600; color: var(--wox-accent); letter-spacing: 0.5px; }
+        .top-bar .sub { font-size: 11px; color: var(--wox-text-secondary); }
+        .main { display: flex; flex: 1; overflow: hidden; }
+
+        /* ─── Left Column: Scrollable Showcase ─── */
+        .showcase {
+            flex: 1; overflow-y: auto; padding: 24px 32px; display: flex; flex-direction: column; gap: 24px;
+            scrollbar-width: thin; scrollbar-color: var(--wox-border) transparent;
+        }
+        .showcase::-webkit-scrollbar { width: 6px; }
+        .showcase::-webkit-scrollbar-thumb { background: var(--wox-border); border-radius: 3px; }
+
+        /* ─── Section Cards ─── */
+        .section-card {
+            background: var(--wox-bg-panel); border: 1px solid var(--wox-border);
+            border-radius: 12px; overflow: hidden;
+        }
+        .section-card-header {
+            padding: 12px 16px; background: var(--wox-bg-section-header);
+            border-bottom: 1px solid var(--wox-border-section);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-card-header h3 {
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--wox-text-hi);
+        }
+        .section-card-header .accent-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--wox-accent); box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+        }
+        .section-card-body { padding: 16px; }
+        .section-card-body.no-pad { padding: 0; }
+
+        /* ─── Helper Layouts ─── */
+        .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .row-tight { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .col { display: flex; flex-direction: column; gap: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .label-sm { font-size: 10px; color: var(--wox-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .mb-8 { margin-bottom: 8px; }
+        .mb-12 { margin-bottom: 12px; }
+        .mb-16 { margin-bottom: 16px; }
+        .mt-8 { margin-top: 8px; }
+        .mt-12 { margin-top: 12px; }
+
+        /* ─── Right Panel: Exact Image Replica ─── */
+        .right-panel {
+            width: 300px; flex-shrink: 0; background: var(--wox-bg-panel);
+            border-left: 1px solid var(--wox-border-light);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+
+        /* ─── Boolean / Path Op SVGs ─── */
+        .bool-svg { width: 34px; height: 34px; }
+
+        /* ─── Glow gallery ─── */
+        .glow-gallery { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+        .glow-group { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .glow-group .label-sm { text-align: center; }
+
+        /* ─── Color palette ─── */
+        .palette { display: flex; gap: 6px; flex-wrap: wrap; }
+
+        /* ─── Toolbar demo ─── */
+        .toolbar-demo { display: flex; gap: 0; height: 260px; border-radius: 8px; overflow: hidden; border: 1px solid var(--wox-border); }
+        .toolbar-demo wox-toolbar { height: 100%; }
+        .toolbar-canvas { flex: 1; background: var(--wox-bg-canvas); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--wox-text-secondary); }
+
+        /* ─── Menu bar demo ─── */
+        .menubar-demo { border-radius: 8px; overflow: hidden; border: 1px solid var(--wox-border); }
+
+        /* ─── Notification / status ─── */
+        .notif {
+            display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+            border-radius: 8px; border: 1px solid var(--wox-border);
+        }
+        .notif.info { background: rgba(0, 229, 255, 0.06); border-color: rgba(0, 229, 255, 0.2); }
+        .notif.warn { background: rgba(255, 193, 7, 0.06); border-color: rgba(255, 193, 7, 0.2); }
+        .notif.danger { background: rgba(247, 37, 133, 0.06); border-color: rgba(247, 37, 133, 0.2); }
+        .notif.success { background: rgba(76, 201, 240, 0.06); border-color: rgba(76, 201, 240, 0.2); }
+        .notif-icon { font-size: 18px; }
+        .notif-text { font-size: 12px; }
+
+        /* ─── Stat cards ─── */
+        .stat-card {
+            background: var(--wox-bg-toolbar); border: 1px solid var(--wox-border);
+            border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 4px;
+        }
+        .stat-value { font-size: 22px; font-weight: 700; color: var(--wox-text-hi); }
+        .stat-label { font-size: 10px; color: var(--wox-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ─── Field row for panel ─── */
+        .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .swatch-pair { display: flex; gap: 10px; align-items: center; }
+
+        /* ─── Pill toggle ─── */
+        .pill-row { display: flex; gap: 2px; background: var(--wox-bg-input); border-radius: 6px; padding: 2px; border: 1px solid var(--wox-border); }
+        .pill-btn {
+            padding: 6px 14px; border: none; background: transparent; color: var(--wox-text-secondary);
+            font-size: 11px; font-family: var(--wox-font); border-radius: 4px; cursor: pointer; transition: all 0.15s;
+        }
+        .pill-btn.active { background: var(--wox-accent); color: #000; font-weight: 600; }
+        .pill-btn:hover:not(.active) { color: var(--wox-text-hi); }
+
+        /* ─── Progress bar ─── */
+        .progress-track { height: 6px; background: var(--wox-border); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+        .progress-fill.accent { background: var(--wox-accent); }
+        .progress-fill.danger { background: var(--wox-danger); }
+        .progress-fill.success { background: var(--wox-success); }
+
+        /* ─── Kbd tag ─── */
+        kbd {
+            display: inline-block; padding: 2px 6px; font-size: 10px;
+            background: var(--wox-bg-input); border: 1px solid var(--wox-border);
+            border-radius: 3px; color: var(--wox-text-primary); font-family: var(--wox-font-mono);
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- ─── Top Bar ─── -->
+    <div class="top-bar">
+        <span class="title">WOX-GUI</span>
+        <span class="sub">Super Showcase</span>
+        <span style="flex:1;"></span>
+        <wox-badge variant="text" text="v1.0.0" color="#4cc9f0"></wox-badge>
+        <wox-badge variant="dot" color="#4cc9f0"></wox-badge>
+    </div>
+
+    <div class="main">
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- LEFT: Scrollable Showcase                   -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div class="showcase">
+
+            <!-- ─── GLOW BUTTONS ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Glow Buttons</h3>
+                </div>
+                <div class="section-card-body">
+                    <p class="label-sm mb-12">Tile buttons with per-button color accents and neon glow effects</p>
+                    <div class="glow-gallery">
+                        <div class="glow-group">
+                            <wox-button variant="tile" label="Unite" color="#4cc9f0" glow>
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.6"/>
+                                    <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.6"/>
+                                    <path d="M12 8 A9 9 0 0 1 12 26 L22 26 A9 9 0 0 0 22 8 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                                </svg>
+                            </wox-button>
+                            <span class="label-sm">Active glow</span>
+                        </div>
+                        <div class="glow-group">
+                            <wox-button variant="tile" label="Subtract" color="#f72585" glow>
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2,2" opacity="0.3"/>
+                                    <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                                    <path d="M12 8 A9 9 0 0 1 12 26 A9 9 0 0 0 16 25 A9 9 0 0 1 16 9 A9 9 0 0 0 12 8" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                                </svg>
+                            </wox-button>
+                            <span class="label-sm">Danger glow</span>
+                        </div>
+                        <div class="glow-group">
+                            <wox-button variant="tile" label="Intersect" color="#4361ee" glow>
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.4"/>
+                                    <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.4"/>
+                                    <path d="M16 9.5 A9 9 0 0 1 18 9.5 A9 9 0 0 1 18 24.5 A9 9 0 0 1 16 24.5 A9 9 0 0 1 16 9.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                                </svg>
+                            </wox-button>
+                            <span class="label-sm">Primary glow</span>
+                        </div>
+                        <div class="glow-group">
+                            <wox-button variant="tile" label="Exclude" color="#7209b7" glow>
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="currentColor" opacity="0.8"/>
+                                    <circle cx="22" cy="17" r="9" fill="currentColor" opacity="0.8"/>
+                                    <path d="M16 9.5 A9 9 0 0 1 18 9.5 A9 9 0 0 1 18 24.5 A9 9 0 0 1 16 24.5 A9 9 0 0 1 16 9.5" fill="#1e1e22"/>
+                                </svg>
+                            </wox-button>
+                            <span class="label-sm">Purple glow</span>
+                        </div>
+                    </div>
+
+                    <p class="label-sm mt-12 mb-8">Hover glow (not active, just color accent on hover)</p>
+                    <div class="glow-gallery">
+                        <wox-button variant="tile" label="Unite" color="#4cc9f0">
+                            <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.6"/>
+                                <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.6"/>
+                                <path d="M12 8 A9 9 0 0 1 12 26 L22 26 A9 9 0 0 0 22 8 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                            </svg>
+                        </wox-button>
+                        <wox-button variant="tile" label="Subtract" color="#f72585">
+                            <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2,2" opacity="0.3"/>
+                                <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                                <path d="M12 8 A9 9 0 0 1 12 26 A9 9 0 0 0 16 25 A9 9 0 0 1 16 9 A9 9 0 0 0 12 8" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                            </svg>
+                        </wox-button>
+                        <wox-button variant="tile" label="Intersect" color="#4361ee">
+                            <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.4"/>
+                                <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.4"/>
+                                <path d="M16 9.5 A9 9 0 0 1 18 9.5 A9 9 0 0 1 18 24.5 A9 9 0 0 1 16 24.5 A9 9 0 0 1 16 9.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                            </svg>
+                        </wox-button>
+                        <wox-button variant="tile" label="Exclude" color="#7209b7">
+                            <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                <circle cx="12" cy="17" r="9" fill="currentColor" opacity="0.8"/>
+                                <circle cx="22" cy="17" r="9" fill="currentColor" opacity="0.8"/>
+                                <path d="M16 9.5 A9 9 0 0 1 18 9.5 A9 9 0 0 1 18 24.5 A9 9 0 0 1 16 24.5 A9 9 0 0 1 16 9.5" fill="#1e1e22"/>
+                            </svg>
+                        </wox-button>
+                    </div>
+
+                    <p class="label-sm mt-12 mb-8">More glow examples — Material Icons</p>
+                    <div class="glow-gallery">
+                        <wox-button variant="tile" icon="auto_fix_high" label="Magic" color="#ffd600" glow></wox-button>
+                        <wox-button variant="tile" icon="bolt" label="Power" color="#00e676" glow></wox-button>
+                        <wox-button variant="tile" icon="whatshot" label="Hot" color="#ff5722" glow></wox-button>
+                        <wox-button variant="tile" icon="ac_unit" label="Freeze" color="#00bcd4" glow></wox-button>
+                        <wox-button variant="tile" icon="favorite" label="Love" color="#e91e63" glow></wox-button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── ICON ZOO ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Icons &amp; Badges</h3>
+                </div>
+                <div class="section-card-body">
+                    <p class="label-sm mb-8">Material Icons at various sizes</p>
+                    <div class="row mb-16">
+                        <wox-icon name="near_me" size="14"></wox-icon>
+                        <wox-icon name="near_me" size="18"></wox-icon>
+                        <wox-icon name="near_me" size="24"></wox-icon>
+                        <wox-icon name="near_me" size="32"></wox-icon>
+                        <wox-separator direction="v" style="height:32px;"></wox-separator>
+                        <wox-icon name="crop_square" size="24"></wox-icon>
+                        <wox-icon name="radio_button_unchecked" size="24"></wox-icon>
+                        <wox-icon name="timeline" size="24"></wox-icon>
+                        <wox-icon name="image" size="24"></wox-icon>
+                        <wox-icon name="text_fields" size="24"></wox-icon>
+                        <wox-icon name="layers" size="24"></wox-icon>
+                        <wox-icon name="folder" size="24"></wox-icon>
+                        <wox-icon name="palette" size="24"></wox-icon>
+                        <wox-icon name="tune" size="24"></wox-icon>
+                        <wox-icon name="settings" size="24"></wox-icon>
+                    </div>
+                    <p class="label-sm mb-8">Badges — Dot / Diamond / Text</p>
+                    <div class="row">
+                        <wox-badge></wox-badge>
+                        <wox-badge color="#f72585"></wox-badge>
+                        <wox-badge color="#4361ee"></wox-badge>
+                        <wox-badge color="#ffd600"></wox-badge>
+                        <wox-badge color="#00e676"></wox-badge>
+                        <wox-separator direction="v" style="height:16px;"></wox-separator>
+                        <wox-badge variant="diamond"></wox-badge>
+                        <wox-badge variant="diamond" color="#f72585"></wox-badge>
+                        <wox-badge variant="diamond" color="#ffd600"></wox-badge>
+                        <wox-separator direction="v" style="height:16px;"></wox-separator>
+                        <wox-badge variant="text" text="Rectangle"></wox-badge>
+                        <wox-badge variant="text" text="Ellipse" color="#4361ee"></wox-badge>
+                        <wox-badge variant="text" text="Path" color="#f72585"></wox-badge>
+                        <wox-badge variant="text" text="Image" color="#00e676"></wox-badge>
+                        <wox-badge variant="text" text="Group" color="#7209b7"></wox-badge>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── ALL BUTTON VARIANTS ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>All Button Variants</h3>
+                </div>
+                <div class="section-card-body">
+                    <p class="label-sm mb-8">Icon buttons (toolbar style)</p>
+                    <div class="row mb-12">
+                        <wox-tooltip text="Select (V)" position="bottom"><wox-button variant="icon" icon="near_me" active></wox-button></wox-tooltip>
+                        <wox-tooltip text="Pen (P)" position="bottom"><wox-button variant="icon" icon="edit"></wox-button></wox-tooltip>
+                        <wox-tooltip text="Rectangle (R)" position="bottom"><wox-button variant="icon" icon="crop_square"></wox-button></wox-tooltip>
+                        <wox-tooltip text="Ellipse (E)" position="bottom"><wox-button variant="icon" icon="radio_button_unchecked"></wox-button></wox-tooltip>
+                        <wox-tooltip text="Image (I)" position="bottom"><wox-button variant="icon" icon="image"></wox-button></wox-tooltip>
+                        <wox-tooltip text="Text (T)" position="bottom"><wox-button variant="icon" icon="text_fields"></wox-button></wox-tooltip>
+                        <wox-button variant="icon" icon="zoom_in"></wox-button>
+                        <wox-button variant="icon" icon="zoom_out"></wox-button>
+                        <wox-button variant="icon" icon="undo"></wox-button>
+                        <wox-button variant="icon" icon="redo"></wox-button>
+                        <wox-button variant="icon" icon="settings" disabled></wox-button>
+                    </div>
+
+                    <p class="label-sm mb-8">Text buttons</p>
+                    <div class="row mb-12">
+                        <wox-button variant="text" label="Save"></wox-button>
+                        <wox-button variant="text" icon="add" label="New File"></wox-button>
+                        <wox-button variant="text" icon="file_download" label="Export"></wox-button>
+                        <wox-button variant="text" label="Disabled" disabled></wox-button>
+                    </div>
+
+                    <p class="label-sm mb-8">Tile buttons — Action panel</p>
+                    <div class="grid-3 mb-12" style="max-width: 300px;">
+                        <wox-button variant="tile" icon="flip_to_front" label="Front"></wox-button>
+                        <wox-button variant="tile" icon="flip_to_back" label="Back"></wox-button>
+                        <wox-button variant="tile" icon="delete" label="Delete" color="#f72585"></wox-button>
+                    </div>
+
+                    <p class="label-sm mb-8">Dash pattern buttons</p>
+                    <div class="row-tight">
+                        <wox-button variant="dash" dash="solid" active></wox-button>
+                        <wox-button variant="dash" dash="dotted"></wox-button>
+                        <wox-button variant="dash" dash="dashed"></wox-button>
+                        <wox-button variant="dash" dash="longdash"></wox-button>
+                        <wox-button variant="dash" dash="dotdash"></wox-button>
+                        <wox-button variant="dash" dash="zigzag"></wox-button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── INPUTS & SLIDERS ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Inputs &amp; Sliders</h3>
+                </div>
+                <div class="section-card-body">
+                    <div class="grid-2 mb-16" style="max-width: 400px;">
+                        <wox-input type="text" placeholder="Layer name..." label="Name"></wox-input>
+                        <wox-input type="text" value="my-project.svg" label="File"></wox-input>
+                        <wox-input type="number" label="X" unit="px" value="128" step="1"></wox-input>
+                        <wox-input type="number" label="Y" unit="px" value="96" step="1"></wox-input>
+                        <wox-input type="number" label="W" unit="px" value="400" step="1"></wox-input>
+                        <wox-input type="number" label="H" unit="px" value="300" step="1"></wox-input>
+                        <wox-input type="number" label="Rotation" unit="deg" value="0" min="-360" max="360" step="1"></wox-input>
+                        <wox-input type="number" label="Scale" unit="%" value="100" min="1" max="1000" step="1"></wox-input>
+                    </div>
+
+                    <p class="label-sm mb-8">Sliders</p>
+                    <div class="col" style="max-width: 400px; gap: 12px;">
+                        <wox-slider label="OPACITY" value="1" min="0" max="1" step="0.01" unit="%" show-value></wox-slider>
+                        <wox-slider label="BLUR" value="0" min="0" max="50" step="0.5" show-value></wox-slider>
+                        <wox-slider label="FEATHER" value="3" min="0" max="20" step="0.1" show-value></wox-slider>
+                        <wox-slider label="SPREAD" value="0.5" min="0" max="1" step="0.01" unit="%" show-value></wox-slider>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── COLOR SWATCHES & PICKER ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Color Swatches &amp; Picker</h3>
+                </div>
+                <div class="section-card-body">
+                    <p class="label-sm mb-8">Palette</p>
+                    <div class="palette mb-12">
+                        <wox-color-swatch color="#ff0000" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#ff5722" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#ff9800" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#ffd600" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#cddc39" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#4caf50" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#00e676" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#00bcd4" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#2196f3" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#3f51b5" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#7209b7" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#e91e63" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#ffffff" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#999999" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#333333" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="#000000" size="28"></wox-color-swatch>
+                    </div>
+
+                    <p class="label-sm mb-8">Fill &amp; Stroke (click to open picker)</p>
+                    <div class="row mb-12">
+                        <wox-color-swatch id="sc-fill" color="#4cc9f0" size="42" selected></wox-color-swatch>
+                        <wox-color-swatch id="sc-stroke" color="#000000" size="42"></wox-color-swatch>
+                        <wox-separator direction="v" style="height:36px;"></wox-separator>
+                        <span id="sc-hex" style="font-family: var(--wox-font-mono); font-size: 13px; color: var(--wox-text-secondary);">#4cc9f0</span>
+                    </div>
+                    <wox-color-picker id="sc-picker" color="#4cc9f0"></wox-color-picker>
+
+                    <p class="label-sm mb-8">Alpha transparency swatches</p>
+                    <div class="palette">
+                        <wox-color-swatch color="rgba(0, 229, 255, 1)" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="rgba(0, 229, 255, 0.8)" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="rgba(0, 229, 255, 0.6)" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="rgba(0, 229, 255, 0.4)" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="rgba(0, 229, 255, 0.2)" size="28"></wox-color-swatch>
+                        <wox-color-swatch color="transparent" size="28"></wox-color-swatch>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── MENUS ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Menus &amp; Menubar</h3>
+                </div>
+                <div class="section-card-body">
+                    <div class="menubar-demo mb-12">
+                        <wox-menubar>
+                            <wox-menu label="File">
+                                <wox-menu-item label="New" shortcut="Ctrl+N" icon="add"></wox-menu-item>
+                                <wox-menu-item label="Open" shortcut="Ctrl+O" icon="folder_open"></wox-menu-item>
+                                <wox-menu-item type="separator"></wox-menu-item>
+                                <wox-menu-item label="Save (SVG)" shortcut="Ctrl+S"></wox-menu-item>
+                                <wox-menu-item label="Save As" shortcut="Ctrl+Shift+S"></wox-menu-item>
+                                <wox-menu-item type="separator"></wox-menu-item>
+                                <wox-menu-item label="Export PNG" shortcut="Ctrl+E"></wox-menu-item>
+                                <wox-menu-item label="Export PDF" disabled></wox-menu-item>
+                            </wox-menu>
+                            <wox-menu label="Edit">
+                                <wox-menu-item label="Undo" shortcut="Ctrl+Z" icon="undo"></wox-menu-item>
+                                <wox-menu-item label="Redo" shortcut="Ctrl+Shift+Z" icon="redo"></wox-menu-item>
+                                <wox-menu-item type="separator"></wox-menu-item>
+                                <wox-menu-item label="Cut" shortcut="Ctrl+X"></wox-menu-item>
+                                <wox-menu-item label="Copy" shortcut="Ctrl+C"></wox-menu-item>
+                                <wox-menu-item label="Paste" shortcut="Ctrl+V"></wox-menu-item>
+                                <wox-menu-item label="Duplicate" shortcut="Ctrl+D"></wox-menu-item>
+                                <wox-menu-item type="separator"></wox-menu-item>
+                                <wox-menu-item label="Select All" shortcut="Ctrl+A"></wox-menu-item>
+                            </wox-menu>
+                            <wox-menu label="Object">
+                                <wox-menu-item type="header" label="Transform"></wox-menu-item>
+                                <wox-menu-item label="Group" shortcut="Ctrl+G"></wox-menu-item>
+                                <wox-menu-item label="Ungroup" shortcut="Ctrl+Shift+G"></wox-menu-item>
+                                <wox-menu-item type="separator"></wox-menu-item>
+                                <wox-menu-item type="header" label="Arrange"></wox-menu-item>
+                                <wox-menu-item label="Bring to Front" shortcut="Ctrl+]"></wox-menu-item>
+                                <wox-menu-item label="Send to Back" shortcut="Ctrl+["></wox-menu-item>
+                                <wox-menu-item label="Bring Forward"></wox-menu-item>
+                                <wox-menu-item label="Send Backward"></wox-menu-item>
+                            </wox-menu>
+                            <wox-menu label="View">
+                                <wox-menu-item label="Zoom In" shortcut="Ctrl++"></wox-menu-item>
+                                <wox-menu-item label="Zoom Out" shortcut="Ctrl+-"></wox-menu-item>
+                                <wox-menu-item label="Fit Canvas" shortcut="Ctrl+0"></wox-menu-item>
+                                <wox-menu-item type="separator"></wox-menu-item>
+                                <wox-menu-item label="Show Grid" shortcut="Ctrl+'"></wox-menu-item>
+                                <wox-menu-item label="Snap to Grid" shortcut="Ctrl+Shift+'"></wox-menu-item>
+                            </wox-menu>
+                            <wox-menu label="Help">
+                                <wox-menu-item label="Keyboard Shortcuts" shortcut="?"></wox-menu-item>
+                                <wox-menu-item label="About"></wox-menu-item>
+                            </wox-menu>
+                        </wox-menubar>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── TOOLBAR + CANVAS MOCKUP ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Toolbar &amp; Layout</h3>
+                </div>
+                <div class="section-card-body">
+                    <div class="toolbar-demo">
+                        <wox-toolbar>
+                            <wox-toolbar-group>
+                                <wox-button variant="icon" icon="near_me" active></wox-button>
+                            </wox-toolbar-group>
+                            <wox-toolbar-group>
+                                <wox-button variant="icon" icon="edit"></wox-button>
+                            </wox-toolbar-group>
+                            <wox-toolbar-group>
+                                <wox-button variant="icon" icon="crop_square"></wox-button>
+                                <wox-button variant="icon" icon="radio_button_unchecked"></wox-button>
+                                <wox-button variant="icon" icon="change_history"></wox-button>
+                                <wox-button variant="icon" icon="star_border"></wox-button>
+                                <wox-button variant="icon" icon="image"></wox-button>
+                                <wox-button variant="icon" icon="text_fields"></wox-button>
+                            </wox-toolbar-group>
+                        </wox-toolbar>
+                        <div class="toolbar-canvas">
+                            <span>Canvas Area &mdash; 1920 &times; 1080</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── LAYERS ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Layers Panel</h3>
+                </div>
+                <div class="section-card-body no-pad">
+                    <div style="max-width: 320px; padding: 8px 0;">
+                        <wox-layer-item name="Artboard 1" type="group" visible selected></wox-layer-item>
+                        <wox-layer-item name="Header Group" type="group" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Logo" type="image" visible depth="2"></wox-layer-item>
+                        <wox-layer-item name="Nav Rectangle" type="rectangle" visible depth="2"></wox-layer-item>
+                        <wox-layer-item name="Body" type="layer" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Hero Ellipse" type="ellipse" visible depth="2"></wox-layer-item>
+                        <wox-layer-item name="CTA Path" type="path" visible depth="2"></wox-layer-item>
+                        <wox-layer-item name="Background" type="rectangle" visible locked></wox-layer-item>
+                        <wox-layer-item name="Old Design" type="layer" locked></wox-layer-item>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── UI PATTERNS ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>UI Patterns</h3>
+                </div>
+                <div class="section-card-body">
+                    <p class="label-sm mb-8">Pill Toggle</p>
+                    <div class="row mb-16">
+                        <div class="pill-row">
+                            <button class="pill-btn active">Design</button>
+                            <button class="pill-btn">Prototype</button>
+                            <button class="pill-btn">Inspect</button>
+                        </div>
+                        <div class="pill-row">
+                            <button class="pill-btn active">px</button>
+                            <button class="pill-btn">%</button>
+                            <button class="pill-btn">em</button>
+                        </div>
+                    </div>
+
+                    <p class="label-sm mb-8">Progress Bars</p>
+                    <div class="col mb-16" style="max-width: 300px; gap: 10px;">
+                        <div><span class="label-sm">Export 72%</span><div class="progress-track mt-4"><div class="progress-fill accent" style="width:72%"></div></div></div>
+                        <div><span class="label-sm">Memory 89%</span><div class="progress-track mt-4"><div class="progress-fill danger" style="width:89%"></div></div></div>
+                        <div><span class="label-sm">Upload 45%</span><div class="progress-track mt-4"><div class="progress-fill success" style="width:45%"></div></div></div>
+                    </div>
+
+                    <p class="label-sm mb-8">Stat Cards</p>
+                    <div class="grid-4 mb-16" style="max-width: 500px;">
+                        <div class="stat-card"><span class="stat-value">24</span><span class="stat-label">Objects</span></div>
+                        <div class="stat-card"><span class="stat-value">3</span><span class="stat-label">Layers</span></div>
+                        <div class="stat-card"><span class="stat-value" style="color: var(--wox-accent);">SVG</span><span class="stat-label">Format</span></div>
+                        <div class="stat-card"><span class="stat-value">1.2<span style="font-size:12px; color: var(--wox-text-secondary);">MB</span></span><span class="stat-label">File Size</span></div>
+                    </div>
+
+                    <p class="label-sm mb-8">Notifications</p>
+                    <div class="col" style="max-width: 400px; gap: 8px;">
+                        <div class="notif info"><wox-icon name="info" size="18" style="color:var(--wox-accent)"></wox-icon><span class="notif-text">Project saved successfully.</span></div>
+                        <div class="notif warn"><wox-icon name="warning" size="18" style="color:#ffc107"></wox-icon><span class="notif-text">Canvas exceeds 4096px. WebGPU may clip.</span></div>
+                        <div class="notif danger"><wox-icon name="error" size="18" style="color:var(--wox-danger)"></wox-icon><span class="notif-text">Failed to export: invalid path data.</span></div>
+                        <div class="notif success"><wox-icon name="check_circle" size="18" style="color:var(--wox-success)"></wox-icon><span class="notif-text">All layers merged.</span></div>
+                    </div>
+
+                    <p class="label-sm mt-12 mb-8">Keyboard Shortcuts</p>
+                    <div class="row" style="gap: 8px;">
+                        <kbd>Ctrl</kbd>+<kbd>Z</kbd>
+                        <span style="color: var(--wox-text-secondary); font-size: 11px;">Undo</span>
+                        <wox-separator direction="v" style="height:16px;"></wox-separator>
+                        <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd>
+                        <span style="color: var(--wox-text-secondary); font-size: 11px;">Redo</span>
+                        <wox-separator direction="v" style="height:16px;"></wox-separator>
+                        <kbd>Del</kbd>
+                        <span style="color: var(--wox-text-secondary); font-size: 11px;">Delete</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── MODAL ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Modal Dialogs</h3>
+                </div>
+                <div class="section-card-body">
+                    <div class="row">
+                        <wox-button variant="text" label="Confirm Delete" id="modal-delete-trigger"></wox-button>
+                        <wox-button variant="text" label="Export Options" id="modal-export-trigger"></wox-button>
+                    </div>
+                    <wox-modal id="modal-delete" title="Delete Object?">
+                        <p>This will permanently remove <strong>Rectangle 1</strong> from the canvas. This action cannot be undone.</p>
+                    </wox-modal>
+                    <wox-modal id="modal-export" title="Export Settings" width="450px">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <wox-input type="text" label="Filename" value="design-export.svg"></wox-input>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                <wox-input type="number" label="Width" unit="px" value="1920"></wox-input>
+                                <wox-input type="number" label="Height" unit="px" value="1080"></wox-input>
+                            </div>
+                            <wox-slider label="QUALITY" value="0.9" min="0" max="1" step="0.05" unit="%" show-value></wox-slider>
+                        </div>
+                    </wox-modal>
+                </div>
+            </div>
+
+            <!-- spacer -->
+            <div style="height: 32px; flex-shrink: 0;"></div>
+
+        </div><!-- /showcase -->
+
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- RIGHT PANEL: Exact Image Replica            -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div class="right-panel">
+            <wox-tabs active="properties" style="flex: 1; overflow: hidden;">
+                <wox-tab name="properties" label="Properties">
+
+                    <!-- 2 Objects Header -->
+                    <wox-section title="2 Objects">
+                        <div class="field-grid">
+                            <wox-input type="number" label="X" unit="px" value="0" step="1"></wox-input>
+                            <wox-input type="number" label="Y" unit="px" value="0" step="1"></wox-input>
+                            <wox-input type="number" label="W" unit="px" value="0" step="1"></wox-input>
+                            <wox-input type="number" label="H" unit="px" value="0" step="1"></wox-input>
+                        </div>
+                    </wox-section>
+
+                    <!-- Style Section -->
+                    <wox-section title="Style">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; gap: 16px; align-items: center;">
+                                <div class="swatch-pair">
+                                    <wox-color-swatch id="rp-fill" color="#ffffff" size="42" selected></wox-color-swatch>
+                                    <wox-color-swatch id="rp-stroke" color="#000000" size="42"></wox-color-swatch>
+                                </div>
+                                <wox-separator direction="v" style="height: 36px;"></wox-separator>
+                                <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 8px; justify-content: flex-end;">
+                                        <span class="label-sm">WIDTH</span>
+                                        <wox-input type="number" value="1" min="0" step="0.5" style="width: 70px;"></wox-input>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(2, 42px); gap: 6px; justify-content: flex-end;">
+                                        <wox-button variant="dash" dash="solid" active></wox-button>
+                                        <wox-button variant="dash" dash="dotted"></wox-button>
+                                        <wox-button variant="dash" dash="dashed"></wox-button>
+                                        <wox-button variant="dash" dash="longdash"></wox-button>
+                                        <wox-button variant="dash" dash="dotdash"></wox-button>
+                                        <wox-button variant="dash" dash="zigzag"></wox-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <wox-slider label="OPACITY" value="1" min="0" max="1" step="0.01" unit="%" show-value></wox-slider>
+                        </div>
+                    </wox-section>
+
+                    <!-- Action Section -->
+                    <wox-section title="Action">
+                        <div class="grid-3">
+                            <wox-button variant="tile" icon="flip_to_front" label="Front"></wox-button>
+                            <wox-button variant="tile" icon="flip_to_back" label="Back"></wox-button>
+                            <wox-button variant="tile" icon="delete" label="Delete" color="#f72585"></wox-button>
+                        </div>
+                    </wox-section>
+
+                    <!-- Path Operations Section — matches the image exactly -->
+                    <wox-section title="Path Operations">
+                        <div class="grid-3" style="margin-bottom: 12px;">
+                            <wox-button variant="tile" label="Unite" color="#4cc9f0">
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.6"/>
+                                    <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.6"/>
+                                    <path d="M12 8 A9 9 0 0 1 12 26 L22 26 A9 9 0 0 0 22 8 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                                </svg>
+                            </wox-button>
+                            <wox-button variant="tile" label="Subtract" color="#f72585" glow>
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2,2" opacity="0.3"/>
+                                    <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                                    <path d="M12 8 A9 9 0 0 1 12 26 A9 9 0 0 0 16 25 A9 9 0 0 1 16 9 A9 9 0 0 0 12 8" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                                </svg>
+                            </wox-button>
+                            <wox-button variant="tile" label="Intersect" color="#4361ee">
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.4"/>
+                                    <circle cx="22" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.4"/>
+                                    <path d="M16 9.5 A9 9 0 0 1 18 9.5 A9 9 0 0 1 18 24.5 A9 9 0 0 1 16 24.5 A9 9 0 0 1 16 9.5" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+                                </svg>
+                            </wox-button>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <wox-button variant="tile" label="Exclude" color="#7209b7">
+                                <svg slot="icon" width="34" height="34" viewBox="0 0 34 34">
+                                    <circle cx="12" cy="17" r="9" fill="currentColor" opacity="0.8"/>
+                                    <circle cx="22" cy="17" r="9" fill="currentColor" opacity="0.8"/>
+                                    <path d="M16 9.5 A9 9 0 0 1 18 9.5 A9 9 0 0 1 18 24.5 A9 9 0 0 1 16 24.5 A9 9 0 0 1 16 9.5" fill="#1e1e22"/>
+                                </svg>
+                            </wox-button>
+                        </div>
+                    </wox-section>
+
+                </wox-tab>
+
+                <wox-tab name="layers" label="Layers">
+                    <div style="padding: 8px 0;">
+                        <wox-layer-item name="Layer 1" type="layer" visible selected></wox-layer-item>
+                        <wox-layer-item name="Rectangle 1" type="rectangle" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Ellipse 1" type="ellipse" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Path 1" type="path" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Layer 2" type="layer" visible></wox-layer-item>
+                        <wox-layer-item name="Star Shape" type="path" visible depth="1"></wox-layer-item>
+                        <wox-layer-item name="Background Image" type="image" visible locked depth="1"></wox-layer-item>
+                        <wox-layer-item name="Hidden Sketch" type="layer" locked></wox-layer-item>
+                    </div>
+                </wox-tab>
+            </wox-tabs>
+
+            <!-- Status bar at bottom of right panel -->
+            <div style="padding: 6px 12px; background: var(--wox-bg-section-header); border-top: 1px solid var(--wox-border-section); font-size: 10px; color: var(--wox-text-secondary); display: flex; justify-content: space-between;">
+                <span>2 selected</span>
+                <span>Zoom: 100%</span>
+            </div>
+        </div>
+
+    </div><!-- /main -->
+
+    <!-- ─── Bottom Status Bar ─── -->
+    <wox-statusbar>
+        <span slot="left">Selection: 2 Objects</span>
+        <span slot="center">Tool: Select &mdash; Dual-click to edit &middot; Drag to move &middot; <kbd>Del</kbd> delete &middot; <kbd>Shift</kbd> multiselect</span>
+        <span slot="right">X: 128 Y: 96</span>
+    </wox-statusbar>
+
+</div><!-- /page -->
+
+<!-- ─── Color Picker (shared) ─── -->
+<wox-color-picker id="rp-picker"></wox-color-picker>
+
+<script type="module">
+    // ── Right panel color picker ──
+    const rpFill = document.getElementById('rp-fill');
+    const rpStroke = document.getElementById('rp-stroke');
+    const rpPicker = document.getElementById('rp-picker');
+    let rpActive = null;
+
+    const openRpPicker = (swatch) => {
+        rpActive = swatch;
+        rpPicker.setAttribute('color', swatch.getAttribute('color'));
+        rpPicker.showAt(swatch);
+    };
+
+    rpFill.addEventListener('wox-click', () => openRpPicker(rpFill));
+    rpStroke.addEventListener('wox-click', () => openRpPicker(rpStroke));
+
+    rpPicker.addEventListener('wox-color-change', (e) => {
+        if (!rpActive) return;
+        const [r, g, b] = e.detail.color.map(v => Math.round(v * 255));
+        const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+        rpActive.setAttribute('color', hex);
+    });
+
+    // ── Showcase color picker ──
+    const scFill = document.getElementById('sc-fill');
+    const scStroke = document.getElementById('sc-stroke');
+    const scPicker = document.getElementById('sc-picker');
+    const scHex = document.getElementById('sc-hex');
+    let scActive = null;
+
+    const openScPicker = (swatch) => {
+        scActive = swatch;
+        scPicker.setAttribute('color', swatch.getAttribute('color'));
+        scPicker.showAt(swatch);
+    };
+
+    scFill.addEventListener('wox-click', () => openScPicker(scFill));
+    scStroke.addEventListener('wox-click', () => openScPicker(scStroke));
+
+    scPicker.addEventListener('wox-color-change', (e) => {
+        if (!scActive) return;
+        const [r, g, b] = e.detail.color.map(v => Math.round(v * 255));
+        const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+        scActive.setAttribute('color', hex);
+        scHex.textContent = hex;
+    });
+
+    // ── Pill toggles ──
+    document.querySelectorAll('.pill-row').forEach((row) => {
+        row.querySelectorAll('.pill-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                row.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    });
+
+    // ── Modals ──
+    document.getElementById('modal-delete-trigger').addEventListener('wox-click', () => {
+        document.getElementById('modal-delete').setAttribute('open', '');
+    });
+    document.getElementById('modal-export-trigger').addEventListener('wox-click', () => {
+        document.getElementById('modal-export').setAttribute('open', '');
+    });
+
+    // ── Boolean toggle glow on click ──
+    document.querySelectorAll('wox-button[variant="tile"][color]').forEach((btn) => {
+        btn.addEventListener('wox-click', () => {
+            // Toggle glow
+            if (btn.hasAttribute('glow')) {
+                btn.removeAttribute('glow');
+            } else {
+                btn.setAttribute('glow', '');
+            }
+        });
+    });
+</script>
+</body>
+</html>
