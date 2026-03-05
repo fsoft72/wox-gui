@@ -1,6 +1,7 @@
 // wox-slider.js — Range slider with custom track, thumb, and value display
 
 import { WoxElement } from './wox-base.js';
+import { FX_STYLES } from './wox-fx.js';
 
 const STYLES = `
     :host { display: inline-block; width: 100%; }
@@ -24,6 +25,8 @@ const STYLES = `
         font-size: var(--wox-font-size-base, 12px); color: var(--wox-text-secondary, #999);
         font-weight: 600; min-width: 35px; text-align: right; user-select: none;
     }
+    .fill.custom-color { background: var(--wox-fx-color); }
+    .thumb.glow { width: 16px; height: 16px; }
 `;
 
 /**
@@ -35,11 +38,14 @@ const STYLES = `
  * @attr {string}  label      - Label text on the left
  * @attr {string}  unit       - Unit suffix for value display (e.g. "%")
  * @attr {boolean} show-value - Show numeric value on the right
+ * @attr {string}  color      - Custom accent color for fill and thumb glow
+ * @attr {boolean} glow       - Enable neon glow effect on the thumb
+ * @attr {boolean} pulse      - Enable opacity pulse animation on the thumb
  * @fires wox-input  - On drag, detail: { value }
  * @fires wox-change - On drag end, detail: { value }
  */
 class WoxSlider extends WoxElement {
-    static observedAttributes = ['value', 'min', 'max', 'step', 'label', 'unit', 'show-value'];
+    static observedAttributes = ['value', 'min', 'max', 'step', 'label', 'unit', 'show-value', 'color', 'glow', 'pulse'];
 
     constructor() {
         super();
@@ -95,13 +101,19 @@ class WoxSlider extends WoxElement {
         const label = this.getAttribute('label') || '';
         const showValue = this.hasAttribute('show-value');
         const pct = ((value - min) / (max - min)) * 100;
+        const color = this.getAttribute('color') || '';
+        const glow = this.hasAttribute('glow');
+        const pulse = this.hasAttribute('pulse');
+        const fxClasses = [glow ? 'glow' : '', pulse ? 'pulse' : ''].filter(Boolean).join(' ');
+        const fxStyle = color ? `--wox-fx-color:${color};border-color:${color}` : '';
+        const fillClass = color ? ' custom-color' : '';
 
-        this.render(STYLES, `
+        this.render(STYLES + FX_STYLES, `
             <div class="wrapper">
                 ${label ? `<span class="label">${label}</span>` : ''}
                 <div class="track-wrap">
-                    <div class="track"><div class="fill" style="width:${pct}%"></div></div>
-                    <div class="thumb" style="left:${pct}%"></div>
+                    <div class="track"><div class="fill${fillClass}" style="width:${pct}%;${color ? '--wox-fx-color:'+color : ''}"></div></div>
+                    <div class="thumb ${fxClasses}" style="${fxStyle};left:${pct}%"></div>
                 </div>
                 ${showValue ? `<span class="value">${this._formatVal(value)}</span>` : ''}
             </div>
