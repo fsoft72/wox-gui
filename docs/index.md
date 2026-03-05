@@ -2,7 +2,7 @@
 
 A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, and CSS custom properties. Originally extracted from VectorWebGPU.
 
-**21 components** | **Dark theme** | **Zero dependencies** | **No build step**
+**25 components** | **Dark theme** | **Zero dependencies** | **No build step**
 
 ---
 
@@ -36,6 +36,9 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 | [wox-menu-item](./wox-menu-item.md) | Menu entry with icon, shortcut, and submenu support |
 | [wox-menu](./wox-menu.md) | Dropdown menu with click/hover/context triggers |
 | [wox-layer-item](./wox-layer-item.md) | Layer panel row with visibility, lock, and rename |
+| [wox-gradient-editor](./wox-gradient-editor.md) | Interactive gradient color-stop editor bar |
+| [wox-gradient-selector](./wox-gradient-selector.md) | Full gradient picker with presets, controls, and editor dialog |
+| [wox-context-menu](./wox-context-menu.md) | Right-click context menu with shortcuts and icons |
 
 ### Layout
 
@@ -56,6 +59,12 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 | Component | Description |
 |-----------|-------------|
 | [wox-datagrid](./wox-datagrid.md) | Sortable data grid with resizable columns and row selection |
+
+### Feedback
+
+| Component | Description |
+|-----------|-------------|
+| [wox-toast](./wox-toast.md) | Toast notifications with auto-dismiss, pause-on-hover, and dedup |
 
 ---
 

@@ -1,5 +1,14 @@
 # CHANGES.md
 
+## 2026-03-05 — Documentation for toast, context-menu, gradient components
+
+### Added
+- **`docs/wox-toast.md`**: Documentation for the toast notification component (static API, options, position codes, features, examples)
+- **`docs/wox-context-menu.md`**: Documentation for the context menu component (static API, item properties, features, examples)
+- **`docs/wox-gradient-editor.md`**: Documentation for the gradient editor component (gradient object shape, events, exported utility functions, interaction features, examples)
+- **`docs/wox-gradient-selector.md`**: Documentation for the gradient selector component (attributes, events, built-in presets, localStorage persistence, examples)
+- **`docs/index.md`**: Updated component count from 21 to 25; added gradient-editor, gradient-selector, context-menu under Composite; added Feedback section with wox-toast
+
 ## 2026-03-05 — Demo sections for toast, context-menu, gradient components
 
 ### Added
