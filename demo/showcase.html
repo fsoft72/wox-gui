@@ -533,6 +533,18 @@
                 </div>
             </div>
 
+            <!-- ─── DATAGRID ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Data Grid</h3>
+                </div>
+                <div class="section-card-body">
+                    <p class="label-sm mb-8">Click headers to sort &middot; Drag column borders to resize</p>
+                    <wox-datagrid id="sc-grid" style="height: 260px;"></wox-datagrid>
+                </div>
+            </div>
+
             <!-- ─── UI PATTERNS ─── -->
             <div class="section-card">
                 <div class="section-card-header">
@@ -752,6 +764,31 @@
 <wox-color-picker id="rp-picker"></wox-color-picker>
 
 <script type="module">
+    // ── Showcase datagrid ──
+    const scGrid = document.getElementById('sc-grid');
+    scGrid.columns = [
+        { key: 'name',     label: 'Layer',    width: 160 },
+        { key: 'type',     label: 'Type',     width: 100 },
+        { key: 'x',        label: 'X',        width: 60, align: 'right' },
+        { key: 'y',        label: 'Y',        width: 60, align: 'right' },
+        { key: 'width',    label: 'Width',    width: 70, align: 'right' },
+        { key: 'height',   label: 'Height',   width: 70, align: 'right' },
+        { key: 'opacity',  label: 'Opacity',  width: 70, align: 'right' },
+        { key: 'visible',  label: 'Visible',  width: 70 },
+    ];
+    scGrid.rows = [
+        { name: 'Background',   type: 'Rectangle', x: 0,   y: 0,   width: 1920, height: 1080, opacity: '100%', visible: 'Yes' },
+        { name: 'Hero Image',   type: 'Image',     x: 120, y: 80,  width: 800,  height: 600,  opacity: '100%', visible: 'Yes' },
+        { name: 'Title Text',   type: 'Text',      x: 960, y: 120, width: 400,  height: 48,   opacity: '100%', visible: 'Yes' },
+        { name: 'Subtitle',     type: 'Text',      x: 960, y: 180, width: 400,  height: 24,   opacity: '80%',  visible: 'Yes' },
+        { name: 'CTA Button',   type: 'Rectangle', x: 960, y: 240, width: 200,  height: 48,   opacity: '100%', visible: 'Yes' },
+        { name: 'Logo',         type: 'Path',      x: 32,  y: 32,  width: 64,   height: 64,   opacity: '100%', visible: 'Yes' },
+        { name: 'Divider Line', type: 'Path',      x: 0,   y: 700, width: 1920, height: 2,    opacity: '40%',  visible: 'Yes' },
+        { name: 'Footer Text',  type: 'Text',      x: 40,  y: 1040, width: 300, height: 20,   opacity: '60%',  visible: 'No' },
+        { name: 'Shadow',       type: 'Ellipse',   x: 400, y: 650, width: 600,  height: 40,   opacity: '20%',  visible: 'Yes' },
+        { name: 'Overlay',      type: 'Rectangle', x: 0,   y: 0,   width: 1920, height: 1080, opacity: '10%',  visible: 'No' },
+    ];
+
     // ── Right panel color picker ──
     const rpFill = document.getElementById('rp-fill');
     const rpStroke = document.getElementById('rp-stroke');

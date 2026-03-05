@@ -1,5 +1,13 @@
 # CHANGES.md
 
+## 2026-03-05 — Data grid component
+
+### Added
+- **`<wox-datagrid>`** (`src/wox-datagrid.js`): New sortable data grid with resizable columns, row hover, odd/even row striping. Columns and rows set via JS properties. Emits `wox-sort` and `wox-row-click` events. Supports column alignment, sortable toggle, and smart numeric/string sorting.
+- Added to barrel export (`src/index.js`)
+- Demo sections in `demo/catalog.html` and `demo/showcase.html`
+- Documentation at `docs/wox-datagrid.md`, linked from `docs/index.md`
+
 ## 2026-03-05 — Comprehensive documentation
 
 ### Added

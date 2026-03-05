@@ -51,6 +51,12 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 | [wox-statusbar](./wox-statusbar.md) | Three-column bottom status bar |
 | [wox-modal](./wox-modal.md) | Dialog overlay with backdrop, escape key, and animations |
 
+### Data
+
+| Component | Description |
+|-----------|-------------|
+| [wox-datagrid](./wox-datagrid.md) | Sortable data grid with resizable columns and row selection |
+
 ---
 
 ## Architecture

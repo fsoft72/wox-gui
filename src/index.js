@@ -22,3 +22,4 @@ export { WoxPanel } from './wox-panel.js';
 export { WoxMenubar } from './wox-menubar.js';
 export { WoxStatusbar } from './wox-statusbar.js';
 export { WoxModal } from './wox-modal.js';
+export { WoxDatagrid } from './wox-datagrid.js';

@@ -263,6 +263,32 @@
         </wox-modal>
     </div>
 
+    <!-- DATAGRID -->
+    <h2>wox-datagrid</h2>
+    <div class="card wide">
+        <p class="label">Sortable, resizable columns (click headers to sort, drag borders to resize)</p>
+        <wox-datagrid id="demo-grid" style="margin-top: 8px; height: 220px;"></wox-datagrid>
+    </div>
+
+    <script type="module">
+        // Datagrid demo data
+        const grid = document.getElementById('demo-grid');
+        grid.columns = [
+            { key: 'name',   label: 'Name',   width: 180 },
+            { key: 'type',   label: 'Type',   width: 100 },
+            { key: 'size',   label: 'Size',   width: 80, align: 'right' },
+            { key: 'modified', label: 'Modified', width: 140 },
+        ];
+        grid.rows = [
+            { name: 'hero-banner.svg',  type: 'SVG',   size: 24,   modified: '2026-03-04' },
+            { name: 'logo.png',         type: 'Image', size: 1024, modified: '2026-02-28' },
+            { name: 'icons.svg',        type: 'SVG',   size: 48,   modified: '2026-03-01' },
+            { name: 'background.jpg',   type: 'Image', size: 3200, modified: '2026-01-15' },
+            { name: 'wireframe.svg',    type: 'SVG',   size: 12,   modified: '2026-03-05' },
+            { name: 'photo.png',        type: 'Image', size: 5800, modified: '2026-02-10' },
+        ];
+    </script>
+
     <script type="module">
         // Event logging
         const log = document.getElementById('event-log');
@@ -283,6 +309,8 @@
         document.addEventListener('wox-lock', (e) => logEvent('wox-lock', e.detail));
         document.addEventListener('wox-color-change', (e) => logEvent('wox-color-change', e.detail));
         document.addEventListener('wox-close', (e) => logEvent('wox-close', e.detail));
+        document.addEventListener('wox-sort', (e) => logEvent('wox-sort', e.detail));
+        document.addEventListener('wox-row-click', (e) => logEvent('wox-row-click', e.detail));
         document.addEventListener('wox-confirm', (e) => logEvent('wox-confirm', e.detail));
         document.addEventListener('wox-cancel', (e) => logEvent('wox-cancel', e.detail));
 
