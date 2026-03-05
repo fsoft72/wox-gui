@@ -21,6 +21,7 @@ Multi-variant button component supporting icon buttons, text buttons, tile butto
 | `size` | `string` | — | Size override in pixels |
 | `dash` | `string` | — | Dash pattern for `dash` variant (see below) |
 | `glow` | `boolean` | `false` | Enable animated neon glow effect (`tile` variant with `color`) |
+| `pulse` | `boolean` | `false` | Enable opacity pulse animation (`tile` variant). Composable with `glow`. |
 
 ---
 
@@ -84,6 +85,18 @@ When the `glow` attribute is present on a `tile` variant with a `color`, the but
 <wox-button variant="tile" icon="bolt" label="Energy" color="#4cc9f0" glow></wox-button>
 <wox-button variant="tile" icon="whatshot" label="Fire" color="#f72585" glow></wox-button>
 <wox-button variant="tile" icon="diamond" label="Premium" color="#7209b7" glow></wox-button>
+```
+
+#### Pulse Effect
+
+When the `pulse` attribute is present on a `tile` variant, the button's opacity cycles between 1.0 and 0.4 over a 1.5-second period. Useful for drawing attention to alerts, sync states, or pending actions.
+
+```html
+<!-- Standalone pulse -->
+<wox-button variant="tile" icon="notifications" label="Alert" color="#ffd600" pulse></wox-button>
+
+<!-- Combined with glow -->
+<wox-button variant="tile" icon="bolt" label="Power" color="#00e676" glow pulse></wox-button>
 ```
 
 ### `"dash"`

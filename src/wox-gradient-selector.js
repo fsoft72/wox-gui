@@ -37,10 +37,10 @@ const STYLES = `
     .label { flex: 1; font-size: var(--wox-font-size-lg, 13px); color: var(--wox-text-primary, #eee); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .chevron { font-size: 10px; color: var(--wox-text-secondary, #999); flex-shrink: 0; }
     .dropdown {
-        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        display: none; position: fixed;
         z-index: var(--wox-z-dropdown, 1000); background: var(--wox-bg-panel, #17171a);
-        border: 1px solid var(--wox-border, #333); border-top: none;
-        border-radius: 0 0 var(--wox-radius-sm, 3px) var(--wox-radius-sm, 3px);
+        border: 1px solid var(--wox-border, #333);
+        border-radius: var(--wox-radius-sm, 3px);
         box-shadow: var(--wox-shadow-md); max-height: 280px; overflow-y: auto;
     }
     .selector.open .dropdown { display: block; }
@@ -523,6 +523,40 @@ class WoxGradientSelector extends WoxElement {
         this._open = true;
         this.$('.selector').classList.add('open');
         this._populateDropdown();
+        this._positionDropdown();
+    };
+
+    /**
+     * Position the fixed dropdown relative to the trigger, flipping up if needed.
+     * @private
+     */
+    _positionDropdown = () => {
+        const current = this.$('.current');
+        const dropdown = this.$('.dropdown');
+        if ( ! current || ! dropdown ) return;
+
+        const rect = current.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        dropdown.style.left = `${rect.left}px`;
+        dropdown.style.width = `${rect.width}px`;
+
+        // Try below first
+        const spaceBelow = vh - rect.bottom;
+        const spaceAbove = rect.top;
+        const maxH = 280;
+
+        if ( spaceBelow >= maxH || spaceBelow >= spaceAbove ) {
+            // Place below
+            dropdown.style.top = `${rect.bottom}px`;
+            dropdown.style.bottom = '';
+            dropdown.style.maxHeight = `${Math.min(maxH, spaceBelow - 4)}px`;
+        } else {
+            // Place above
+            dropdown.style.top = '';
+            dropdown.style.bottom = `${vh - rect.top}px`;
+            dropdown.style.maxHeight = `${Math.min(maxH, spaceAbove - 4)}px`;
+        }
     };
 
     /**
