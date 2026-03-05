@@ -1,19 +1,15 @@
 # CHANGES.md
 
-## 2026-03-05 — Documentation for toast, context-menu, gradient components
+## 2026-03-05 — Toast, Context Menu & Gradient components
 
 ### Added
-- **`docs/wox-toast.md`**: Documentation for the toast notification component (static API, options, position codes, features, examples)
-- **`docs/wox-context-menu.md`**: Documentation for the context menu component (static API, item properties, features, examples)
-- **`docs/wox-gradient-editor.md`**: Documentation for the gradient editor component (gradient object shape, events, exported utility functions, interaction features, examples)
-- **`docs/wox-gradient-selector.md`**: Documentation for the gradient selector component (attributes, events, built-in presets, localStorage persistence, examples)
-- **`docs/index.md`**: Updated component count from 21 to 25; added gradient-editor, gradient-selector, context-menu under Composite; added Feedback section with wox-toast
-
-## 2026-03-05 — Demo sections for toast, context-menu, gradient components
-
-### Added
-- **Catalog demos** (`demo/catalog.html`): Added demo sections for `<wox-toast>`, `<wox-context-menu>`, `<wox-gradient-editor>`, and `<wox-gradient-selector>`. Includes interactive script block importing `WoxToast` and `WoxContextMenu` static APIs, and `wox-gradient-change` event logging.
-- **Showcase demos** (`demo/showcase.html`): Added 3 section cards (Toast Notifications, Context Menu, Gradient Editor & Selector) before the UI Patterns section. Includes interactive JS wiring for toast buttons, right-click context menu, and gradient editor initialization.
+- **`<wox-toast>`** (`src/wox-toast.js`): Toast notification system ported from wow3. Static API: `WoxToast.success/error/warning/info(message, options)`. Supports 4 types, 6 positions (TL/TC/TR/BL/BC/BR), auto-dismiss with progress bar, pause-on-hover, duplicate deduplication, slide+collapse animations. Dark-themed with `--wox-*` variables.
+- **`<wox-context-menu>`** (`src/wox-context-menu.js`): Right-click context menu ported from wow3. Static API: `WoxContextMenu.show(event, items)`. Supports labels, icons, shortcuts, dividers, disabled states. Singleton pattern, viewport clamping, Escape/outside-click to close.
+- **`<wox-gradient-editor>`** (`src/wox-gradient-editor.js`): Interactive gradient stop bar ported from wow3. Set gradient via JS property. Drag handles to reposition, double-click to add stops, drag 40px down to remove. Emits `wox-gradient-input` and `wox-gradient-change` events. Exports `gradientToCSS()` and `cssToGradient()` utility functions.
+- **`<wox-gradient-selector>`** (`src/wox-gradient-selector.js`): Full gradient picker ported from wow3. Dropdown with 6 built-in presets, solid color option, custom gradient editor dialog (via `<wox-modal>`). Type toggle (linear/radial), angle and speed sliders (via `<wox-slider>`), animation type selector. localStorage persistence for user-created gradients. Emits `wox-gradient-change`.
+- Added all 4 components to barrel export (`src/index.js`)
+- Demo sections in `demo/catalog.html` and `demo/showcase.html`
+- Documentation for all 4 components in `docs/`, updated `docs/index.md` (25 components)
 
 ## 2026-03-05 — Data grid component
 
