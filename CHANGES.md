@@ -1,5 +1,15 @@
 # CHANGES.md
 
+## 2026-03-05 — Comprehensive documentation
+
+### Added
+- **Documentation** (`docs/`): 24 Markdown files covering every component in the library:
+  - `index.md` — Component index with links to all docs
+  - `getting-started.md` — Setup, fonts, imports, minimal example, project structure
+  - `theming.md` — All CSS custom properties (colors, spacing, radius, typography, shadows, transitions, z-index)
+  - Individual docs for all 21 components: `wox-icon`, `wox-separator`, `wox-badge`, `wox-button`, `wox-input`, `wox-slider`, `wox-color-swatch`, `wox-tooltip`, `wox-color-picker`, `wox-menu-item`, `wox-menu`, `wox-layer-item`, `wox-section`, `wox-tab`, `wox-tabs`, `wox-toolbar-group`, `wox-toolbar`, `wox-panel`, `wox-menubar`, `wox-statusbar`, `wox-modal`
+  - Each component doc details all properties, events, slots, features, and code examples
+
 ## 2026-03-05 — Glow buttons & super showcase
 
 ### Added
