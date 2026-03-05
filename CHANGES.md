@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-05 — Demo sections for toast, context-menu, gradient components
+
+### Added
+- **Catalog demos** (`demo/catalog.html`): Added demo sections for `<wox-toast>`, `<wox-context-menu>`, `<wox-gradient-editor>`, and `<wox-gradient-selector>`. Includes interactive script block importing `WoxToast` and `WoxContextMenu` static APIs, and `wox-gradient-change` event logging.
+
 ## 2026-03-05 — Data grid component
 
 ### Added

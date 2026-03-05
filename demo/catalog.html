@@ -289,6 +289,73 @@
         ];
     </script>
 
+    <!-- TOASTS -->
+    <h2>wox-toast</h2>
+    <div class="card">
+        <p class="label">Click buttons to trigger toasts (static API)</p>
+        <div class="row" style="margin-top: 8px;">
+            <wox-button variant="text" label="Success" id="toast-success"></wox-button>
+            <wox-button variant="text" label="Error" id="toast-error"></wox-button>
+            <wox-button variant="text" label="Warning" id="toast-warning"></wox-button>
+            <wox-button variant="text" label="Info" id="toast-info"></wox-button>
+        </div>
+    </div>
+
+    <!-- CONTEXT MENU -->
+    <h2>wox-context-menu</h2>
+    <div class="card" id="ctx-menu-area" style="min-height: 80px; display: flex; align-items: center; justify-content: center;">
+        <p class="label">Right-click anywhere in this card</p>
+    </div>
+
+    <!-- GRADIENT EDITOR -->
+    <h2>wox-gradient-editor</h2>
+    <div class="card" style="max-width: 400px;">
+        <p class="label">Drag handles, double-click to add, drag down to remove</p>
+        <wox-gradient-editor id="demo-grad-editor" style="margin-top: 8px;"></wox-gradient-editor>
+    </div>
+
+    <!-- GRADIENT SELECTOR -->
+    <h2>wox-gradient-selector</h2>
+    <div class="card" style="max-width: 300px;">
+        <p class="label">Full gradient picker with presets</p>
+        <wox-gradient-selector id="demo-grad-selector" value="#4cc9f0" style="margin-top: 8px;"></wox-gradient-selector>
+    </div>
+
+    <script type="module">
+        import { WoxToast, WoxContextMenu } from '../src/index.js';
+
+        // Toast demos
+        document.getElementById('toast-success').addEventListener('wox-click', () => WoxToast.success('File saved successfully'));
+        document.getElementById('toast-error').addEventListener('wox-click', () => WoxToast.error('Failed to load resource'));
+        document.getElementById('toast-warning').addEventListener('wox-click', () => WoxToast.warning('Unsaved changes will be lost'));
+        document.getElementById('toast-info').addEventListener('wox-click', () => WoxToast.info('New version available'));
+
+        // Context menu demo
+        document.getElementById('ctx-menu-area').addEventListener('contextmenu', (e) => {
+            WoxContextMenu.show(e, [
+                { label: 'Cut', shortcut: 'Ctrl+X', icon: 'content_cut', action: () => console.log('Cut') },
+                { label: 'Copy', shortcut: 'Ctrl+C', icon: 'content_copy', action: () => console.log('Copy') },
+                { label: 'Paste', shortcut: 'Ctrl+V', icon: 'content_paste', action: () => console.log('Paste') },
+                { divider: true },
+                { label: 'Select All', shortcut: 'Ctrl+A', action: () => console.log('Select All') },
+                { label: 'Disabled Item', disabled: true },
+            ]);
+        });
+
+        // Gradient editor demo
+        const gradEditor = document.getElementById('demo-grad-editor');
+        gradEditor.gradient = {
+            type: 'linear', angle: 135,
+            stops: [
+                { color: '#ff512f', position: 0 },
+                { color: '#f09819', position: 50 },
+                { color: '#dd2476', position: 100 }
+            ]
+        };
+
+        // Gradient selector demo — no special setup needed, defaults work
+    </script>
+
     <script type="module">
         // Event logging
         const log = document.getElementById('event-log');
@@ -313,6 +380,7 @@
         document.addEventListener('wox-row-click', (e) => logEvent('wox-row-click', e.detail));
         document.addEventListener('wox-confirm', (e) => logEvent('wox-confirm', e.detail));
         document.addEventListener('wox-cancel', (e) => logEvent('wox-cancel', e.detail));
+        document.addEventListener('wox-gradient-change', (e) => logEvent('wox-gradient-change', e.detail));
 
         // Color picker toggle
         const pickerTrigger = document.getElementById('picker-trigger');
