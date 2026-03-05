@@ -1,5 +1,25 @@
 # CHANGES.md
 
+## 2026-03-05 — Extract glow/pulse FX into shared module
+
+### Added
+- **`src/wox-fx.js`**: New shared module exporting `FX_STYLES` — glow and pulse CSS effects using `--wox-fx-color` variable. Any WOX component can import and append these styles to gain `.glow` and `.pulse` class support.
+- Exported `FX_STYLES` from barrel file (`src/index.js`)
+
+### Changed
+- **`<wox-button>`**: Glow/pulse CSS extracted into `wox-fx.js`. Internal variable renamed from `--btn-color` to `--wox-fx-color` for consistency with the shared module. No API changes — `glow`, `pulse`, and `color` attributes work exactly as before.
+
+## 2026-03-05 — Pulse style, input alignment, tooltip & dropdown fixes
+
+### Added
+- **`<wox-button>`**: New `pulse` boolean attribute — opacity pulse animation (1.0 to 0.4, 1.5s cycle). Works standalone or combined with `glow` for glow+pulse effect.
+- Pulse examples added to `demo/showcase.html` (standalone, combined with glow)
+
+### Fixed
+- **`<wox-input>`**: Numeric inputs now right-align text
+- **`<wox-tooltip>`**: Switched to `position: fixed` with viewport-aware positioning — tooltips no longer get clipped by container overflow. Preferred placement is respected but auto-flips when near edges.
+- **`<wox-gradient-selector>`**: Dropdown switched to `position: fixed` with dynamic positioning — no longer clipped by parent containers. Auto-flips above trigger when insufficient space below.
+
 ## 2026-03-05 — Toast, Context Menu & Gradient components
 
 ### Added

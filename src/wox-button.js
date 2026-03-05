@@ -1,6 +1,7 @@
 // wox-button.js — Multi-variant button component (icon, text, tile, dash)
 
 import { WoxElement } from './wox-base.js';
+import { FX_STYLES } from './wox-fx.js';
 
 const STYLES = `
     :host { display: inline-block; }
@@ -37,31 +38,13 @@ const STYLES = `
     button.v-tile.delete:hover { border-color: var(--wox-danger, #f72585); color: var(--wox-danger, #f72585); background: rgba(247, 37, 133, 0.05); }
 
     /* tile with custom color accent */
-    button.v-tile[data-color] { --btn-color: var(--wox-text-secondary, #999); }
+    button.v-tile[data-color] { --wox-fx-color: var(--wox-text-secondary, #999); }
     button.v-tile[data-color]:hover {
-        background: color-mix(in srgb, var(--btn-color), transparent 92%);
-        border-color: var(--btn-color); color: var(--btn-color);
-        box-shadow: 0 0 15px color-mix(in srgb, var(--btn-color), transparent 80%);
+        background: color-mix(in srgb, var(--wox-fx-color), transparent 92%);
+        border-color: var(--wox-fx-color); color: var(--wox-fx-color);
+        box-shadow: 0 0 15px color-mix(in srgb, var(--wox-fx-color), transparent 80%);
     }
-    button.v-tile[data-color]:hover svg { filter: drop-shadow(0 0 4px var(--btn-color)); }
-
-    /* glow: active tile with color = full neon glow */
-    button.v-tile.glow {
-        border-color: var(--btn-color); color: var(--btn-color);
-        background: color-mix(in srgb, var(--btn-color), transparent 90%);
-        box-shadow: 0 0 20px color-mix(in srgb, var(--btn-color), transparent 60%),
-                    0 0 40px color-mix(in srgb, var(--btn-color), transparent 85%),
-                    inset 0 0 15px color-mix(in srgb, var(--btn-color), transparent 90%);
-        animation: glow-pulse 2s ease-in-out infinite alternate;
-    }
-    button.v-tile.glow svg, button.v-tile.glow .material-icons {
-        filter: drop-shadow(0 0 6px var(--btn-color)); opacity: 1;
-    }
-    button.v-tile.glow span { text-shadow: 0 0 8px var(--btn-color); }
-    @keyframes glow-pulse {
-        from { box-shadow: 0 0 15px color-mix(in srgb, var(--btn-color), transparent 65%), 0 0 30px color-mix(in srgb, var(--btn-color), transparent 88%), inset 0 0 12px color-mix(in srgb, var(--btn-color), transparent 92%); }
-        to   { box-shadow: 0 0 25px color-mix(in srgb, var(--btn-color), transparent 50%), 0 0 50px color-mix(in srgb, var(--btn-color), transparent 80%), inset 0 0 20px color-mix(in srgb, var(--btn-color), transparent 88%); }
-    }
+    button.v-tile[data-color]:hover svg { filter: drop-shadow(0 0 4px var(--wox-fx-color)); }
 
     /* dash variant */
     button.v-dash {
@@ -98,10 +81,11 @@ const STYLES = `
  * @attr {string}  size     - Size override
  * @attr {string}  dash     - Dash pattern: "solid", "dotted", "dashed", "longdash", "dotdash", "zigzag"
  * @attr {boolean} glow     - Enable neon glow effect (requires color)
+ * @attr {boolean} pulse    - Enable opacity pulse animation (composable with glow)
  * @fires wox-click - Emitted on click with no detail
  */
 class WoxButton extends WoxElement {
-    static observedAttributes = ['variant', 'icon', 'label', 'active', 'disabled', 'color', 'size', 'dash', 'glow'];
+    static observedAttributes = ['variant', 'icon', 'label', 'active', 'disabled', 'color', 'size', 'dash', 'glow', 'pulse'];
 
     connectedCallback() {
         this._render();
@@ -121,8 +105,9 @@ class WoxButton extends WoxElement {
         const dash = this.getAttribute('dash') || 'solid';
         const color = this.getAttribute('color') || '';
         const glow = this.hasAttribute('glow');
+        const pulse = this.hasAttribute('pulse');
 
-        const classes = [`v-${variant}`, active ? 'active' : '', glow ? 'glow' : ''].filter(Boolean).join(' ');
+        const classes = [`v-${variant}`, active ? 'active' : '', glow ? 'glow' : '', pulse ? 'pulse' : ''].filter(Boolean).join(' ');
         let content = '';
 
         if (variant === 'icon') {
@@ -136,9 +121,9 @@ class WoxButton extends WoxElement {
             content = `<div class="dash-line${dashClass}"></div>`;
         }
 
-        const colorAttr = color ? ` data-color style="--btn-color:${color}"` : '';
+        const colorAttr = color ? ` data-color style="--wox-fx-color:${color}"` : '';
 
-        this.render(STYLES,
+        this.render(STYLES + FX_STYLES,
             `<button class="${classes}"${colorAttr} ${disabled ? 'disabled' : ''}>${content}</button>`
         );
 

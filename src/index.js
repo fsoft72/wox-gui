@@ -1,6 +1,7 @@
 // index.js — Barrel file: imports and re-exports all WOX components
 
 export { WoxElement } from './wox-base.js';
+export { FX_STYLES } from './wox-fx.js';
 export { WoxIcon } from './wox-icon.js';
 export { WoxSeparator } from './wox-separator.js';
 export { WoxBadge } from './wox-badge.js';
