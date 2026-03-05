@@ -16,6 +16,9 @@ A dialog overlay component with backdrop, scale-in animation, escape-to-close, a
 | `title` | `string` | — | Dialog title text |
 | `closable` | `boolean` | `true` | Show the close (x) button in the top-right corner (presence attribute) |
 | `width` | `string` | `"400px"` | Maximum width of the dialog |
+| `color` | `string` | — | Custom color for glow/pulse border effects |
+| `glow` | `boolean` | `false` | Enable neon glow on the dialog box |
+| `pulse` | `boolean` | `false` | Enable opacity pulse on the dialog. Composable with `glow`. |
 
 ---
 
@@ -59,6 +62,24 @@ Clicking outside the dialog (on the backdrop) closes the modal.
 ### Default footer
 
 If no `footer` slot content is provided, the modal renders default **Cancel** and **OK** buttons.
+
+---
+
+### Glow & Pulse Effects
+
+When `glow` is present with a `color`, the dialog box renders with an animated neon glow border. `pulse` adds an opacity pulse.
+
+```html
+<!-- Neon glow dialog -->
+<wox-modal open title="Neon Dialog" color="#4cc9f0" glow>
+    <p>This dialog has a glowing border.</p>
+</wox-modal>
+
+<!-- Glow + Pulse -->
+<wox-modal open title="Alert" color="#f72585" glow pulse>
+    <p>Critical warning with animated border.</p>
+</wox-modal>
+```
 
 ---
 

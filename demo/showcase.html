@@ -249,6 +249,20 @@
                         <wox-button variant="tile" icon="ac_unit" label="Freeze" color="#00bcd4" glow></wox-button>
                         <wox-button variant="tile" icon="favorite" label="Love" color="#e91e63" glow></wox-button>
                     </div>
+
+                    <p class="label-sm mt-12 mb-8">Pulse (opacity animation, standalone)</p>
+                    <div class="glow-gallery">
+                        <wox-button variant="tile" icon="notifications" label="Alert" color="#ffd600" pulse></wox-button>
+                        <wox-button variant="tile" icon="sync" label="Syncing" color="#00e676" pulse></wox-button>
+                        <wox-button variant="tile" icon="warning" label="Warn" color="#ff5722" pulse></wox-button>
+                    </div>
+
+                    <p class="label-sm mt-12 mb-8">Glow + Pulse combined</p>
+                    <div class="glow-gallery">
+                        <wox-button variant="tile" icon="auto_fix_high" label="Magic" color="#ffd600" glow pulse></wox-button>
+                        <wox-button variant="tile" icon="bolt" label="Power" color="#00e676" glow pulse></wox-button>
+                        <wox-button variant="tile" icon="favorite" label="Love" color="#e91e63" glow pulse></wox-button>
+                    </div>
                 </div>
             </div>
 
@@ -276,6 +290,14 @@
                         <wox-icon name="palette" size="24"></wox-icon>
                         <wox-icon name="tune" size="24"></wox-icon>
                         <wox-icon name="settings" size="24"></wox-icon>
+                    </div>
+                    <p class="label-sm mt-12 mb-8">Icon glow &amp; pulse effects</p>
+                    <div class="glow-gallery">
+                        <wox-icon name="auto_awesome" size="28" color="#ffd600" glow></wox-icon>
+                        <wox-icon name="bolt" size="28" color="#00e676" glow></wox-icon>
+                        <wox-icon name="favorite" size="28" color="#e91e63" glow></wox-icon>
+                        <wox-icon name="notifications" size="28" color="#ff5722" glow pulse></wox-icon>
+                        <wox-icon name="sync" size="28" color="#4cc9f0" pulse></wox-icon>
                     </div>
                     <p class="label-sm mb-8">Badges — Dot / Diamond / Text</p>
                     <div class="row">
@@ -372,6 +394,12 @@
                         <wox-slider label="FEATHER" value="3" min="0" max="20" step="0.1" show-value></wox-slider>
                         <wox-slider label="SPREAD" value="0.5" min="0" max="1" step="0.01" unit="%" show-value></wox-slider>
                     </div>
+                    <p class="label-sm mt-12 mb-8">Slider glow &amp; pulse effects</p>
+                    <div class="col" style="max-width: 400px; gap: 12px;">
+                        <wox-slider label="ENERGY" value="75" min="0" max="100" step="1" show-value color="#00e676" glow></wox-slider>
+                        <wox-slider label="HEAT" value="50" min="0" max="100" step="1" show-value color="#f72585" glow pulse></wox-slider>
+                        <wox-slider label="SYNC" value="30" min="0" max="100" step="1" show-value color="#4cc9f0" pulse></wox-slider>
+                    </div>
                 </div>
             </div>
 
@@ -419,6 +447,14 @@
                         <wox-color-swatch color="rgba(0, 229, 255, 0.4)" size="28"></wox-color-swatch>
                         <wox-color-swatch color="rgba(0, 229, 255, 0.2)" size="28"></wox-color-swatch>
                         <wox-color-swatch color="transparent" size="28"></wox-color-swatch>
+                    </div>
+                    <p class="label-sm mt-12 mb-8">Glow swatches</p>
+                    <div class="palette">
+                        <wox-color-swatch color="#00e5ff" size="32" glow></wox-color-swatch>
+                        <wox-color-swatch color="#f72585" size="32" glow></wox-color-swatch>
+                        <wox-color-swatch color="#ffd600" size="32" glow></wox-color-swatch>
+                        <wox-color-swatch color="#7209b7" size="32" glow pulse></wox-color-swatch>
+                        <wox-color-swatch color="#00e676" size="32" pulse></wox-color-swatch>
                     </div>
                 </div>
             </div>
@@ -663,6 +699,7 @@
                     <div class="row">
                         <wox-button variant="text" label="Confirm Delete" id="modal-delete-trigger"></wox-button>
                         <wox-button variant="text" label="Export Options" id="modal-export-trigger"></wox-button>
+                        <wox-button variant="text" label="Glow Modal" id="modal-glow-trigger"></wox-button>
                     </div>
                     <wox-modal id="modal-delete" title="Delete Object?">
                         <p>This will permanently remove <strong>Rectangle 1</strong> from the canvas. This action cannot be undone.</p>
@@ -676,6 +713,9 @@
                             </div>
                             <wox-slider label="QUALITY" value="0.9" min="0" max="1" step="0.05" unit="%" show-value></wox-slider>
                         </div>
+                    </wox-modal>
+                    <wox-modal id="modal-glow" title="Neon Dialog" color="#4cc9f0" glow>
+                        <p>This modal has a neon glow border effect using the shared FX system.</p>
                     </wox-modal>
                 </div>
             </div>
@@ -901,6 +941,10 @@
     });
     document.getElementById('modal-export-trigger').addEventListener('wox-click', () => {
         document.getElementById('modal-export').setAttribute('open', '');
+    });
+
+    document.getElementById('modal-glow-trigger')?.addEventListener('click', () => {
+        document.getElementById('modal-glow')?.setAttribute('open', '');
     });
 
     // ── Boolean toggle glow on click ──

@@ -14,6 +14,9 @@ Material Icons wrapper component. Renders icons by ligature name with configurab
 |-----------|------|---------|-------------|
 | `name` | `string` | — | Material Icons ligature name (e.g. `"near_me"`, `"layers"`, `"delete"`) |
 | `size` | `string \| number` | `18` | Icon size in pixels |
+| `color` | `string` | — | Custom color for glow/pulse effects |
+| `glow` | `boolean` | `false` | Enable neon glow effect (requires `color`) |
+| `pulse` | `boolean` | `false` | Enable opacity pulse animation. Composable with `glow`. |
 
 ---
 
@@ -59,6 +62,27 @@ None.
         <circle cx="12" cy="12" r="10" fill="currentColor"/>
     </svg>
 </wox-icon>
+```
+
+---
+
+### Glow & Pulse Effects
+
+When `glow` and/or `pulse` attributes are present alongside a `color`, the icon renders with animated visual effects:
+
+- **Glow**: neon box-shadow and drop-shadow on the icon
+- **Pulse**: opacity cycles between 1.0 and 0.4
+- **Combined**: both effects applied simultaneously
+
+```html
+<!-- Glow icon -->
+<wox-icon name="auto_awesome" size="28" color="#ffd600" glow></wox-icon>
+
+<!-- Pulse icon -->
+<wox-icon name="sync" size="28" color="#4cc9f0" pulse></wox-icon>
+
+<!-- Glow + Pulse -->
+<wox-icon name="notifications" size="28" color="#ff5722" glow pulse></wox-icon>
 ```
 
 ---

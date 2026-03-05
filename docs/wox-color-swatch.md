@@ -15,6 +15,8 @@ A clickable color preview square with alpha channel support via a checkerboard b
 | `color` | `string` | `"transparent"` | CSS color value (hex, rgb, rgba, named colors) |
 | `size` | `string` | `"24"` | Size in pixels (renders as a square) |
 | `selected` | `boolean` | `false` | Selected / active state with highlight border (presence attribute) |
+| `glow` | `boolean` | `false` | Enable neon glow using the swatch's own color |
+| `pulse` | `boolean` | `false` | Enable opacity pulse animation. Composable with `glow`. |
 
 ---
 
@@ -39,6 +41,23 @@ When `selected` is set, the swatch displays a white border and a subtle accent g
 ### Hover effect
 
 Swatches scale slightly on hover and show a border highlight.
+
+---
+
+### Glow & Pulse Effects
+
+When `glow` is present, the swatch glows using its own `color` value — no separate FX color needed.
+
+```html
+<!-- Glowing swatch -->
+<wox-color-swatch color="#00e5ff" size="32" glow></wox-color-swatch>
+
+<!-- Glow + Pulse -->
+<wox-color-swatch color="#7209b7" size="32" glow pulse></wox-color-swatch>
+
+<!-- Pulse only -->
+<wox-color-swatch color="#00e676" size="32" pulse></wox-color-swatch>
+```
 
 ---
 

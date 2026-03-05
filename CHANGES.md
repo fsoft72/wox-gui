@@ -1,5 +1,15 @@
 # CHANGES.md
 
+## 2026-03-05 — Expand glow/pulse FX to icon, slider, swatch, modal
+
+### Added
+- **`<wox-icon>`**: New `color`, `glow`, `pulse` attributes — neon glow and opacity pulse effects with custom color.
+- **`<wox-slider>`**: New `color`, `glow`, `pulse` attributes — custom accent color for fill track, neon glow on thumb, opacity pulse.
+- **`<wox-color-swatch>`**: New `glow`, `pulse` attributes — glow uses the swatch's own color automatically.
+- **`<wox-modal>`**: New `color`, `glow`, `pulse` attributes — neon glow border on dialog box.
+- Showcase examples for all 4 components with glow, pulse, and combined effects.
+- Documentation updates for all 4 components.
+
 ## 2026-03-05 — Extract glow/pulse FX into shared module
 
 ### Added

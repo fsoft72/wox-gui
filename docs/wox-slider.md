@@ -19,6 +19,9 @@ Custom range slider with accent-colored fill track, optional label, and numeric 
 | `label` | `string` | — | Label text on the left |
 | `unit` | `string` | — | Unit suffix for value display (e.g. `"%"`) |
 | `show-value` | `boolean` | `false` | Show numeric value on the right (presence attribute) |
+| `color` | `string` | — | Custom accent color for fill track and FX effects |
+| `glow` | `boolean` | `false` | Enable neon glow on the slider thumb |
+| `pulse` | `boolean` | `false` | Enable opacity pulse on the thumb. Composable with `glow`. |
 
 ---
 
@@ -42,6 +45,23 @@ The slider renders a custom track with an accent-colored fill indicating the cur
 - Integer steps: values are rounded to whole numbers
 - Float steps (e.g. `step="0.01"`): values display with 2 decimal places
 - Percentage unit: `unit="%"` appends `%` to the displayed value
+
+---
+
+### Glow & Pulse Effects
+
+When `glow` and/or `pulse` attributes are present, the slider thumb renders with animated effects. The `color` attribute also tints the fill track.
+
+```html
+<!-- Glowing thumb with custom color -->
+<wox-slider label="ENERGY" value="75" color="#00e676" glow show-value></wox-slider>
+
+<!-- Glow + Pulse -->
+<wox-slider label="HEAT" value="50" color="#f72585" glow pulse show-value></wox-slider>
+
+<!-- Pulse only -->
+<wox-slider label="SYNC" value="30" color="#4cc9f0" pulse show-value></wox-slider>
+```
 
 ---
 
