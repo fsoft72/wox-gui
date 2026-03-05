@@ -1,6 +1,7 @@
 // wox-modal.js — Dialog with backdrop, focus trap, and escape-to-close
 
 import { WoxElement } from './wox-base.js';
+import { FX_STYLES } from './wox-fx.js';
 
 const STYLES = `
     :host { display: none; }
@@ -46,6 +47,9 @@ const STYLES = `
  * @attr {string}  title    - Modal title
  * @attr {boolean} closable - Show close button (default true via presence)
  * @attr {string}  width    - Max width (default "400px")
+ * @attr {string}  color    - FX color for glow/pulse effects (CSS color value)
+ * @attr {boolean} glow     - Enable neon glow effect
+ * @attr {boolean} pulse    - Enable pulse animation effect
  * @slot default - Modal body content
  * @slot footer  - Footer buttons (if not provided, default Cancel/OK shown)
  * @fires wox-close   - When closed via X or backdrop
@@ -53,7 +57,7 @@ const STYLES = `
  * @fires wox-cancel  - When Cancel clicked
  */
 class WoxModal extends WoxElement {
-    static observedAttributes = ['open', 'title', 'closable', 'width'];
+    static observedAttributes = ['open', 'title', 'closable', 'width', 'color', 'glow', 'pulse'];
 
     connectedCallback() {
         this._render();
@@ -77,10 +81,15 @@ class WoxModal extends WoxElement {
         const title = this.getAttribute('title') || '';
         const closable = !this.hasAttribute('closable') || this.getAttribute('closable') !== 'false';
         const width = this.getAttribute('width') || '400px';
+        const color = this.getAttribute('color') || '';
+        const glow = this.hasAttribute('glow');
+        const pulse = this.hasAttribute('pulse');
+        const fxClasses = [glow ? 'glow' : '', pulse ? 'pulse' : ''].filter(Boolean).join(' ');
+        const fxStyle = color ? ` style="--wox-fx-color:${color}"` : '';
 
-        this.render(`${STYLES} .box { --width: ${width}; }`, `
+        this.render(`${STYLES} ${FX_STYLES} .box { --width: ${width}; }`, `
             <div class="overlay">
-                <div class="box">
+                <div class="box ${fxClasses}"${fxStyle}>
                     <div class="header">
                         <span class="title">${title}</span>
                         ${closable ? '<button class="close-btn">&#x2715;</button>' : ''}
