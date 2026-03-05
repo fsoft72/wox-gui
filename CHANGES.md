@@ -4,6 +4,7 @@
 
 ### Added
 - **Catalog demos** (`demo/catalog.html`): Added demo sections for `<wox-toast>`, `<wox-context-menu>`, `<wox-gradient-editor>`, and `<wox-gradient-selector>`. Includes interactive script block importing `WoxToast` and `WoxContextMenu` static APIs, and `wox-gradient-change` event logging.
+- **Showcase demos** (`demo/showcase.html`): Added 3 section cards (Toast Notifications, Context Menu, Gradient Editor & Selector) before the UI Patterns section. Includes interactive JS wiring for toast buttons, right-click context menu, and gradient editor initialization.
 
 ## 2026-03-05 — Data grid component
 
