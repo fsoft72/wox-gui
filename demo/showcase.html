@@ -545,6 +545,56 @@
                 </div>
             </div>
 
+            <!-- Toast Notifications -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Toast Notifications</h3>
+                </div>
+                <div class="section-card-body">
+                    <div class="row">
+                        <wox-button variant="tile" icon="check_circle" label="Success" id="sc-toast-success"></wox-button>
+                        <wox-button variant="tile" icon="error" label="Error" id="sc-toast-error"></wox-button>
+                        <wox-button variant="tile" icon="warning" label="Warning" id="sc-toast-warn"></wox-button>
+                        <wox-button variant="tile" icon="info" label="Info" id="sc-toast-info"></wox-button>
+                    </div>
+                    <p style="margin-top: 8px; font-size: 10px; color: var(--wox-text-secondary);">
+                        Toasts auto-dismiss after 4s. Hover to pause. Duplicate messages are deduplicated.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Context Menu -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Context Menu</h3>
+                </div>
+                <div class="section-card-body" id="sc-ctx-area" style="min-height: 60px; display: flex; align-items: center;">
+                    <span style="color: var(--wox-text-secondary); font-size: 11px;">Right-click in this area to test the context menu</span>
+                </div>
+            </div>
+
+            <!-- Gradient Editor & Selector -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Gradient Editor &amp; Selector</h3>
+                </div>
+                <div class="section-card-body">
+                    <div class="grid-2">
+                        <div>
+                            <p class="label" style="margin-bottom: 8px;">Gradient Editor</p>
+                            <wox-gradient-editor id="sc-grad-editor"></wox-gradient-editor>
+                        </div>
+                        <div>
+                            <p class="label" style="margin-bottom: 8px;">Gradient Selector</p>
+                            <wox-gradient-selector id="sc-grad-selector" value="linear-gradient(135deg, #ff512f 0%, #f09819 100%)"></wox-gradient-selector>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ─── UI PATTERNS ─── -->
             <div class="section-card">
                 <div class="section-card-header">
@@ -864,6 +914,38 @@
             }
         });
     });
+
+    // ── Toast demos ──
+    import { WoxToast, WoxContextMenu } from '../src/index.js';
+
+    document.getElementById('sc-toast-success').addEventListener('wox-click', () => WoxToast.success('Operation completed'));
+    document.getElementById('sc-toast-error').addEventListener('wox-click', () => WoxToast.error('Connection failed'));
+    document.getElementById('sc-toast-warn').addEventListener('wox-click', () => WoxToast.warning('Disk space low'));
+    document.getElementById('sc-toast-info').addEventListener('wox-click', () => WoxToast.info('Update available'));
+
+    // ── Context menu ──
+    document.getElementById('sc-ctx-area').addEventListener('contextmenu', (e) => {
+        WoxContextMenu.show(e, [
+            { label: 'Undo', shortcut: 'Ctrl+Z', icon: 'undo', action: () => {} },
+            { label: 'Redo', shortcut: 'Ctrl+Y', icon: 'redo', action: () => {} },
+            { divider: true },
+            { label: 'Cut', shortcut: 'Ctrl+X', action: () => {} },
+            { label: 'Copy', shortcut: 'Ctrl+C', action: () => {} },
+            { label: 'Paste', shortcut: 'Ctrl+V', action: () => {} },
+            { divider: true },
+            { label: 'Delete', icon: 'delete', disabled: true },
+        ]);
+    });
+
+    // ── Gradient editor ──
+    const scGradEditor = document.getElementById('sc-grad-editor');
+    scGradEditor.gradient = {
+        type: 'linear', angle: 90,
+        stops: [
+            { color: '#2193b0', position: 0 },
+            { color: '#6dd5ed', position: 100 }
+        ]
+    };
 </script>
 </body>
 </html>
