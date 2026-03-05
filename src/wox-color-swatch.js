@@ -1,6 +1,7 @@
 // wox-color-swatch.js — Clickable color square with checkerboard for alpha
 
 import { WoxElement } from './wox-base.js';
+import { FX_STYLES } from './wox-fx.js';
 
 const STYLES = `
     :host { display: inline-block; }
@@ -26,10 +27,12 @@ const STYLES = `
  * @attr {string}  color    - CSS color value (default "transparent")
  * @attr {string}  size     - Size in px (default "24")
  * @attr {boolean} selected - Selected/active state (presence attr)
+ * @attr {boolean} glow     - Enable neon glow effect using swatch color
+ * @attr {boolean} pulse    - Enable opacity pulse animation
  * @fires wox-click - On click, detail: { color }
  */
 class WoxColorSwatch extends WoxElement {
-    static observedAttributes = ['color', 'size', 'selected'];
+    static observedAttributes = ['color', 'size', 'selected', 'glow', 'pulse'];
 
     connectedCallback() {
         this._render();
@@ -44,10 +47,14 @@ class WoxColorSwatch extends WoxElement {
         const color = this.getAttribute('color') || 'transparent';
         const size = this.getAttribute('size') || '24';
         const selected = this.hasAttribute('selected');
+        const glow = this.hasAttribute('glow');
+        const pulse = this.hasAttribute('pulse');
+        const fxClasses = [selected ? 'selected' : '', glow ? 'glow' : '', pulse ? 'pulse' : ''].filter(Boolean).join(' ');
+        const fxStyle = (glow || pulse) ? ` style="--wox-fx-color:${color}"` : '';
 
         this.render(
-            `${STYLES} :host { --size: ${size}px; }`,
-            `<div class="swatch ${selected ? 'selected' : ''}">
+            `${STYLES} ${FX_STYLES} :host { --size: ${size}px; }`,
+            `<div class="swatch ${fxClasses}"${fxStyle}>
                 <div class="checker"></div>
                 <div class="color" style="background:${color}"></div>
             </div>`
