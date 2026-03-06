@@ -45,6 +45,9 @@ const STYLES = `
         background: var(--wox-accent, #00e5ff);
     }
 
+    .header-cell.dragging { opacity: 0.4; background: var(--wox-bg-hover, #2a2a2e); }
+    .header-cell.drag-over { border-left: 2px solid var(--wox-accent, #00e5ff); }
+
     /* ── Body ── */
     .body {
         flex: 1; overflow-y: auto; overflow-x: hidden;
@@ -71,6 +74,11 @@ const STYLES = `
     }
     .cell.align-right  { justify-content: flex-end; }
     .cell.align-center { justify-content: center; }
+    
+    .cell-input {
+        width: 100%; height: 24px; background: #222; border: 1px solid var(--wox-accent, #00e5ff);
+        color: #fff; padding: 2px 4px; border-radius: 4px; font-size: 11px; outline: none;
+    }
 
     /* ── Empty state ── */
     .empty {
@@ -104,6 +112,8 @@ class WoxDatagrid extends WoxElement {
     _sortDir = 'asc';
     /** @private */
     _colWidths = [];
+    /** @private */
+    _editingCell = null; // { rowIndex: number, key: string }
 
     connectedCallback() {
         this._render();
@@ -160,9 +170,9 @@ class WoxDatagrid extends WoxElement {
 
         const headerCells = this._columns.map((col, i) => {
             const isSorted = this._sortKey === col.key;
-            const cls = ['header-cell', isSorted ? 'sorted' : '', isSorted && this._sortDir === 'desc' ? 'desc' : ''].filter(Boolean).join(' ');
+            const cls = [isSorted ? 'sorted' : '', isSorted && this._sortDir === 'desc' ? 'desc' : ''].filter(Boolean).join(' ');
             const sortable = col.sortable !== false;
-            return `<div class="${cls}" data-col="${i}" style="width:${this._colWidths[i]}px">
+            return `<div class="header-cell ${cls}" data-col="${i}" style="width:${this._colWidths[i]}px" draggable="true">
                 <span class="label-text">${col.label || col.key}</span>
                 ${sortable ? '<span class="sort-arrow">&#9650;</span>' : ''}
                 <div class="resize-handle" data-col="${i}"></div>
@@ -175,8 +185,16 @@ class WoxDatagrid extends WoxElement {
                 const parity = ri % 2 === 0 ? 'even' : 'odd';
                 const cells = this._columns.map((col, ci) => {
                     const align = col.align ? ` align-${col.align}` : '';
+                    const isEditing = this._editingCell && this._editingCell.rowIndex === ri && this._editingCell.key === col.key;
                     const val = row[col.key] != null ? row[col.key] : '';
-                    return `<div class="cell${align}" style="width:${this._colWidths[ci]}px">${val}</div>`;
+
+                    if (isEditing) {
+                        return `<div class="cell${align}" style="width:${this._colWidths[ci]}px" data-key="${col.key}">
+                            <input class="cell-input" spellcheck="false">
+                        </div>`;
+                    }
+
+                    return `<div class="cell${align}" style="width:${this._colWidths[ci]}px" data-key="${col.key}">${val}</div>`;
                 }).join('');
                 return `<div class="row ${parity}" data-row="${ri}">${cells}</div>`;
             }).join('');
@@ -189,6 +207,59 @@ class WoxDatagrid extends WoxElement {
         `);
 
         this._bindEvents();
+
+        if (this._editingCell) {
+            const input = this.$('.cell-input');
+            if (input) {
+                const { rowIndex, key } = this._editingCell;
+                const sorted = this._getSortedRows();
+                let originalVal = sorted[rowIndex][key] != null ? sorted[rowIndex][key] : '';
+
+                // Strip HTML if present for clean editing
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = originalVal;
+                const cleanVal = tempDiv.textContent || tempDiv.innerText || originalVal;
+
+                input.value = cleanVal;
+                input.dataset.oldValue = cleanVal; // Store the clean version for easier comparison and matching in the app
+
+                input.focus();
+                input.select();
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        this._commitEdit(input.value);
+                    } else if (e.key === 'Escape') {
+                        this._editingCell = null;
+                        this._render();
+                    }
+                });
+
+                input.addEventListener('blur', () => {
+                    this._commitEdit(input.value);
+                });
+            }
+        }
+    };
+
+    /** @private */
+    _commitEdit = (newVal) => {
+        if (!this._editingCell) return;
+        const { rowIndex, key } = this._editingCell;
+        const input = this.$('.cell-input');
+        const originalVal = input ? input.dataset.oldValue : '';
+        const sorted = this._getSortedRows();
+        const row = sorted[rowIndex];
+
+        if (originalVal !== newVal) {
+            // Emit change event
+            this.emit('wox-cell-change', { row, key, oldValue: originalVal, newValue: newVal });
+            // Update local row (might be overwritten by outside refresh)
+            row[key] = newVal;
+        }
+
+        this._editingCell = null;
+        this._render();
     };
 
     /** @private */
@@ -211,6 +282,37 @@ class WoxDatagrid extends WoxElement {
                 this.emit('wox-sort', { key: this._sortKey, direction: this._sortDir });
                 this._render();
             });
+
+            // Reordering via Drag & Drop
+            cell.addEventListener('dragstart', (e) => {
+                const idx = cell.dataset.col;
+                e.dataTransfer.setData('text/plain', idx);
+                cell.classList.add('dragging');
+            });
+
+            cell.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                cell.classList.add('drag-over');
+            });
+
+            cell.addEventListener('dragleave', () => {
+                cell.classList.remove('drag-over');
+            });
+
+            cell.addEventListener('drop', (e) => {
+                e.preventDefault();
+                cell.classList.remove('drag-over');
+                const fromIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+                const toIdx = parseInt(cell.dataset.col, 10);
+
+                if (fromIdx !== toIdx) {
+                    this._swapColumns(fromIdx, toIdx);
+                }
+            });
+
+            cell.addEventListener('dragend', () => {
+                cell.classList.remove('dragging');
+            });
         });
 
         // Row click
@@ -219,6 +321,20 @@ class WoxDatagrid extends WoxElement {
                 const ri = Number(row.dataset.row);
                 const sorted = this._getSortedRows();
                 this.emit('wox-row-click', { row: sorted[ri], index: ri });
+            });
+
+            row.querySelectorAll('.cell').forEach(cell => {
+                cell.addEventListener('dblclick', (e) => {
+                    e.stopPropagation();
+                    const ri = Number(row.dataset.row);
+                    const key = cell.dataset.key;
+                    // Check if column is editable (default yes for now unless specified otherwise)
+                    const colIdx = this._columns.findIndex(c => c.key === key);
+                    if (this._columns[colIdx].editable === false) return;
+
+                    this._editingCell = { rowIndex: ri, key: key };
+                    this._render();
+                });
             });
         });
 
@@ -264,6 +380,22 @@ class WoxDatagrid extends WoxElement {
                 cell.style.width = `${this._colWidths[i]}px`;
             });
         });
+    };
+
+    /** @private */
+    _swapColumns = (from, to) => {
+        const cols = [...this._columns];
+        const widths = [...this._colWidths];
+
+        const [movedCol] = cols.splice(from, 1);
+        cols.splice(to, 0, movedCol);
+
+        const [movedWidth] = widths.splice(from, 1);
+        widths.splice(to, 0, movedWidth);
+
+        this._columns = cols;
+        this._colWidths = widths;
+        this._render();
     };
 }
 
