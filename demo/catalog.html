@@ -482,5 +482,29 @@
             el.addEventListener('wox-search', (e) => appendLog(`wox-search: "${e.detail.query}"`));
         });
     </script>
+    <!-- DATE PICKER -->
+    <h2>wox-date-picker</h2>
+    <div class="card">
+        <div class="label" style="margin-bottom: 12px;">Single date selection</div>
+        <div class="row">
+            <wox-date-picker id="dp-single"></wox-date-picker>
+        </div>
+        <div class="label" style="margin-top: 20px; margin-bottom: 12px;">Range selection</div>
+        <div class="row">
+            <wox-date-picker id="dp-range" range-mode></wox-date-picker>
+        </div>
+        <div class="label" style="margin-top: 20px; margin-bottom: 12px;">Disabled</div>
+        <div class="row">
+            <wox-date-picker disabled></wox-date-picker>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('wox-date-picker').forEach((el) => {
+            el.addEventListener('wox-change', (e) => {
+                const log = document.getElementById('event-log');
+                log.textContent = 'wox-change: ' + JSON.stringify(e.detail) + '\n' + log.textContent;
+            });
+        });
+    </script>
 </body>
 </html>
