@@ -157,6 +157,23 @@ class WoxModal extends WoxElement {
     _detachKeyHandler = () => {
         document.removeEventListener('keydown', this._keyHandler);
     };
+
+    open() {
+        this.setAttribute('open', '');
+    }
+
+    close() {
+        this.removeAttribute('open');
+    }
+
+    get openState() {
+        return this.hasAttribute('open');
+    }
+
+    set openState(val) {
+        if (val) this.setAttribute('open', '');
+        else this.removeAttribute('open');
+    }
 }
 
 customElements.define('wox-modal', WoxModal);
