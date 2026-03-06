@@ -1,6 +1,6 @@
 # wox-modal
 
-A dialog overlay component with backdrop, scale-in animation, escape-to-close, and customizable footer actions.
+A dialog overlay component with backdrop blur, escape-to-close handling, default footer actions, and optional glow/pulse FX on the dialog box.
 
 **Tag:** `<wox-modal>`
 **Source:** `src/wox-modal.js`
@@ -14,8 +14,8 @@ A dialog overlay component with backdrop, scale-in animation, escape-to-close, a
 |-----------|------|---------|-------------|
 | `open` | `boolean` | `false` | Show or hide the modal (presence attribute) |
 | `title` | `string` | — | Dialog title text |
-| `closable` | `boolean` | `true` | Show the close (x) button in the top-right corner (presence attribute) |
-| `width` | `string` | `"400px"` | Maximum width of the dialog |
+| `closable` | `boolean` | `true` | Show the close button. The button is visible unless `closable="false"` is set. |
+| `width` | `string` | `"400px"` | Max width of the dialog box. The component also enforces a `300px` minimum width. |
 | `color` | `string` | — | Custom color for glow/pulse border effects |
 | `glow` | `boolean` | `false` | Enable neon glow on the dialog box |
 | `pulse` | `boolean` | `false` | Enable opacity pulse on the dialog. Composable with `glow`. |
@@ -41,15 +41,21 @@ A dialog overlay component with backdrop, scale-in animation, escape-to-close, a
 
 ---
 
+## Methods
+
+| Method / Property | Type | Description |
+|-------------------|------|-------------|
+| `open()` | method | Sets the `open` attribute |
+| `close()` | method | Removes the `open` attribute |
+| `openState` | getter / setter | Boolean wrapper around the `open` attribute |
+
+---
+
 ## Features
 
 ### Backdrop
 
 A dark semi-transparent overlay with a 2px blur effect covers the entire viewport.
-
-### Scale-in animation
-
-The dialog scales from 0.95 to 1.0 with a fade-in effect when opened.
 
 ### Escape to close
 
@@ -62,6 +68,10 @@ Clicking outside the dialog (on the backdrop) closes the modal.
 ### Default footer
 
 If no `footer` slot content is provided, the modal renders default **Cancel** and **OK** buttons.
+
+### Close behavior details
+
+The `closable` attribute only controls the top-right close button. Escape-key dismissal and backdrop-click dismissal remain active even when `closable="false"` is used.
 
 ---
 
@@ -124,16 +134,15 @@ When `glow` is present with a `color`, the dialog box renders with an animated n
 </wox-modal>
 ```
 
-### Non-closable modal
+### Hide the close button
 
 ```html
-<wox-modal open title="Processing...">
+<wox-modal open title="Processing..." closable="false">
     <p>Please wait while your file is being exported.</p>
-    <!-- No close button, no escape, no backdrop dismiss -->
 </wox-modal>
 ```
 
-Note: Remove the `closable` attribute to hide the close button. However, Escape and backdrop click still work by default.
+Note: This hides only the close button. Escape and backdrop click still close the modal in the current implementation.
 
 ### Event handling
 
@@ -143,25 +152,25 @@ const openBtn = document.getElementById('open-modal');
 
 // Open the modal
 openBtn.addEventListener('click', () => {
-    modal.setAttribute('open', '');
+    modal.open();
 });
 
 // Handle confirm (default OK button)
 modal.addEventListener('wox-confirm', () => {
     console.log('User confirmed');
-    modal.removeAttribute('open');
+    modal.close();
 });
 
 // Handle cancel (default Cancel button)
 modal.addEventListener('wox-cancel', () => {
     console.log('User cancelled');
-    modal.removeAttribute('open');
+    modal.close();
 });
 
 // Handle any close (X button, Escape, backdrop)
 modal.addEventListener('wox-close', () => {
     console.log('Modal closed');
-    modal.removeAttribute('open');
+    modal.close();
 });
 ```
 
@@ -170,9 +179,13 @@ modal.addEventListener('wox-close', () => {
 ```javascript
 const modal = document.querySelector('wox-modal');
 
-// Open
-modal.setAttribute('open', '');
+// Open via method
+modal.open();
 
-// Close
-modal.removeAttribute('open');
+// Close via method
+modal.close();
+
+// Or use the boolean wrapper
+modal.openState = true;
+modal.openState = false;
 ```

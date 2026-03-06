@@ -1,6 +1,6 @@
 # wox-datagrid
 
-A sortable data grid with resizable columns, row hover effects, and odd/even row striping. Data is provided via JavaScript properties.
+A sortable data grid with resizable and reorderable columns, row hover effects, odd/even row striping, and optional inline cell editing. Data is provided via JavaScript properties.
 
 **Tag:** `<wox-datagrid>`
 **Source:** `src/wox-datagrid.js`
@@ -23,6 +23,7 @@ An array of column definition objects:
 | `width` | `number` | `120` | Initial column width in pixels |
 | `align` | `string` | `"left"` | Cell alignment: `"left"`, `"center"`, or `"right"` |
 | `sortable` | `boolean` | `true` | Whether the column can be sorted by clicking the header |
+| `editable` | `boolean` | `true` | Whether cells in this column can enter inline edit mode on double-click |
 
 ### `rows` (JavaScript property)
 
@@ -36,6 +37,7 @@ An array of plain objects. Each object's keys should match the column `key` valu
 |-------|--------|-------------|
 | `wox-sort` | `{ key, direction }` | Emitted when sort changes. `direction` is `"asc"` or `"desc"` |
 | `wox-row-click` | `{ row, index }` | Emitted when a row is clicked. `row` is the data object, `index` is the visual row index |
+| `wox-cell-change` | `{ row, key, oldValue, newValue }` | Emitted when an inline edit is committed with a changed value |
 
 ---
 
@@ -53,6 +55,10 @@ Click a column header to sort ascending. Click again to toggle to descending. Th
 
 Drag the right edge of any column header to resize it. A 5px handle zone is provided. Minimum column width is 40px. The handle highlights with the accent color on hover and during drag.
 
+### Column reordering
+
+Drag a header cell and drop it on another header to reorder columns. Widths move with their columns, so custom sizing is preserved after reordering.
+
 ### Row striping
 
 Even rows use `--wox-bg-panel` and odd rows use `--wox-bg-toolbar` for a subtle alternating pattern.
@@ -60,6 +66,10 @@ Even rows use `--wox-bg-panel` and odd rows use `--wox-bg-toolbar` for a subtle 
 ### Row hover
 
 Rows highlight with `--wox-bg-hover` on mouse over.
+
+### Inline editing
+
+Double-click a cell to edit it inline. Press **Enter** or blur the input to commit, or press **Escape** to cancel. When the value changes, the component emits `wox-cell-change` and updates the current row object locally.
 
 ### Scrollable body
 
@@ -106,6 +116,17 @@ grid.columns = [
 ];
 ```
 
+### With read-only and editable columns
+
+```javascript
+grid.columns = [
+    { key: 'id', label: 'ID', width: 60, align: 'center', sortable: false, editable: false },
+    { key: 'name', label: 'Name', width: 220 },
+    { key: 'status', label: 'Status', width: 120 },
+    { key: 'owner', label: 'Owner', width: 160 },
+];
+```
+
 ### Listening for events
 
 ```javascript
@@ -119,6 +140,12 @@ grid.addEventListener('wox-row-click', (e) => {
     console.log('Clicked row:', e.detail.row);
     console.log('Row index:', e.detail.index);
 });
+
+grid.addEventListener('wox-cell-change', (e) => {
+    console.log('Cell changed:', e.detail.key);
+    console.log('Old value:', e.detail.oldValue);
+    console.log('New value:', e.detail.newValue);
+});
 ```
 
 ### Updating data dynamically
@@ -130,6 +157,10 @@ grid.rows = newData;
 // Change columns (resets sort state)
 grid.columns = newColumnDefs;
 ```
+
+### Reordering columns
+
+Drag column headers to change their visual order. The component updates its internal `columns` array immediately, so subsequent renders preserve the new order.
 
 ### Inside a panel
 
@@ -148,3 +179,4 @@ grid.columns = newColumnDefs;
 - The grid uses these theme variables: `--wox-bg-panel`, `--wox-bg-toolbar`, `--wox-bg-hover`, `--wox-bg-section-header`, `--wox-border`, `--wox-border-section`, `--wox-border-light`, `--wox-accent`, `--wox-text-primary`, `--wox-text-secondary`, `--wox-text-hi`
 - Set a fixed `height` on the element for the scrollable body to work
 - The component uses `display: block` by default and fills its container width
+- Cell content is rendered directly into the cell template. Plain text values are the safest default if you do not intentionally want HTML markup rendered inside cells

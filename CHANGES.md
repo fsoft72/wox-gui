@@ -1,5 +1,28 @@
 # CHANGES.md
 
+## 2026-03-06 — Refresh input, datagrid, and modal demos
+
+### Changed
+- **`demo/catalog.html`**: Added an inline-unit input example with programmatic `value` updates, updated the modal demo to use `open()` / `openState`, added a `closable="false"` example, and expanded the datagrid demo to show reorderable columns and inline editing.
+- **`demo/showcase.html`**: Added compact unit-suffix input examples, updated the datagrid copy and sample data for inline editing and column reordering, added a live `wox-cell-change` status message, and updated modal triggers to use the public API plus a no-close-button example.
+- **`demo/editor.html`**: Updated the unlabeled stroke-width input to use the inline unit suffix layout.
+
+## 2026-03-06 — Correct wox-modal documentation
+
+### Changed
+- **`docs/wox-modal.md`**: Updated the docs to match the current implementation. Clarified that `closable="false"` hides only the close button, Escape and backdrop clicks still dismiss the modal, and documented the public `open()`, `close()`, and `openState` API.
+
+## 2026-03-06 — Correct wox-datagrid documentation
+
+### Changed
+- **`docs/wox-datagrid.md`**: Added the undocumented `editable` column flag, `wox-cell-change` event, inline-edit behavior, and column drag-reordering details. Also documented that reordering preserves widths and that cell values are rendered directly into the template.
+- **`docs/index.md`**: Updated the datagrid summary to mention reorderable columns and inline editing.
+
+## 2026-03-06 — Correct wox-input documentation
+
+### Changed
+- **`docs/wox-input.md`**: Documented the public `value` property, clarified how units render with and without labels, and noted that numeric events emit parsed numbers and can produce `NaN` for empty or invalid values.
+
 ## 2026-03-06 — Add vertical tab placement to wox-tabs
 
 ### Added

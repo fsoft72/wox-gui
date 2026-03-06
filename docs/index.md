@@ -58,7 +58,7 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 
 | Component | Description |
 |-----------|-------------|
-| [wox-datagrid](./wox-datagrid.md) | Sortable data grid with resizable columns and row selection |
+| [wox-datagrid](./wox-datagrid.md) | Sortable data grid with resizable and reorderable columns plus inline editing |
 
 ### Feedback
 

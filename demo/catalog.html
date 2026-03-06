@@ -124,6 +124,14 @@
             </div>
         </div>
         <div class="card">
+            <p class="label">Inline Unit Suffix + Value Property</p>
+            <wox-input id="input-prop-demo" type="number" value="75" unit="%" min="0" max="100" step="1" style="margin-top: 8px; width: 110px;"></wox-input>
+            <div class="row" style="margin-top: 10px; margin-bottom: 0; align-items: center;">
+                <wox-button variant="text" label="Set 50%" id="input-prop-set-50"></wox-button>
+                <span class="label" id="input-prop-readout">value = 75</span>
+            </div>
+        </div>
+        <div class="card">
             <p class="label">Disabled</p>
             <wox-input type="number" label="W" unit="px" value="0" disabled style="margin-top: 8px; width: 100px;"></wox-input>
         </div>
@@ -284,16 +292,23 @@
     <!-- MODAL -->
     <h2>wox-modal</h2>
     <div class="card">
-        <wox-button variant="text" label="Open Modal" id="modal-trigger"></wox-button>
+        <p class="label">Open via public API. The second example hides only the top-right close button.</p>
+        <div class="row" style="margin-top: 8px; margin-bottom: 0;">
+            <wox-button variant="text" label="Open Modal" id="modal-trigger"></wox-button>
+            <wox-button variant="text" label="Open No-X Modal" id="modal-no-close-trigger"></wox-button>
+        </div>
         <wox-modal id="demo-modal" title="Confirm Action">
             <p>Are you sure you want to delete this object?</p>
+        </wox-modal>
+        <wox-modal id="demo-modal-no-close" title="Processing..." width="360px" closable="false">
+            <p>The close button is hidden in this modal. Press Escape or click the backdrop to dismiss it.</p>
         </wox-modal>
     </div>
 
     <!-- DATAGRID -->
     <h2>wox-datagrid</h2>
     <div class="card wide">
-        <p class="label">Sortable, resizable columns (click headers to sort, drag borders to resize)</p>
+        <p class="label">Sortable, reorderable, inline-editable grid (click headers to sort, drag headers to reorder, double-click editable cells)</p>
         <wox-datagrid id="demo-grid" style="margin-top: 8px; height: 220px;"></wox-datagrid>
     </div>
 
@@ -301,19 +316,35 @@
         // Datagrid demo data
         const grid = document.getElementById('demo-grid');
         grid.columns = [
-            { key: 'name',   label: 'Name',   width: 180 },
-            { key: 'type',   label: 'Type',   width: 100 },
-            { key: 'size',   label: 'Size',   width: 80, align: 'right' },
-            { key: 'modified', label: 'Modified', width: 140 },
+            { key: 'id', label: '#', width: 48, align: 'center', sortable: false, editable: false },
+            { key: 'name', label: 'Name', width: 180 },
+            { key: 'type', label: 'Type', width: 100, editable: false },
+            { key: 'status', label: 'Status', width: 110 },
+            { key: 'size', label: 'Size', width: 80, align: 'right', editable: false },
+            { key: 'modified', label: 'Modified', width: 120, editable: false },
         ];
         grid.rows = [
-            { name: 'hero-banner.svg',  type: 'SVG',   size: 24,   modified: '2026-03-04' },
-            { name: 'logo.png',         type: 'Image', size: 1024, modified: '2026-02-28' },
-            { name: 'icons.svg',        type: 'SVG',   size: 48,   modified: '2026-03-01' },
-            { name: 'background.jpg',   type: 'Image', size: 3200, modified: '2026-01-15' },
-            { name: 'wireframe.svg',    type: 'SVG',   size: 12,   modified: '2026-03-05' },
-            { name: 'photo.png',        type: 'Image', size: 5800, modified: '2026-02-10' },
+            { id: 1, name: 'hero-banner.svg', type: 'SVG', status: 'Approved', size: 24, modified: '2026-03-04' },
+            { id: 2, name: 'logo.png', type: 'Image', status: 'Needs review', size: 1024, modified: '2026-02-28' },
+            { id: 3, name: 'icons.svg', type: 'SVG', status: 'Approved', size: 48, modified: '2026-03-01' },
+            { id: 4, name: 'background.jpg', type: 'Image', status: 'Blocked', size: 3200, modified: '2026-01-15' },
+            { id: 5, name: 'wireframe.svg', type: 'SVG', status: 'Draft', size: 12, modified: '2026-03-05' },
+            { id: 6, name: 'photo.png', type: 'Image', status: 'Approved', size: 5800, modified: '2026-02-10' },
         ];
+
+        const propertyInput = document.getElementById('input-prop-demo');
+        const propertyInputReadout = document.getElementById('input-prop-readout');
+        const syncPropertyInputReadout = () => {
+            propertyInputReadout.textContent = `value = ${propertyInput.value}`;
+        };
+
+        syncPropertyInputReadout();
+        propertyInput.addEventListener('wox-input', syncPropertyInputReadout);
+        propertyInput.addEventListener('wox-change', syncPropertyInputReadout);
+        document.getElementById('input-prop-set-50').addEventListener('wox-click', () => {
+            propertyInput.value = '50';
+            syncPropertyInputReadout();
+        });
     </script>
 
     <!-- TOASTS -->
@@ -405,6 +436,7 @@
         document.addEventListener('wox-close', (e) => logEvent('wox-close', e.detail));
         document.addEventListener('wox-sort', (e) => logEvent('wox-sort', e.detail));
         document.addEventListener('wox-row-click', (e) => logEvent('wox-row-click', e.detail));
+        document.addEventListener('wox-cell-change', (e) => logEvent('wox-cell-change', e.detail));
         document.addEventListener('wox-confirm', (e) => logEvent('wox-confirm', e.detail));
         document.addEventListener('wox-cancel', (e) => logEvent('wox-cancel', e.detail));
         document.addEventListener('wox-gradient-change', (e) => logEvent('wox-gradient-change', e.detail));
@@ -427,7 +459,11 @@
 
         // Modal toggle
         document.getElementById('modal-trigger').addEventListener('wox-click', () => {
-            document.getElementById('demo-modal').setAttribute('open', '');
+            document.getElementById('demo-modal').open();
+        });
+
+        document.getElementById('modal-no-close-trigger').addEventListener('wox-click', () => {
+            document.getElementById('demo-modal-no-close').openState = true;
         });
     </script>
     <!-- SELECT -->

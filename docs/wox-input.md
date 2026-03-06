@@ -1,6 +1,6 @@
 # wox-input
 
-Text and number input field with optional label, unit suffix, and drag-to-scrub for numeric values.
+Text and number input field with optional label, unit display, numeric drag-scrubbing, and a public `value` property for programmatic reads and writes.
 
 **Tag:** `<wox-input>`
 **Source:** `src/wox-input.js`
@@ -24,12 +24,20 @@ Text and number input field with optional label, unit suffix, and drag-to-scrub 
 
 ---
 
+## JavaScript API
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `value` | `string` | Gets or sets the current input value programmatically |
+
+---
+
 ## Events
 
 | Event | Detail | Description |
 |-------|--------|-------------|
-| `wox-input` | `{ value }` | Emitted on every keystroke |
-| `wox-change` | `{ value }` | Emitted on blur or when Enter is pressed |
+| `wox-input` | `{ value }` | Emitted on every keystroke. In `number` mode this emits `parseFloat(input.value)` |
+| `wox-change` | `{ value }` | Emitted on native change. In practice this fires on blur, and Enter commits by blurring the input |
 
 ---
 
@@ -43,9 +51,17 @@ When both `label` and `unit` are set, the unit is displayed next to the label te
 <wox-input type="number" label="Width" unit="px" value="100"></wox-input>
 ```
 
+### Inline unit suffix
+
+When `unit` is set without a `label`, the unit is rendered inside the input on the right side.
+
+```html
+<wox-input type="number" value="75" unit="%"></wox-input>
+```
+
 ### Drag scrubbing
 
-For number inputs with a label, you can **click and drag on the label** to adjust the value by the step amount. This provides a quick way to scrub through numeric values without typing.
+For number inputs with a label, you can **click and drag on the label** to adjust the value by the step amount. This provides a quick way to scrub through numeric values without typing. Scrubbing is disabled when the input is disabled.
 
 ### Min / max / step
 
@@ -69,6 +85,12 @@ Number inputs respect `min`, `max`, and `step` constraints:
 
 ```html
 <wox-input type="number" label="X" value="120" min="0" max="1920" step="1" unit="px"></wox-input>
+```
+
+### Unit-only compact input
+
+```html
+<wox-input type="number" value="12" unit="px"></wox-input>
 ```
 
 ### Compact number grid (common pattern)
@@ -103,3 +125,19 @@ input.addEventListener('wox-change', (e) => {
     console.log('Committed:', e.detail.value);
 });
 ```
+
+### Programmatic value access
+
+```javascript
+const input = document.querySelector('wox-input');
+
+input.value = '256';
+console.log(input.value);
+```
+
+---
+
+## Notes
+
+- In `number` mode, event payloads use `parseFloat(input.value)`, so an empty or invalid numeric field can emit `NaN`
+- Numeric inputs are right-aligned in the current implementation

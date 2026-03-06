@@ -387,6 +387,13 @@
                         <wox-input type="number" label="Scale" unit="%" value="100" min="1" max="1000" step="1"></wox-input>
                     </div>
 
+                    <p class="label-sm mb-8">Compact unit suffix inputs</p>
+                    <div class="row mb-16">
+                        <wox-input id="sc-unit-input" type="number" value="64" unit="px" min="0" step="1" style="width: 92px;"></wox-input>
+                        <wox-input type="number" value="85" unit="%" min="0" max="100" step="1" style="width: 92px;"></wox-input>
+                        <wox-button variant="text" label="Set 128px" id="sc-unit-trigger"></wox-button>
+                    </div>
+
                     <p class="label-sm mb-8">Sliders</p>
                     <div class="col" style="max-width: 400px; gap: 12px;">
                         <wox-slider label="OPACITY" value="1" min="0" max="1" step="0.01" unit="%" show-value></wox-slider>
@@ -576,8 +583,9 @@
                     <h3>Data Grid</h3>
                 </div>
                 <div class="section-card-body">
-                    <p class="label-sm mb-8">Click headers to sort &middot; Drag column borders to resize</p>
+                    <p class="label-sm mb-8">Click headers to sort &middot; Drag headers to reorder &middot; Drag borders to resize &middot; Double-click editable cells</p>
                     <wox-datagrid id="sc-grid" style="height: 260px;"></wox-datagrid>
+                    <p id="sc-grid-status" style="margin-top: 10px; font-size: 11px; color: var(--wox-text-secondary);">Inline edit the Layer or Visible columns to test `wox-cell-change`.</p>
                 </div>
             </div>
 
@@ -699,6 +707,7 @@
                     <div class="row">
                         <wox-button variant="text" label="Confirm Delete" id="modal-delete-trigger"></wox-button>
                         <wox-button variant="text" label="Export Options" id="modal-export-trigger"></wox-button>
+                        <wox-button variant="text" label="No X Button" id="modal-no-close-trigger"></wox-button>
                         <wox-button variant="text" label="Glow Modal" id="modal-glow-trigger"></wox-button>
                     </div>
                     <wox-modal id="modal-delete" title="Delete Object?">
@@ -713,6 +722,9 @@
                             </div>
                             <wox-slider label="QUALITY" value="0.9" min="0" max="1" step="0.05" unit="%" show-value></wox-slider>
                         </div>
+                    </wox-modal>
+                    <wox-modal id="modal-no-close" title="Background Export" width="420px" closable="false">
+                        <p>The close button is intentionally hidden here. Backdrop click and Escape still dismiss the modal in the current implementation.</p>
                     </wox-modal>
                     <wox-modal id="modal-glow" title="Neon Dialog" color="#4cc9f0" glow>
                         <p>This modal has a neon glow border effect using the shared FX system.</p>
@@ -755,7 +767,7 @@
                                 <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
                                     <div style="display: flex; align-items: center; gap: 8px; justify-content: flex-end;">
                                         <span class="label-sm">WIDTH</span>
-                                        <wox-input type="number" value="1" min="0" step="0.5" style="width: 70px;"></wox-input>
+                                        <wox-input type="number" value="1" min="0" step="0.5" unit="px" style="width: 82px;"></wox-input>
                                     </div>
                                     <div style="display: grid; grid-template-columns: repeat(2, 42px); gap: 6px; justify-content: flex-end;">
                                         <wox-button variant="dash" dash="solid" active></wox-button>
@@ -856,28 +868,39 @@
 <script type="module">
     // ── Showcase datagrid ──
     const scGrid = document.getElementById('sc-grid');
+    const scGridStatus = document.getElementById('sc-grid-status');
     scGrid.columns = [
-        { key: 'name',     label: 'Layer',    width: 160 },
-        { key: 'type',     label: 'Type',     width: 100 },
-        { key: 'x',        label: 'X',        width: 60, align: 'right' },
-        { key: 'y',        label: 'Y',        width: 60, align: 'right' },
-        { key: 'width',    label: 'Width',    width: 70, align: 'right' },
-        { key: 'height',   label: 'Height',   width: 70, align: 'right' },
-        { key: 'opacity',  label: 'Opacity',  width: 70, align: 'right' },
-        { key: 'visible',  label: 'Visible',  width: 70 },
+        { key: 'id', label: '#', width: 46, align: 'center', sortable: false, editable: false },
+        { key: 'name', label: 'Layer', width: 160 },
+        { key: 'type', label: 'Type', width: 100, editable: false },
+        { key: 'x', label: 'X', width: 60, align: 'right', editable: false },
+        { key: 'y', label: 'Y', width: 60, align: 'right', editable: false },
+        { key: 'width', label: 'Width', width: 70, align: 'right', editable: false },
+        { key: 'height', label: 'Height', width: 70, align: 'right', editable: false },
+        { key: 'opacity', label: 'Opacity', width: 70, align: 'right', editable: false },
+        { key: 'visible', label: 'Visible', width: 70 },
     ];
     scGrid.rows = [
-        { name: 'Background',   type: 'Rectangle', x: 0,   y: 0,   width: 1920, height: 1080, opacity: '100%', visible: 'Yes' },
-        { name: 'Hero Image',   type: 'Image',     x: 120, y: 80,  width: 800,  height: 600,  opacity: '100%', visible: 'Yes' },
-        { name: 'Title Text',   type: 'Text',      x: 960, y: 120, width: 400,  height: 48,   opacity: '100%', visible: 'Yes' },
-        { name: 'Subtitle',     type: 'Text',      x: 960, y: 180, width: 400,  height: 24,   opacity: '80%',  visible: 'Yes' },
-        { name: 'CTA Button',   type: 'Rectangle', x: 960, y: 240, width: 200,  height: 48,   opacity: '100%', visible: 'Yes' },
-        { name: 'Logo',         type: 'Path',      x: 32,  y: 32,  width: 64,   height: 64,   opacity: '100%', visible: 'Yes' },
-        { name: 'Divider Line', type: 'Path',      x: 0,   y: 700, width: 1920, height: 2,    opacity: '40%',  visible: 'Yes' },
-        { name: 'Footer Text',  type: 'Text',      x: 40,  y: 1040, width: 300, height: 20,   opacity: '60%',  visible: 'No' },
-        { name: 'Shadow',       type: 'Ellipse',   x: 400, y: 650, width: 600,  height: 40,   opacity: '20%',  visible: 'Yes' },
-        { name: 'Overlay',      type: 'Rectangle', x: 0,   y: 0,   width: 1920, height: 1080, opacity: '10%',  visible: 'No' },
+        { id: 1, name: 'Background', type: 'Rectangle', x: 0, y: 0, width: 1920, height: 1080, opacity: '100%', visible: 'Yes' },
+        { id: 2, name: 'Hero Image', type: 'Image', x: 120, y: 80, width: 800, height: 600, opacity: '100%', visible: 'Yes' },
+        { id: 3, name: 'Title Text', type: 'Text', x: 960, y: 120, width: 400, height: 48, opacity: '100%', visible: 'Yes' },
+        { id: 4, name: 'Subtitle', type: 'Text', x: 960, y: 180, width: 400, height: 24, opacity: '80%', visible: 'Yes' },
+        { id: 5, name: 'CTA Button', type: 'Rectangle', x: 960, y: 240, width: 200, height: 48, opacity: '100%', visible: 'Yes' },
+        { id: 6, name: 'Logo', type: 'Path', x: 32, y: 32, width: 64, height: 64, opacity: '100%', visible: 'Yes' },
+        { id: 7, name: 'Divider Line', type: 'Path', x: 0, y: 700, width: 1920, height: 2, opacity: '40%', visible: 'Yes' },
+        { id: 8, name: 'Footer Text', type: 'Text', x: 40, y: 1040, width: 300, height: 20, opacity: '60%', visible: 'No' },
+        { id: 9, name: 'Shadow', type: 'Ellipse', x: 400, y: 650, width: 600, height: 40, opacity: '20%', visible: 'Yes' },
+        { id: 10, name: 'Overlay', type: 'Rectangle', x: 0, y: 0, width: 1920, height: 1080, opacity: '10%', visible: 'No' },
     ];
+    scGrid.addEventListener('wox-cell-change', (e) => {
+        scGridStatus.textContent = `Edited ${e.detail.key}: ${e.detail.oldValue} -> ${e.detail.newValue}`;
+    });
+
+    // ── Input value property demo ──
+    const scUnitInput = document.getElementById('sc-unit-input');
+    document.getElementById('sc-unit-trigger').addEventListener('wox-click', () => {
+        scUnitInput.value = '128';
+    });
 
     // ── Right panel color picker ──
     const rpFill = document.getElementById('rp-fill');
@@ -937,14 +960,17 @@
 
     // ── Modals ──
     document.getElementById('modal-delete-trigger').addEventListener('wox-click', () => {
-        document.getElementById('modal-delete').setAttribute('open', '');
+        document.getElementById('modal-delete').open();
     });
     document.getElementById('modal-export-trigger').addEventListener('wox-click', () => {
-        document.getElementById('modal-export').setAttribute('open', '');
+        document.getElementById('modal-export').openState = true;
+    });
+    document.getElementById('modal-no-close-trigger').addEventListener('wox-click', () => {
+        document.getElementById('modal-no-close').openState = true;
     });
 
-    document.getElementById('modal-glow-trigger')?.addEventListener('click', () => {
-        document.getElementById('modal-glow')?.setAttribute('open', '');
+    document.getElementById('modal-glow-trigger').addEventListener('wox-click', () => {
+        document.getElementById('modal-glow').open();
     });
 
     // ── Boolean toggle glow on click ──
