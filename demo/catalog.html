@@ -498,10 +498,10 @@
             <wox-date-picker disabled></wox-date-picker>
         </div>
     </div>
-    <script>
+    <script type="module">
+        const log = document.getElementById('event-log');
         document.querySelectorAll('wox-date-picker').forEach((el) => {
             el.addEventListener('wox-change', (e) => {
-                const log = document.getElementById('event-log');
                 log.textContent = 'wox-change: ' + JSON.stringify(e.detail) + '\n' + log.textContent;
             });
         });
