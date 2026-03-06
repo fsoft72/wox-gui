@@ -7,6 +7,7 @@ export { WoxSeparator } from './wox-separator.js';
 export { WoxBadge } from './wox-badge.js';
 export { WoxButton } from './wox-button.js';
 export { WoxInput } from './wox-input.js';
+export { WoxSelect } from './wox-select.js';
 export { WoxSlider } from './wox-slider.js';
 export { WoxColorSwatch } from './wox-color-swatch.js';
 export { WoxTooltip } from './wox-tooltip.js';

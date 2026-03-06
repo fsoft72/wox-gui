@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-06 — Add wox-select component
+
+### Added
+- **`<wox-select>`**: New component ported from SmartSelectElement (liwe3-webcomponents). Searchable dropdown with single/multi-select, keyboard navigation (arrows, enter, escape), viewport-aware positioning (opens upward when near bottom edge), and per-option avatar images. Uses `wox-*` events (`wox-change`, `wox-open`, `wox-close`, `wox-search`).
+
 ## 2026-03-06 — Fix five bugs in wox-select
 
 ### Fixed

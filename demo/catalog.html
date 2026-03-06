@@ -403,5 +403,84 @@
             document.getElementById('demo-modal').setAttribute('open', '');
         });
     </script>
+    <!-- SELECT -->
+    <h2>wox-select</h2>
+
+    <div class="demo-grid">
+        <div class="card">
+            <div class="label">Single select</div>
+            <wox-select id="sel-basic" placeholder="Choose a fruit" style="width:100%"></wox-select>
+        </div>
+
+        <div class="card">
+            <div class="label">Searchable</div>
+            <wox-select id="sel-search" searchable placeholder="Search countries..." style="width:100%"></wox-select>
+        </div>
+
+        <div class="card">
+            <div class="label">Multi-select</div>
+            <wox-select id="sel-multi" multiple placeholder="Select tags..." style="width:100%"></wox-select>
+        </div>
+
+        <div class="card">
+            <div class="label">With images</div>
+            <wox-select id="sel-images" placeholder="Choose user..." style="width:100%"></wox-select>
+        </div>
+
+        <div class="card">
+            <div class="label">Disabled</div>
+            <wox-select placeholder="Disabled" disabled style="width:100%"></wox-select>
+        </div>
+
+        <div class="card">
+            <div class="label">Multi searchable</div>
+            <wox-select id="sel-multi-search" multiple searchable placeholder="Search and pick..." style="width:100%"></wox-select>
+        </div>
+    </div>
+
+    <script type="module">
+        const FRUITS = [
+            { value: 'apple', label: 'Apple' },
+            { value: 'banana', label: 'Banana' },
+            { value: 'cherry', label: 'Cherry' },
+            { value: 'date', label: 'Date' },
+            { value: 'elderberry', label: 'Elderberry' },
+        ];
+        const COUNTRIES = [
+            { value: 'us', label: 'United States' },
+            { value: 'gb', label: 'United Kingdom' },
+            { value: 'de', label: 'Germany' },
+            { value: 'fr', label: 'France' },
+            { value: 'jp', label: 'Japan' },
+            { value: 'br', label: 'Brazil' },
+            { value: 'in', label: 'India' },
+            { value: 'au', label: 'Australia' },
+        ];
+        const USERS = [
+            { value: 'alice', label: 'Alice', image: 'https://i.pravatar.cc/40?img=1' },
+            { value: 'bob', label: 'Bob', image: 'https://i.pravatar.cc/40?img=2' },
+            { value: 'carol', label: 'Carol', image: 'https://i.pravatar.cc/40?img=3' },
+            { value: 'dave', label: 'Dave', image: 'https://i.pravatar.cc/40?img=4' },
+        ];
+
+        const log = document.getElementById('event-log');
+        const appendLog = (msg) => {
+            log.textContent += '\n' + msg;
+            log.scrollTop = log.scrollHeight;
+        };
+
+        document.getElementById('sel-basic').setOptions(FRUITS);
+        document.getElementById('sel-search').setOptions(COUNTRIES);
+        document.getElementById('sel-multi').setOptions(FRUITS);
+        document.getElementById('sel-images').setOptions(USERS);
+        document.getElementById('sel-multi-search').setOptions(COUNTRIES);
+
+        document.querySelectorAll('wox-select').forEach((el) => {
+            el.addEventListener('wox-change', (e) => appendLog(`wox-change: ${JSON.stringify(e.detail.value)}`));
+            el.addEventListener('wox-open', () => appendLog('wox-open'));
+            el.addEventListener('wox-close', () => appendLog('wox-close'));
+            el.addEventListener('wox-search', (e) => appendLog(`wox-search: "${e.detail.query}"`));
+        });
+    </script>
 </body>
 </html>
