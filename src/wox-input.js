@@ -59,6 +59,17 @@ class WoxInput extends WoxElement {
         this._render();
     }
 
+    get value() {
+        const input = this.$('input');
+        return input ? input.value : (this.getAttribute('value') || '');
+    }
+
+    set value(v) {
+        this.setAttribute('value', v);
+        const input = this.$('input');
+        if (input) input.value = v;
+    }
+
     /** @private */
     _render = () => {
         const type = this.getAttribute('type') || 'text';
