@@ -286,7 +286,7 @@ class WoxDatePicker extends WoxElement {
         } else if (name === 'value' && newVal !== null) {
             this._selectedDate = newVal;
             const d = _parseLocalDate(newVal);
-            this._currentDate = new Date(d.getFullYear(), d.getMonth(), 1);
+            if (!isNaN(d)) this._currentDate = new Date(d.getFullYear(), d.getMonth(), 1);
         } else if (name === 'range-start') {
             this._selectedRange.start = newVal;
         } else if (name === 'range-end') {
@@ -315,7 +315,7 @@ class WoxDatePicker extends WoxElement {
         if (this.rangeMode) return;
         this._selectedDate = dateStr;
         const d = _parseLocalDate(dateStr);
-        this._currentDate = new Date(d.getFullYear(), d.getMonth(), 1);
+        if (!isNaN(d)) this._currentDate = new Date(d.getFullYear(), d.getMonth(), 1);
         this._render();
     }
 
