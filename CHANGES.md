@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-06 — Add wox-date-picker component
+
+### Added
+- **`<wox-date-picker>`**: New component ported from DateSelectorElement (liwe3-webcomponents). Calendar date picker with single and range selection modes. Month navigation (prev/next) and year dropdown (±10 years). Range hover preview via DOM class manipulation (no re-render). "Today" button navigates to current month and selects today (or starts range from today). Clicking other-month cells navigates to that month. Uses `wox-change` event with `detail: { date }` (single) or `detail: { start, end }` (range). Attributes: `range-mode`, `value`, `range-start`, `range-end`, `disabled`. Public API: `setDate()`, `setRange()`, `getSelectedDate()`, `getSelectedRange()`, `clear()`.
+
 ## 2026-03-06 — Add wox-select component
 
 ### Added
