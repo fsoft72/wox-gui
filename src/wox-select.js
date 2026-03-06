@@ -278,6 +278,7 @@ class WoxSelect extends WoxElement {
     }
 
     disconnectedCallback() {
+        clearTimeout(this._keyboardTimer);
         document.removeEventListener('click', this._boundDocumentClick);
         window.removeEventListener('resize', this._boundWindowResize);
         window.removeEventListener('scroll', this._boundWindowScroll, true);
@@ -296,6 +297,10 @@ class WoxSelect extends WoxElement {
             this._selectedOptions = this._selectedOptions.filter((s) =>
                 newOpts.some((o) => o.value === s.value)
             );
+        } else if (name === 'value' && newValue !== null) {
+            // Handles single-select only; multi-select must be set via the JS property setter.
+            const opt = this.options.find((o) => o.value === newValue);
+            this._selectedOptions = opt ? [opt] : [];
         }
         this._render();
     }
@@ -416,12 +421,12 @@ class WoxSelect extends WoxElement {
             if (!this._selectedOptions.find((o) => o.value === value)) {
                 this._selectedOptions.push(opt);
             }
+            this._render();
         } else {
             this._selectedOptions = [opt];
-            this.close();
+            this.close(); // close() calls _render() internally
         }
 
-        this._render();
         this.emit('wox-change', { value: this.value });
     }
 
@@ -676,6 +681,8 @@ class WoxSelect extends WoxElement {
         if (this._isOpen) {
             const dropdown = this.$('.dropdown');
             if (dropdown) {
+                // Safe to add per-render: the .dropdown element is recreated by innerHTML on each
+                // _render() call, so its listeners are discarded with it. No accumulation occurs.
                 dropdown.addEventListener('mouseleave', () => {
                     if (this._keyboardNavigating) return;
                     this.$('.option.focused')?.classList.remove('focused');

@@ -16,7 +16,7 @@ Searchable, single or multi-select dropdown with keyboard navigation and optiona
 | `searchable`  | `boolean` | `false`              | Shows a search input inside the dropdown         |
 | `placeholder` | `string`  | `"Select an option"` | Placeholder when nothing is selected             |
 | `disabled`    | `boolean` | `false`              | Disables the component                           |
-| `value`       | `string`  | `""`                 | Selected value (JS property only for setting)    |
+| `value`       | `string \| string[]` | `""`          | Selected value; array in multi-select mode (JS property) |
 | `options`     | `string`  | `"[]"`               | JSON array of `{ value, label, image? }` objects |
 
 ---
