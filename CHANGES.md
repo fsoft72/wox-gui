@@ -1,5 +1,14 @@
 # CHANGES.md
 
+## 2026-03-06 — Fix five bugs in wox-select
+
+### Fixed
+- **Memory leak (Fix 1)**: Shadow root `click`, `mouseover`, and `input` listeners were re-added on every `_render()` call, causing unbounded listener accumulation. Moved them to `connectedCallback()` as named bound references and removed them in `disconnectedCallback()`. The `mouseleave` handler for clearing focused options is now attached directly to the recreated dropdown element inside `_render()`.
+- **XSS (Fix 2)**: Added module-level `_esc()` helper that escapes `&`, `<`, `>`, and `"`. All user-supplied values (`o.label`, `o.value`, `o.image`, `this.placeholder`, `this._searchValue`) are now escaped in the HTML template strings inside `_render()`. `dataset.value` correctly returns the unescaped string so `selectOption`/`deselectOption` receive correct values.
+- **Stale selection after options change (Fix 3)**: `attributeChangedCallback` now filters `_selectedOptions` to only retain entries whose value still exists in the new options list, preventing ghost selections.
+- **Double render in `setOptions()` (Fix 4)**: Removed the redundant direct `_render()` call at the end of `setOptions()`. The attribute assignment via `setAttribute` already triggers `attributeChangedCallback` → `_render()`. Removed use of the `options` property setter to avoid a second `_parsedOptions = null` reset.
+- **Inconsistent `_filteredOptions` reset (Fix 5)**: Removed `options.length > 0` guards from `open()` and `close()`. `_filteredOptions` is now always reset unconditionally, including when the options list is empty.
+
 ## 2026-03-05 — Fix menu dropdown clipped by container overflow
 
 ### Fixed
