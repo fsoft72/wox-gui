@@ -17,16 +17,43 @@ const STYLES = `
     .tab-btn.active { color: var(--wox-text-hi, #fff); border-bottom-color: var(--wox-accent, #00e5ff); }
     .tab-btn:hover { color: var(--wox-text-primary, #eee); }
     .body { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* Vertical left placement */
+    :host([placement="left"]) { flex-direction: row; }
+    :host([placement="left"]) .tab-headers {
+        flex-direction: column; padding: 4px 0; border-bottom: none;
+        border-right: 1px solid var(--wox-border-section, #2e2e2e);
+    }
+    :host([placement="left"]) .tab-btn {
+        flex: none; border-bottom: none; margin-bottom: 0;
+        border-right: 2px solid transparent; margin-right: -1px;
+        writing-mode: vertical-rl; transform: rotate(180deg); padding: 8px 6px;
+    }
+    :host([placement="left"]) .tab-btn.active { border-right-color: var(--wox-accent, #00e5ff); }
+
+    /* Vertical right placement */
+    :host([placement="right"]) { flex-direction: row-reverse; }
+    :host([placement="right"]) .tab-headers {
+        flex-direction: column; padding: 4px 0; border-bottom: none;
+        border-left: 1px solid var(--wox-border-section, #2e2e2e);
+    }
+    :host([placement="right"]) .tab-btn {
+        flex: none; border-bottom: none; margin-bottom: 0;
+        border-left: 2px solid transparent; margin-left: -1px;
+        writing-mode: vertical-rl; padding: 8px 6px;
+    }
+    :host([placement="right"]) .tab-btn.active { border-left-color: var(--wox-accent, #00e5ff); }
 `;
 
 /**
  * <wox-tabs> — Tab container that builds header buttons from child <wox-tab> elements.
  * @attr {string} active - Name of the active tab
+ * @attr {string} placement - Tab header position: "top" (default), "left", or "right"
  * @slot default - <wox-tab> children
  * @fires wox-tab-change - detail: { name }
  */
 class WoxTabs extends WoxElement {
-    static observedAttributes = ['active'];
+    static observedAttributes = ['active', 'placement'];
 
     connectedCallback() {
         this._render();

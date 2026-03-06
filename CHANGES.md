@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-06 — Add vertical tab placement to wox-tabs
+
+### Added
+- **`<wox-tabs placement>`**: New `placement` attribute supporting `top` (default), `left`, and `right` values. Vertical placements render tab headers as a sidebar with rotated text labels. Left tabs read bottom-to-top, right tabs read top-to-bottom. Active indicator line faces the content area.
+
 ## 2026-03-06 — Add wox-date-picker component
 
 ### Added

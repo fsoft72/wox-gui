@@ -13,6 +13,7 @@ A tab container that auto-generates header buttons from child `<wox-tab>` elemen
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `active` | `string` | — | The `name` of the currently active tab |
+| `placement` | `string` | `top` | Tab header position: `top`, `left`, or `right` |
 
 ---
 
@@ -82,6 +83,24 @@ Setting the `active` attribute activates the matching tab and deactivates all ot
         </wox-tab>
     </wox-tabs>
 </wox-panel>
+```
+
+### Vertical tabs on the left
+
+```html
+<wox-tabs active="design" placement="left">
+    <wox-tab name="design" label="Design">Design content</wox-tab>
+    <wox-tab name="prototype" label="Prototype">Prototype content</wox-tab>
+</wox-tabs>
+```
+
+### Vertical tabs on the right
+
+```html
+<wox-tabs active="layers" placement="right">
+    <wox-tab name="layers" label="Layers">Layers content</wox-tab>
+    <wox-tab name="assets" label="Assets">Assets content</wox-tab>
+</wox-tabs>
 ```
 
 ### Programmatic tab switching
