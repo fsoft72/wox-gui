@@ -1,0 +1,33 @@
+{
+  "name": "wox-gui",
+  "version": "0.1.0",
+  "description": "WOX — Web Component UI library",
+  "type": "module",
+  "main": "./dist/wox-gui.umd.cjs",
+  "module": "./dist/wox-gui.js",
+  "exports": {
+    ".": {
+      "import": "./dist/wox-gui.js",
+      "require": "./dist/wox-gui.umd.cjs"
+    },
+    "./theme": "./dist/wox-theme.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && cp css/wox-theme.css dist/wox-theme.css",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "keywords": [
+    "web-components",
+    "ui",
+    "component-library",
+    "custom-elements"
+  ],
+  "license": "MIT"
+}
