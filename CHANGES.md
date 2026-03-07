@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-07 — Add npm publish script
+
+### Added
+- **`scripts/publish.sh`**: Bash script to publish wox-gui to npm. Checks clean working tree, verifies npm auth, runs `pnpm build`, bumps version (patch/minor/major or explicit), publishes with `--access public`, then commits and tags the release.
+
 ## 2026-03-07 — npm package setup with Vite library mode
 
 ### Added
