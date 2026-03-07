@@ -133,5 +133,4 @@ class WoxButton extends WoxElement {
     };
 }
 
-customElements.define('wox-button', WoxButton);
 export { WoxButton };

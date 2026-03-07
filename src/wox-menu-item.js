@@ -81,5 +81,4 @@ class WoxMenuItem extends WoxElement {
     };
 }
 
-customElements.define('wox-menu-item', WoxMenuItem);
 export { WoxMenuItem };

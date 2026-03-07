@@ -40,5 +40,4 @@ class WoxToolbar extends WoxElement {
     };
 }
 
-customElements.define('wox-toolbar', WoxToolbar);
 export { WoxToolbar };

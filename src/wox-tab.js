@@ -21,5 +21,4 @@ class WoxTab extends WoxElement {
     }
 }
 
-customElements.define('wox-tab', WoxTab);
 export { WoxTab };

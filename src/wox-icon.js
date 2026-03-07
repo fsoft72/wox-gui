@@ -51,5 +51,4 @@ class WoxIcon extends WoxElement {
     };
 }
 
-customElements.define('wox-icon', WoxIcon);
 export { WoxIcon };

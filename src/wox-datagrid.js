@@ -399,5 +399,4 @@ class WoxDatagrid extends WoxElement {
     };
 }
 
-customElements.define('wox-datagrid', WoxDatagrid);
 export { WoxDatagrid };

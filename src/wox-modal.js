@@ -176,5 +176,4 @@ class WoxModal extends WoxElement {
     }
 }
 
-customElements.define('wox-modal', WoxModal);
 export { WoxModal };

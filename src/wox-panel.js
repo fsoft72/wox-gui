@@ -78,5 +78,4 @@ class WoxPanel extends WoxElement {
     };
 }
 
-customElements.define('wox-panel', WoxPanel);
 export { WoxPanel };

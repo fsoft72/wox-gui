@@ -543,5 +543,4 @@ const _isInRange = (dateStr, start, end) => {
     return dateStr > start && dateStr < end;
 };
 
-customElements.define('wox-date-picker', WoxDatePicker);
 export { WoxDatePicker };

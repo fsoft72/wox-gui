@@ -3,10 +3,14 @@
 ## 2026-03-07 — npm package setup with Vite library mode
 
 ### Added
-- **`package.json`**: Project manifest with ESM/UMD exports, `"wox-gui/theme"` export for the CSS theme file, `build`/`dev`/`preview` scripts.
-- **`vite.config.js`**: Vite library mode config targeting `src/index.js` as entry, outputting `dist/wox-gui.js` (ESM) and `dist/wox-gui.umd.cjs` (UMD).
+- **`package.json`**: Project manifest with ESM exports, `"wox-gui/register"` and `"wox-gui/theme"` sub-path exports, `sideEffects` field for tree-shaking, `build`/`dev`/`preview` scripts.
+- **`vite.config.js`**: Vite library mode with two entry points (`index.js` and `register.js`), ESM-only output.
+- **`src/register.js`**: Convenience entry that imports all components and calls `customElements.define()` for each.
 
 ### Changed
+- **`src/wox-*.js`**: Removed `customElements.define()` calls from all 28 component files — classes are now pure exports for tree-shaking.
+- **`src/index.js`**: Unchanged — remains a side-effect-free barrel re-export.
+- **`demo/*.html`**: Updated script imports from `src/index.js` to `src/register.js`.
 - **`.gitignore`**: Added `node_modules` and `dist`.
 
 ## 2026-03-06 — Refresh input, datagrid, and modal demos

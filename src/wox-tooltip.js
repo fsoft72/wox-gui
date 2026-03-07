@@ -95,5 +95,4 @@ class WoxTooltip extends WoxElement {
     };
 }
 
-customElements.define('wox-tooltip', WoxTooltip);
 export { WoxTooltip };

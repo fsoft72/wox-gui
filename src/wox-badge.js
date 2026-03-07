@@ -43,5 +43,4 @@ class WoxBadge extends WoxElement {
     };
 }
 
-customElements.define('wox-badge', WoxBadge);
 export { WoxBadge };

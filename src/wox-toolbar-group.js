@@ -34,5 +34,4 @@ class WoxToolbarGroup extends WoxElement {
     };
 }
 
-customElements.define('wox-toolbar-group', WoxToolbarGroup);
 export { WoxToolbarGroup };

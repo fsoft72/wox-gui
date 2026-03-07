@@ -373,5 +373,4 @@ class WoxColorPicker extends WoxElement {
     _rgbToHex = (r, g, b) => '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
 }
 
-customElements.define('wox-color-picker', WoxColorPicker);
 export { WoxColorPicker };

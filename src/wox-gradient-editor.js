@@ -329,5 +329,4 @@ class WoxGradientEditor extends WoxElement {
     };
 }
 
-customElements.define('wox-gradient-editor', WoxGradientEditor);
 export { WoxGradientEditor };

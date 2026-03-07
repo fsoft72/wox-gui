@@ -5,8 +5,12 @@
   "type": "module",
   "main": "./dist/wox-gui.js",
   "module": "./dist/wox-gui.js",
+  "sideEffects": [
+    "./dist/register.js"
+  ],
   "exports": {
     ".": "./dist/wox-gui.js",
+    "./register": "./dist/register.js",
     "./theme": "./dist/wox-theme.css"
   },
   "files": [

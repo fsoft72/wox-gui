@@ -174,5 +174,4 @@ class WoxSlider extends WoxElement {
     };
 }
 
-customElements.define('wox-slider', WoxSlider);
 export { WoxSlider };

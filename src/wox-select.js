@@ -705,5 +705,4 @@ class WoxSelect extends WoxElement {
     };
 }
 
-customElements.define('wox-select', WoxSelect);
 export { WoxSelect };

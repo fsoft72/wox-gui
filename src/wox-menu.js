@@ -144,5 +144,4 @@ class WoxMenu extends WoxElement {
     };
 }
 
-customElements.define('wox-menu', WoxMenu);
 export { WoxMenu };

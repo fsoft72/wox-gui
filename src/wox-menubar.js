@@ -50,5 +50,4 @@ class WoxMenubar extends WoxElement {
     };
 }
 
-customElements.define('wox-menubar', WoxMenubar);
 export { WoxMenubar };

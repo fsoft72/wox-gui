@@ -206,5 +206,4 @@ class WoxContextMenu extends WoxElement {
     };
 }
 
-customElements.define('wox-context-menu', WoxContextMenu);
 export { WoxContextMenu };

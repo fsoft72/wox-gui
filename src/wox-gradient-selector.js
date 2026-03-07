@@ -827,5 +827,4 @@ class WoxGradientSelector extends WoxElement {
     };
 }
 
-customElements.define('wox-gradient-selector', WoxGradientSelector);
 export { WoxGradientSelector };

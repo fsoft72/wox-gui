@@ -136,5 +136,4 @@ class WoxLayerItem extends WoxElement {
     };
 }
 
-customElements.define('wox-layer-item', WoxLayerItem);
 export { WoxLayerItem };

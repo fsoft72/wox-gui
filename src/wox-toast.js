@@ -365,5 +365,4 @@ class WoxToast extends WoxElement {
 	static info = (message, options) => _show('info', message, options);
 }
 
-customElements.define('wox-toast', WoxToast);
 export { WoxToast };

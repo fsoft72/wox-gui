@@ -4,8 +4,10 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
-      fileName: 'wox-gui',
+      entry: {
+        'wox-gui': resolve(__dirname, 'src/index.js'),
+        'register': resolve(__dirname, 'src/register.js'),
+      },
       formats: ['es'],
     },
   },

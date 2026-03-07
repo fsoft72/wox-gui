@@ -66,5 +66,4 @@ class WoxColorSwatch extends WoxElement {
     };
 }
 
-customElements.define('wox-color-swatch', WoxColorSwatch);
 export { WoxColorSwatch };

@@ -122,5 +122,4 @@ class WoxTabs extends WoxElement {
     };
 }
 
-customElements.define('wox-tabs', WoxTabs);
 export { WoxTabs };

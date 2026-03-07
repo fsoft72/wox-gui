@@ -79,5 +79,4 @@ class WoxSection extends WoxElement {
     };
 }
 
-customElements.define('wox-section', WoxSection);
 export { WoxSection };

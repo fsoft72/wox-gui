@@ -37,5 +37,4 @@ class WoxSeparator extends WoxElement {
     };
 }
 
-customElements.define('wox-separator', WoxSeparator);
 export { WoxSeparator };

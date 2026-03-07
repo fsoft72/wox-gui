@@ -45,5 +45,4 @@ class WoxStatusbar extends WoxElement {
     };
 }
 
-customElements.define('wox-statusbar', WoxStatusbar);
 export { WoxStatusbar };

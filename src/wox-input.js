@@ -146,5 +146,4 @@ class WoxInput extends WoxElement {
     };
 }
 
-customElements.define('wox-input', WoxInput);
 export { WoxInput };
