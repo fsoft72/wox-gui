@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOX-GUI — CDN Bundle Test</title>
+
+    <!-- Fonts (always required) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- CDN bundle: registers all components + injects theme -->
+    <script type="module" src="../dist/wox-gui.cdn.js"></script>
+
+    <!-- NOTE: no <link> to wox-theme.css — the CDN bundle injects it -->
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--wox-bg-app); color: var(--wox-text-primary); font-family: var(--wox-font); font-size: 13px; padding: 32px; overflow-y: auto; }
+        h1 { color: var(--wox-accent); font-size: 22px; margin-bottom: 4px; }
+        .subtitle { color: var(--wox-text-secondary); font-size: 13px; margin-bottom: 32px; }
+        h2 { color: var(--wox-text-hi); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--wox-border); }
+        .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+        .card { background: var(--wox-bg-panel); border: 1px solid var(--wox-border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+        .label { font-size: 10px; color: var(--wox-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        #log { background: var(--wox-bg-input); border: 1px solid var(--wox-border); border-radius: 6px; padding: 8px 12px; font-family: monospace; font-size: 11px; color: var(--wox-accent); max-height: 140px; overflow-y: auto; white-space: pre-wrap; }
+        .check { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+        .check .pass { color: #4cc9f0; }
+        .check .fail { color: #f72585; }
+    </style>
+</head>
+<body>
+    <h1>CDN Bundle Test</h1>
+    <p class="subtitle">Loaded via <code>dist/wox-gui.cdn.js</code> — no theme &lt;link&gt;, no register import.</p>
+
+    <!-- ── Automated checks ── -->
+    <h2>Automated Checks</h2>
+    <div class="card" id="checks"></div>
+
+    <!-- ── Icons ── -->
+    <h2>wox-icon</h2>
+    <div class="row">
+        <wox-icon name="near_me"></wox-icon>
+        <wox-icon name="crop_square"></wox-icon>
+        <wox-icon name="layers" size="24"></wox-icon>
+        <wox-icon name="palette" size="28" color="#f72585" glow></wox-icon>
+    </div>
+
+    <!-- ── Buttons ── -->
+    <h2>wox-button</h2>
+    <div class="row">
+        <wox-button variant="icon" icon="near_me"></wox-button>
+        <wox-button variant="icon" icon="crop_square" active></wox-button>
+        <wox-button variant="text" icon="add" label="New"></wox-button>
+        <wox-button variant="tile" icon="star" label="Fav" color="#f72585" glow></wox-button>
+        <wox-button variant="icon" icon="delete" disabled></wox-button>
+    </div>
+
+    <!-- ── Badges & Separator ── -->
+    <h2>wox-badge + wox-separator</h2>
+    <div class="row">
+        <wox-badge></wox-badge>
+        <wox-badge color="#f72585"></wox-badge>
+        <wox-badge variant="diamond" color="#4361ee"></wox-badge>
+        <wox-badge variant="text" text="Label"></wox-badge>
+        <wox-separator direction="v" spacing="8px" style="height: 20px;"></wox-separator>
+        <span style="color: var(--wox-text-secondary);">Separated</span>
+    </div>
+
+    <!-- ── Inputs ── -->
+    <h2>wox-input</h2>
+    <div class="grid">
+        <div class="card">
+            <p class="label">Text</p>
+            <wox-input type="text" label="Name" placeholder="Type here..."></wox-input>
+        </div>
+        <div class="card">
+            <p class="label">Number with unit</p>
+            <wox-input type="number" label="Width" value="100" unit="px"></wox-input>
+        </div>
+    </div>
+
+    <!-- ── Slider ── -->
+    <h2>wox-slider</h2>
+    <div class="card">
+        <wox-slider value="65" label="Opacity" unit="%" show-value></wox-slider>
+    </div>
+
+    <!-- ── Select ── -->
+    <h2>wox-select</h2>
+    <div class="card">
+        <wox-select placeholder="Choose a color..."></wox-select>
+    </div>
+
+    <!-- ── Color Swatch + Tooltip ── -->
+    <h2>wox-color-swatch + wox-tooltip</h2>
+    <div class="row">
+        <wox-tooltip text="Red">
+            <wox-color-swatch color="#f72585"></wox-color-swatch>
+        </wox-tooltip>
+        <wox-tooltip text="Cyan">
+            <wox-color-swatch color="#00e5ff"></wox-color-swatch>
+        </wox-tooltip>
+        <wox-tooltip text="Semi-transparent">
+            <wox-color-swatch color="rgba(67, 97, 238, 0.5)"></wox-color-swatch>
+        </wox-tooltip>
+    </div>
+
+    <!-- ── Section ── -->
+    <h2>wox-section</h2>
+    <wox-section label="Collapsible Section" open>
+        <div style="padding: 8px; color: var(--wox-text-secondary);">Content inside a collapsible section.</div>
+    </wox-section>
+
+    <!-- ── Tabs ── -->
+    <h2>wox-tabs</h2>
+    <div class="card">
+        <wox-tabs>
+            <wox-tab label="Properties">
+                <div style="padding: 12px;">Properties panel content</div>
+            </wox-tab>
+            <wox-tab label="Layers">
+                <div style="padding: 12px;">Layers panel content</div>
+            </wox-tab>
+        </wox-tabs>
+    </div>
+
+    <!-- ── Modal ── -->
+    <h2>wox-modal</h2>
+    <div class="row">
+        <wox-button variant="text" icon="open_in_new" label="Open Modal" id="modal-trigger"></wox-button>
+    </div>
+    <wox-modal id="test-modal" title="CDN Modal Test">
+        <div style="padding: 16px; color: var(--wox-text-secondary);">This modal was opened from the CDN bundle.</div>
+    </wox-modal>
+
+    <!-- ── Toast ── -->
+    <h2>wox-toast</h2>
+    <div class="row">
+        <wox-button variant="text" icon="check_circle" label="Success" id="toast-success"></wox-button>
+        <wox-button variant="text" icon="error" label="Error" id="toast-error"></wox-button>
+        <wox-button variant="text" icon="warning" label="Warning" id="toast-warning"></wox-button>
+    </div>
+
+    <!-- ── Date Picker ── -->
+    <h2>wox-date-picker</h2>
+    <div class="card">
+        <wox-date-picker></wox-date-picker>
+    </div>
+
+    <!-- ── Datagrid ── -->
+    <h2>wox-datagrid</h2>
+    <div class="card">
+        <wox-datagrid id="test-grid"></wox-datagrid>
+    </div>
+
+    <!-- ── Event Log ── -->
+    <h2>Event Log</h2>
+    <div id="log">Waiting for events...</div>
+
+    <script type="module">
+        import { WoxToast, WoxContextMenu } from '../dist/wox-gui.js';
+
+        // ── Automated checks ──
+        const CHECKS_EL = document.getElementById('checks');
+
+        /** Renders a single pass/fail check line. */
+        const addCheck = (name, passed) => {
+            const div = document.createElement('div');
+            div.className = 'check';
+            div.innerHTML = `<span class="${passed ? 'pass' : 'fail'}">${passed ? '✓' : '✗'}</span> ${name}`;
+            CHECKS_EL.appendChild(div);
+        };
+
+        // 1. Theme injected
+        addCheck('Theme <style id="wox-theme"> injected', !!document.getElementById('wox-theme'));
+
+        // 2. CSS variables resolved
+        const bgApp = getComputedStyle(document.documentElement).getPropertyValue('--wox-bg-app').trim();
+        addCheck(`--wox-bg-app resolved ("${bgApp}")`, bgApp === '#121214');
+
+        // 3. Components registered
+        const EXPECTED_TAGS = [
+            'wox-icon', 'wox-separator', 'wox-badge', 'wox-button', 'wox-input',
+            'wox-select', 'wox-slider', 'wox-color-swatch', 'wox-tooltip',
+            'wox-color-picker', 'wox-menu-item', 'wox-menu', 'wox-layer-item',
+            'wox-section', 'wox-tab', 'wox-tabs', 'wox-toolbar-group', 'wox-toolbar',
+            'wox-panel', 'wox-menubar', 'wox-statusbar', 'wox-modal', 'wox-datagrid',
+            'wox-toast', 'wox-context-menu', 'wox-gradient-editor',
+            'wox-gradient-selector', 'wox-date-picker',
+        ];
+        const missing = EXPECTED_TAGS.filter(tag => !customElements.get(tag));
+        addCheck(`All 28 custom elements registered (missing: ${missing.length})`, missing.length === 0);
+        if (missing.length > 0) {
+            addCheck(`  Missing: ${missing.join(', ')}`, false);
+        }
+
+        // 4. Shadow DOM present on a rendered component
+        const icon = document.querySelector('wox-icon');
+        addCheck('wox-icon has shadowRoot', !!icon?.shadowRoot);
+
+        // 5. No duplicate theme injection
+        const themeCount = document.querySelectorAll('#wox-theme').length;
+        addCheck(`Theme style injected exactly once (count: ${themeCount})`, themeCount === 1);
+
+        // ── Event log ──
+        const LOG_EL = document.getElementById('log');
+        /** Appends a line to the event log. */
+        const log = (msg) => {
+            LOG_EL.textContent = `${msg}\n${LOG_EL.textContent}`.slice(0, 2000);
+        };
+
+        document.body.addEventListener('wox-click', (e) => log(`wox-click → ${e.target.tagName.toLowerCase()}`));
+        document.body.addEventListener('wox-change', (e) => log(`wox-change → ${JSON.stringify(e.detail)}`));
+        document.body.addEventListener('wox-tab-change', (e) => log(`wox-tab-change → ${JSON.stringify(e.detail)}`));
+
+        // ── Modal trigger ──
+        document.getElementById('modal-trigger').addEventListener('wox-click', () => {
+            document.getElementById('test-modal').open();
+        });
+
+        // ── Toast triggers ──
+        document.getElementById('toast-success').addEventListener('wox-click', () => WoxToast.success('It works!'));
+        document.getElementById('toast-error').addEventListener('wox-click', () => WoxToast.error('Something broke'));
+        document.getElementById('toast-warning').addEventListener('wox-click', () => WoxToast.warning('Watch out'));
+
+        // ── Select options ──
+        const sel = document.querySelector('wox-select');
+        sel.setOptions([
+            { label: 'Red', value: 'red' },
+            { label: 'Green', value: 'green' },
+            { label: 'Blue', value: 'blue' },
+            { label: 'Cyan', value: 'cyan' },
+        ]);
+
+        // ── Datagrid data ──
+        const grid = document.getElementById('test-grid');
+        grid.columns = [
+            { key: 'name', label: 'Component', sortable: true },
+            { key: 'type', label: 'Type', sortable: true },
+            { key: 'status', label: 'Status' },
+        ];
+        grid.rows = [
+            { name: 'wox-button', type: 'Primitive', status: 'Stable' },
+            { name: 'wox-input', type: 'Primitive', status: 'Stable' },
+            { name: 'wox-modal', type: 'Layout', status: 'Stable' },
+            { name: 'wox-datagrid', type: 'Data', status: 'Stable' },
+            { name: 'wox-toast', type: 'Feedback', status: 'Stable' },
+        ];
+
+        // ── Context menu (right-click anywhere) ──
+        document.body.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            WoxContextMenu.show(e, [
+                { label: 'Copy', icon: 'content_copy', shortcut: 'Ctrl+C' },
+                { label: 'Paste', icon: 'content_paste', shortcut: 'Ctrl+V' },
+                { type: 'divider' },
+                { label: 'Delete', icon: 'delete', shortcut: 'Del' },
+            ]);
+        });
+    </script>
+</body>
+</html>

@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-09 — Add CDN test page
+
+### Added
+- **`tests/cdn.html`**: Test page for the CDN bundle. Loads only `dist/wox-gui.cdn.js` (no theme `<link>`, no `register.js`). Runs automated checks (theme injection, CSS variable resolution, all 28 custom elements registered, shadow DOM presence, no duplicate injection). Exercises icons, buttons, badges, inputs, slider, select, color swatches, tooltips, section, tabs, modal, toasts, date picker, datagrid, and context menu with an event log.
+
 ## 2026-03-09 — Add CDN bundle entry point
 
 ### Added
