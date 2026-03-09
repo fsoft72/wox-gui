@@ -2,9 +2,60 @@
 // Registers all components and injects the theme stylesheet into the document.
 // Usage: <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui/dist/wox-gui.cdn.js"></script>
 
-export * from './index.js';
-import './register.js';
+export {
+  WoxElement, FX_STYLES,
+  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxInput, WoxSelect,
+  WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
+  WoxMenuItem, WoxMenu, WoxLayerItem,
+  WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
+  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal,
+  WoxDatagrid, WoxToast, WoxContextMenu,
+  WoxGradientEditor, gradientToCSS, cssToGradient, WoxGradientSelector,
+  WoxDatePicker,
+} from './index.js';
 
+import {
+  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxInput, WoxSelect,
+  WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
+  WoxMenuItem, WoxMenu, WoxLayerItem,
+  WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
+  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal,
+  WoxDatagrid, WoxToast, WoxContextMenu,
+  WoxGradientEditor, WoxGradientSelector,
+  WoxDatePicker,
+} from './index.js';
+
+// ── Register all custom elements ──
+customElements.define('wox-icon', WoxIcon);
+customElements.define('wox-separator', WoxSeparator);
+customElements.define('wox-badge', WoxBadge);
+customElements.define('wox-button', WoxButton);
+customElements.define('wox-input', WoxInput);
+customElements.define('wox-select', WoxSelect);
+customElements.define('wox-slider', WoxSlider);
+customElements.define('wox-color-swatch', WoxColorSwatch);
+customElements.define('wox-tooltip', WoxTooltip);
+customElements.define('wox-color-picker', WoxColorPicker);
+customElements.define('wox-menu-item', WoxMenuItem);
+customElements.define('wox-menu', WoxMenu);
+customElements.define('wox-layer-item', WoxLayerItem);
+customElements.define('wox-section', WoxSection);
+customElements.define('wox-tab', WoxTab);
+customElements.define('wox-tabs', WoxTabs);
+customElements.define('wox-toolbar-group', WoxToolbarGroup);
+customElements.define('wox-toolbar', WoxToolbar);
+customElements.define('wox-panel', WoxPanel);
+customElements.define('wox-menubar', WoxMenubar);
+customElements.define('wox-statusbar', WoxStatusbar);
+customElements.define('wox-modal', WoxModal);
+customElements.define('wox-datagrid', WoxDatagrid);
+customElements.define('wox-toast', WoxToast);
+customElements.define('wox-context-menu', WoxContextMenu);
+customElements.define('wox-gradient-editor', WoxGradientEditor);
+customElements.define('wox-gradient-selector', WoxGradientSelector);
+customElements.define('wox-date-picker', WoxDatePicker);
+
+// ── Inject theme CSS custom properties ──
 /** Injects the WOX theme CSS custom properties into the document head. */
 const _injectTheme = () => {
   if (document.getElementById('wox-theme')) return;

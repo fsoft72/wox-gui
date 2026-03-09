@@ -169,12 +169,16 @@
         const addCheck = (name, passed) => {
             const div = document.createElement('div');
             div.className = 'check';
-            div.innerHTML = `<span class="${passed ? 'pass' : 'fail'}">${passed ? '✓' : '✗'}</span> ${name}`;
+            const icon = document.createElement('span');
+            icon.className = passed ? 'pass' : 'fail';
+            icon.textContent = passed ? '✓' : '✗';
+            div.appendChild(icon);
+            div.appendChild(document.createTextNode(' ' + name));
             CHECKS_EL.appendChild(div);
         };
 
         // 1. Theme injected
-        addCheck('Theme <style id="wox-theme"> injected', !!document.getElementById('wox-theme'));
+        addCheck('Theme style#wox-theme injected', !!document.getElementById('wox-theme'));
 
         // 2. CSS variables resolved
         const bgApp = getComputedStyle(document.documentElement).getPropertyValue('--wox-bg-app').trim();
