@@ -11,6 +11,7 @@
   "exports": {
     ".": "./dist/wox-gui.js",
     "./register": "./dist/register.js",
+    "./cdn": "./dist/wox-gui.cdn.js",
     "./theme": "./dist/wox-theme.css"
   },
   "files": [

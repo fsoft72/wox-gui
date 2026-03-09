@@ -1,5 +1,15 @@
 # CHANGES.md
 
+## 2026-03-09 — Add CDN bundle entry point
+
+### Added
+- **`src/cdn.js`**: Single-file CDN entry point that imports `register.js` (registers all components) and injects the theme CSS custom properties into the document head via a `<style id="wox-theme">` element. Idempotent — skips injection if the style element already exists.
+
+### Changed
+- **`vite.config.js`**: Added `wox-gui.cdn` as a third library entry point.
+- **`package.json`**: Added `"./cdn"` sub-path export pointing to `dist/wox-gui.cdn.js`.
+- **`AGENT.md`**: Documented CDN usage with jsdelivr and unpkg URLs.
+
 ## 2026-03-09 — Add AGENT.md
 
 ### Added

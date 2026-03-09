@@ -89,8 +89,25 @@ Every component follows this structure:
 ```js
 import { WoxButton, WoxInput } from 'wox-gui';       // Tree-shakable imports
 import 'wox-gui/register';                             // Auto-register all components
+import 'wox-gui/cdn';                                  // CDN bundle (registers + injects theme)
 import 'wox-gui/theme';                                // CSS custom properties
 ```
+
+### CDN Usage
+
+A single `<script>` tag that registers all components and injects the theme CSS:
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui/dist/wox-gui.cdn.js"></script>
+```
+
+Or via unpkg:
+
+```html
+<script type="module" src="https://unpkg.com/wox-gui/dist/wox-gui.cdn.js"></script>
+```
+
+The CDN bundle auto-injects a `<style id="wox-theme">` element into `<head>` with all CSS custom properties. Users still need to load the fonts themselves (Inter + Material Icons).
 
 ## Component Inventory (28 components)
 

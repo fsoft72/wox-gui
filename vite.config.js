@@ -7,6 +7,7 @@ export default defineConfig({
       entry: {
         'wox-gui': resolve(__dirname, 'src/index.js'),
         'register': resolve(__dirname, 'src/register.js'),
+        'wox-gui.cdn': resolve(__dirname, 'src/cdn.js'),
       },
       formats: ['es'],
     },
