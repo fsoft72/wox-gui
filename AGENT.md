@@ -93,21 +93,47 @@ import 'wox-gui/cdn';                                  // CDN bundle (registers 
 import 'wox-gui/theme';                                // CSS custom properties
 ```
 
-### CDN Usage
+### CDN Usage (single file, no build step)
 
-A single `<script>` tag that registers all components and injects the theme CSS:
-
-```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui/dist/wox-gui.cdn.js"></script>
-```
-
-Or via unpkg:
+The CDN bundle is a **single self-contained file** (164KB) with zero imports. It registers all 28 components and injects the theme CSS into `<head>` automatically.
 
 ```html
-<script type="module" src="https://unpkg.com/wox-gui/dist/wox-gui.cdn.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+
+    <!-- Required fonts (Inter for UI text, Material Icons for icons) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- WOX-GUI: registers all components + injects theme CSS variables -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.3/dist/wox-gui.cdn.js"></script>
+</head>
+<body>
+    <!-- Components are immediately available -->
+    <wox-button variant="text" icon="add" label="New"></wox-button>
+    <wox-input type="text" label="Name" placeholder="Type here..."></wox-input>
+    <wox-slider value="50" label="Opacity" unit="%" show-value></wox-slider>
+</body>
+</html>
 ```
 
-The CDN bundle auto-injects a `<style id="wox-theme">` element into `<head>` with all CSS custom properties. Users still need to load the fonts themselves (Inter + Material Icons).
+The CDN bundle also **re-exports all classes**, so you can import from the same URL in inline scripts:
+
+```html
+<script type="module">
+    import { WoxToast, WoxContextMenu } from 'https://cdn.jsdelivr.net/npm/wox-gui@0.1.3/dist/wox-gui.cdn.js';
+
+    WoxToast.success('Hello from CDN!');
+</script>
+```
+
+Also available via unpkg: `https://unpkg.com/wox-gui@0.1.3/dist/wox-gui.cdn.js`
+
+**Important:** Always pin the version (`@0.1.3`) — unversioned URLs may serve a stale cached version.
 
 ## Component Inventory (28 components)
 
@@ -199,15 +225,43 @@ The dev server serves `index.html` which links to the three demo pages. No trans
 
 ## Documentation
 
-Each component has a dedicated Markdown file in `docs/wox-<name>.md` covering:
-- Tag name and description
-- All attributes/properties with types and defaults
-- Events with detail payloads
-- Slots (if any)
-- Code examples
-- Feature notes
+**For full component API details (attributes, events, slots, examples), read the docs files listed below.**
 
-The `docs/index.md` serves as the component index. Update it when adding new components.
+| File | Contents |
+|------|----------|
+| `docs/index.md` | Component index with links to all docs |
+| `docs/getting-started.md` | Setup, fonts, imports, minimal example |
+| `docs/theming.md` | All CSS custom properties reference |
+| `docs/wox-icon.md` | `<wox-icon>` — attributes: `name`, `size`, `color`, `glow`, `pulse` |
+| `docs/wox-separator.md` | `<wox-separator>` — attributes: `direction`, `spacing` |
+| `docs/wox-badge.md` | `<wox-badge>` — attributes: `variant`, `color`, `text` |
+| `docs/wox-button.md` | `<wox-button>` — attributes: `variant`, `icon`, `label`, `active`, `disabled`, `glow`, `pulse`, `color` |
+| `docs/wox-input.md` | `<wox-input>` — attributes: `type`, `label`, `value`, `placeholder`, `unit`, `min`, `max`, `step`, `disabled` |
+| `docs/wox-select.md` | `<wox-select>` — attributes: `placeholder`, `multi`; JS API: `setOptions()`, `selectOption()`, `deselectOption()` |
+| `docs/wox-slider.md` | `<wox-slider>` — attributes: `value`, `min`, `max`, `step`, `label`, `unit`, `show-value`, `color`, `glow`, `pulse` |
+| `docs/wox-color-swatch.md` | `<wox-color-swatch>` — attributes: `color`, `size`, `glow`, `pulse` |
+| `docs/wox-tooltip.md` | `<wox-tooltip>` — attributes: `text`, `position` |
+| `docs/wox-color-picker.md` | `<wox-color-picker>` — attributes: `color`; JS API: `setColor()`, `getColor()` |
+| `docs/wox-menu-item.md` | `<wox-menu-item>` — attributes: `type`, `icon`, `label`, `shortcut`, `disabled` |
+| `docs/wox-menu.md` | `<wox-menu>` — attributes: `trigger`, `label`, `icon` |
+| `docs/wox-layer-item.md` | `<wox-layer-item>` — attributes: `name`, `visible`, `locked`, `selected` |
+| `docs/wox-section.md` | `<wox-section>` — attributes: `label`, `open` |
+| `docs/wox-tab.md` | `<wox-tab>` — attributes: `label` |
+| `docs/wox-tabs.md` | `<wox-tabs>` — attributes: `placement` (top/left/right) |
+| `docs/wox-toolbar-group.md` | `<wox-toolbar-group>` — attributes: `label` |
+| `docs/wox-toolbar.md` | `<wox-toolbar>` — container for toolbar groups |
+| `docs/wox-panel.md` | `<wox-panel>` — attributes: `side`, `width`; resizable |
+| `docs/wox-menubar.md` | `<wox-menubar>` — horizontal menu bar with keyboard nav |
+| `docs/wox-statusbar.md` | `<wox-statusbar>` — three-column bottom bar (slots: `left`, `center`, `right`) |
+| `docs/wox-modal.md` | `<wox-modal>` — attributes: `title`, `closable`; JS API: `open()`, `close()`, `openState` |
+| `docs/wox-datagrid.md` | `<wox-datagrid>` — JS API: `.columns`, `.rows`; events: `wox-sort`, `wox-row-click`, `wox-cell-change` |
+| `docs/wox-toast.md` | `<wox-toast>` — Static API: `WoxToast.success/error/warning/info(message, options)` |
+| `docs/wox-context-menu.md` | `<wox-context-menu>` — Static API: `WoxContextMenu.show(event, items)` |
+| `docs/wox-gradient-editor.md` | `<wox-gradient-editor>` — JS API: set gradient via property; utilities: `gradientToCSS()`, `cssToGradient()` |
+| `docs/wox-gradient-selector.md` | `<wox-gradient-selector>` — full gradient picker with presets and editor dialog |
+| `docs/wox-date-picker.md` | `<wox-date-picker>` — attributes: `range-mode`, `value`, `disabled`; JS API: `setDate()`, `setRange()`, `getSelectedDate()`, `clear()` |
+
+**When generating code that uses a WOX component, read the corresponding `docs/wox-<name>.md` file first to get the exact API.**
 
 ## Key Files to Modify When Adding a New Component
 
