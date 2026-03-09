@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-09 — Add AGENT.md
+
+### Added
+- **`AGENT.md`**: Comprehensive project guide for LLMs — covers architecture, component inventory, theming system, coding conventions, event patterns, and step-by-step instructions for adding new components.
+
 ## 2026-03-07 — Add npm publish script
 
 ### Added
