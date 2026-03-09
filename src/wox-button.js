@@ -1,13 +1,13 @@
 // wox-button.js — Multi-variant button component (icon, text, tile, dash)
 
-import { WoxElement } from './wox-base.js';
-import { FX_STYLES } from './wox-fx.js';
+import { WoxElement } from "./wox-base.js";
+import { FX_STYLES } from "./wox-fx.js";
 
 const STYLES = `
     :host { display: inline-block; }
     button {
         display: flex; align-items: center; justify-content: center; gap: 6px;
-        background: transparent; border: 1px solid transparent; color: var(--wox-text-secondary, #999);
+        background: transparent; border: 1px solid var(--wox-border); color: var(--wox-text-secondary, #999);
         cursor: pointer; font-family: var(--wox-font, sans-serif); font-size: var(--wox-font-size-base, 12px);
         transition: all var(--wox-transition-fast, 0.12s); border-radius: var(--wox-radius-sm, 3px);
         padding: 0; margin: 0; line-height: 1; user-select: none;
@@ -85,52 +85,81 @@ const STYLES = `
  * @fires wox-click - Emitted on click with no detail
  */
 class WoxButton extends WoxElement {
-    static observedAttributes = ['variant', 'icon', 'label', 'active', 'disabled', 'color', 'size', 'dash', 'glow', 'pulse'];
+	static observedAttributes = [
+		"variant",
+		"icon",
+		"label",
+		"active",
+		"disabled",
+		"color",
+		"size",
+		"dash",
+		"glow",
+		"pulse",
+	];
 
-    connectedCallback() {
-        this._render();
-    }
+	connectedCallback() {
+		this._render();
+	}
 
-    attributeChangedCallback() {
-        if (this.isConnected) this._render();
-    }
+	attributeChangedCallback() {
+		if (this.isConnected) this._render();
+	}
 
-    /** @private */
-    _render = () => {
-        const variant = this.getAttribute('variant') || 'icon';
-        const icon = this.getAttribute('icon') || '';
-        const label = this.getAttribute('label') || '';
-        const active = this.hasAttribute('active');
-        const disabled = this.hasAttribute('disabled');
-        const dash = this.getAttribute('dash') || 'solid';
-        const color = this.getAttribute('color') || '';
-        const glow = this.hasAttribute('glow');
-        const pulse = this.hasAttribute('pulse');
+	/** @private */
+	_render = () => {
+		const variant = this.getAttribute("variant") || "icon";
+		const icon = this.getAttribute("icon") || "";
+		const label = this.getAttribute("label") || "";
+		const active = this.hasAttribute("active");
+		const disabled = this.hasAttribute("disabled");
+		const dash = this.getAttribute("dash") || "solid";
+		const color = this.getAttribute("color") || "";
+		const glow = this.hasAttribute("glow");
+		const pulse = this.hasAttribute("pulse");
 
-        const classes = [`v-${variant}`, active ? 'active' : '', glow ? 'glow' : '', pulse ? 'pulse' : ''].filter(Boolean).join(' ');
-        let content = '';
+		const classes = [
+			`v-${variant}`,
+			active ? "active" : "",
+			glow ? "glow" : "",
+			pulse ? "pulse" : "",
+		]
+			.filter(Boolean)
+			.join(" ");
+		let content = "";
 
-        if (variant === 'icon') {
-            content = icon ? `<span class="material-icons">${icon}</span>` : `<slot></slot>`;
-        } else if (variant === 'text') {
-            content = (icon ? `<span class="material-icons" style="font-size:14px">${icon}</span>` : '') + (label || `<slot></slot>`);
-        } else if (variant === 'tile') {
-            content = (icon ? `<span class="material-icons">${icon}</span>` : `<slot name="icon"></slot>`) + `<span>${label}</span>`;
-        } else if (variant === 'dash') {
-            const dashClass = dash === 'solid' ? '' : ` ${dash}`;
-            content = `<div class="dash-line${dashClass}"></div>`;
-        }
+		if (variant === "icon") {
+			content = icon
+				? `<span class="material-icons">${icon}</span>`
+				: `<slot></slot>`;
+		} else if (variant === "text") {
+			content =
+				(icon
+					? `<span class="material-icons" style="font-size:14px">${icon}</span>`
+					: "") + (label || `<slot></slot>`);
+		} else if (variant === "tile") {
+			content =
+				(icon
+					? `<span class="material-icons">${icon}</span>`
+					: `<slot name="icon"></slot>`) + `<span>${label}</span>`;
+		} else if (variant === "dash") {
+			const dashClass = dash === "solid" ? "" : ` ${dash}`;
+			content = `<div class="dash-line${dashClass}"></div>`;
+		}
 
-        const colorAttr = color ? ` data-color style="--wox-fx-color:${color}"` : '';
+		const colorAttr = color
+			? ` data-color style="--wox-fx-color:${color}"`
+			: "";
 
-        this.render(STYLES + FX_STYLES,
-            `<button class="${classes}"${colorAttr} ${disabled ? 'disabled' : ''}>${content}</button>`
-        );
+		this.render(
+			STYLES + FX_STYLES,
+			`<button class="${classes}"${colorAttr} ${disabled ? "disabled" : ""}>${content}</button>`,
+		);
 
-        this.$('button').addEventListener('click', (e) => {
-            if (!disabled) this.emit('wox-click', { originalEvent: e });
-        });
-    };
+		this.$("button").addEventListener("click", (e) => {
+			if (!disabled) this.emit("wox-click", { originalEvent: e });
+		});
+	};
 }
 
 export { WoxButton };
