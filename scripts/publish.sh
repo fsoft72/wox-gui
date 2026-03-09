@@ -63,6 +63,14 @@ fi
 
 echo "Version: $CURRENT_VERSION -> $NEW_VERSION"
 
+# --- Update version references in AGENT.md and tests/cdn.html ---
+
+for f in AGENT.md tests/cdn.html; do
+  if [ -f "$f" ]; then
+    sed -i "s/@${CURRENT_VERSION}/@${NEW_VERSION}/g" "$f"
+  fi
+done
+
 # --- Publish ---
 
 echo "Publishing wox-gui@$NEW_VERSION to npm..."
@@ -70,7 +78,7 @@ npm publish --access public
 
 # --- Git tag & commit ---
 
-git add package.json
+git add package.json AGENT.md tests/cdn.html
 git commit -m "chore: release v$NEW_VERSION"
 git tag -a "v$NEW_VERSION" -m "v$NEW_VERSION"
 
