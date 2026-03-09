@@ -2,6 +2,7 @@
 // Registers all components and injects the theme stylesheet into the document.
 // Usage: <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui/dist/wox-gui.cdn.js"></script>
 
+export * from './index.js';
 import './register.js';
 
 /** Injects the WOX theme CSS custom properties into the document head. */
