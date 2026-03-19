@@ -38,6 +38,21 @@ const TYPE_PALETTE = {
 	info:    { bg: '#1a222e', border: '#2196F3', icon: '#42A5F5', progress: '#2196F3', text: '#bbdefb' },
 };
 
+/** Type -> light-theme colour palette { bg, border, icon, progress, text } */
+const TYPE_PALETTE_LIGHT = {
+	success: { bg: '#e8f5e9', border: '#2e7d32', icon: '#388e3c', progress: '#2e7d32', text: '#1b5e20' },
+	error:   { bg: '#fce4ec', border: '#c62828', icon: '#d32f2f', progress: '#c62828', text: '#b71c1c' },
+	warning: { bg: '#fff8e1', border: '#e65100', icon: '#ef6c00', progress: '#e65100', text: '#bf360c' },
+	info:    { bg: '#e3f2fd', border: '#1565c0', icon: '#1976d2', progress: '#1565c0', text: '#0d47a1' },
+};
+
+/** Get the active palette for a toast type based on current theme. */
+const _getPalette = (type) => {
+	const isLight = document.documentElement.dataset.woxTheme === 'light';
+	const palettes = isLight ? TYPE_PALETTE_LIGHT : TYPE_PALETTE;
+	return palettes[type] || palettes.info;
+};
+
 /** Inline SVG icons (20x20, stroke=currentColor) per type */
 const ICONS = {
 	success: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`,
@@ -173,7 +188,8 @@ const _show = (type, message, opts = {}) => {
 		position = 'BR',
 	} = opts;
 
-	const palette = TYPE_PALETTE[type] || TYPE_PALETTE.info;
+	const isLight = document.documentElement.dataset.woxTheme === 'light';
+	const palette = _getPalette(type);
 	const pos = POSITIONS[position] ? position : 'BR';
 	const container = _getContainer(pos);
 
@@ -200,7 +216,7 @@ const _show = (type, message, opts = {}) => {
 		const closeBtn = el.querySelector('.wox-toast-close');
 		if (closeBtn) {
 			closeBtn.addEventListener('mouseenter', () => { closeBtn.style.color = palette.icon; });
-			closeBtn.addEventListener('mouseleave', () => { closeBtn.style.color = '#666'; });
+			closeBtn.addEventListener('mouseleave', () => { closeBtn.style.color = isLight ? '#999' : '#666'; });
 		}
 	}
 

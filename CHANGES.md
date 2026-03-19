@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-19 — Light-mode toast palette (Task 16)
+
+### Added
+- **`src/wox-toast.js`**: Added `TYPE_PALETTE_LIGHT` constant with light-theme colour values for success, error, warning, and info toast types. Added `_getPalette()` helper that selects the correct palette based on `data-wox-theme` attribute. Close button mouseleave colour now adapts to the active theme.
+
 ## 2026-03-19 — Light theme foundation (Tasks 1-4)
 
 ### Added
