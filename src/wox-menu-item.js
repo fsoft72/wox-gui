@@ -9,11 +9,11 @@ const STYLES = `
         gap: 8px; cursor: pointer; font-size: 11.5px; font-family: var(--wox-font, sans-serif);
         transition: all 0.2s; border-radius: var(--wox-radius-sm, 3px); user-select: none;
     }
-    .item:hover { background-color: rgba(0, 229, 255, 0.1); color: var(--wox-accent, #00e5ff); }
+    .item:hover { background-color: var(--wox-bg-hover); color: var(--wox-accent, #00e5ff); }
     .item.disabled { opacity: 0.4; pointer-events: none; }
     .label { flex: 1; }
     .shortcut { font-size: var(--wox-font-size-sm, 10px); color: var(--wox-text-secondary, #999); margin-left: auto; }
-    .item:hover .shortcut { color: rgba(0, 229, 255, 0.6); }
+    .item:hover .shortcut { color: var(--wox-accent); }
     .icon { font-size: 14px; width: 18px; text-align: center; }
     .arrow { font-size: 10px; color: var(--wox-text-secondary, #999); margin-left: 4px; }
     .separator { height: 1px; background: var(--wox-border, #333); margin: 4px 0; }
