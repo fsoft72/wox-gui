@@ -7,20 +7,20 @@ const STYLES = `
     .layer {
         display: flex; align-items: center; gap: 6px; padding: 6px 10px 6px 12px;
         margin: 4px 8px 0 8px; border-radius: var(--wox-radius-md, 6px);
-        background: rgba(255, 255, 255, 0.04); border: 1px solid transparent;
+        background: var(--wox-bg-panel); border: 1px solid transparent;
         cursor: pointer; user-select: none; font-size: var(--wox-font-size-md, 11px);
         font-weight: 600; color: var(--wox-text-secondary, #999); text-transform: uppercase;
         letter-spacing: 0.5px; transition: background 0.1s, border-color 0.1s;
     }
     :host([depth="1"]) .layer { margin-left: 24px; }
     :host([depth="2"]) .layer { margin-left: 40px; }
-    .layer:hover { background: rgba(255, 255, 255, 0.07); }
+    .layer:hover { background: var(--wox-bg-hover); }
     .layer.selected { border-color: var(--wox-accent, #00e5ff); color: var(--wox-accent, #00e5ff); background: rgba(0, 229, 255, 0.06); }
-    .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--wox-font-size-lg, 13px); color: #ccc; font-weight: 400; text-transform: none; letter-spacing: 0; }
+    .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--wox-font-size-lg, 13px); color: var(--wox-text-primary, #ccc); font-weight: 400; text-transform: none; letter-spacing: 0; }
     .layer.selected .name { color: var(--wox-text-hi, #fff); }
     .name-input {
-        flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid #4A8CFF;
-        color: #fff; font-size: var(--wox-font-size-lg, 13px); font-family: var(--wox-font, sans-serif);
+        flex: 1; background: var(--wox-bg-input); border: 1px solid var(--wox-accent);
+        color: var(--wox-text-hi, #fff); font-size: var(--wox-font-size-lg, 13px); font-family: var(--wox-font, sans-serif);
         padding: 2px 4px; border-radius: var(--wox-radius-sm, 3px); outline: none; width: 100%;
     }
     .type-icon { font-size: 14px; opacity: 0.6; width: 18px; text-align: center; }
