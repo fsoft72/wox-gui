@@ -12,6 +12,7 @@ export {
   WoxDatagrid, WoxToast, WoxContextMenu,
   WoxGradientEditor, gradientToCSS, cssToGradient, WoxGradientSelector,
   WoxDatePicker,
+  WoxTheme, WoxThemeToggle,
 } from './index.js';
 
 import {
@@ -23,6 +24,7 @@ import {
   WoxDatagrid, WoxToast, WoxContextMenu,
   WoxGradientEditor, WoxGradientSelector,
   WoxDatePicker,
+  WoxThemeToggle,
 } from './index.js';
 
 // ── Register all custom elements ──
@@ -54,6 +56,7 @@ customElements.define('wox-context-menu', WoxContextMenu);
 customElements.define('wox-gradient-editor', WoxGradientEditor);
 customElements.define('wox-gradient-selector', WoxGradientSelector);
 customElements.define('wox-date-picker', WoxDatePicker);
+customElements.define('wox-theme-toggle', WoxThemeToggle);
 
 // ── Inject theme CSS custom properties ──
 /** Injects the WOX theme CSS custom properties into the document head. */
@@ -123,6 +126,31 @@ const THEME_CSS = `/* wox-theme.css — Global CSS custom properties for the WOX
     --wox-shadow-input: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     --wox-shadow-section: inset 0 -12px 24px -12px rgba(0, 0, 0, 0.5);
     --wox-shadow-accent: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+:root[data-wox-theme="light"] {
+    --wox-bg-app: #edeef1;
+    --wox-bg-panel: #e8e9ee;
+    --wox-bg-toolbar: #e2e3e8;
+    --wox-bg-input: #ffffff;
+    --wox-bg-hover: #d5d7de;
+    --wox-bg-canvas: #d8dae0;
+    --wox-bg-section-header: #dcdee4;
+    --wox-text-primary: #1a1a1a;
+    --wox-text-secondary: #6b6f7b;
+    --wox-text-hi: #000000;
+    --wox-accent: #0097a7;
+    --wox-border: #b8bcc6;
+    --wox-border-light: #a8acb8;
+    --wox-border-section: #c5c8d0;
+    --wox-danger: #d81b60;
+    --wox-success: #00838f;
+    --wox-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --wox-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --wox-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.15);
+    --wox-shadow-xl: 0 24px 80px rgba(0, 0, 0, 0.2);
+    --wox-shadow-input: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+    --wox-shadow-section: inset 0 -12px 24px -12px rgba(0, 0, 0, 0.08);
+    --wox-shadow-accent: 0 0 10px rgba(0, 151, 167, 0.25);
 }`;
 
 _injectTheme();

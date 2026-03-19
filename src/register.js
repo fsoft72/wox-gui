@@ -30,6 +30,7 @@ import {
   WoxGradientEditor,
   WoxGradientSelector,
   WoxDatePicker,
+  WoxThemeToggle,
 } from './index.js';
 
 customElements.define('wox-icon', WoxIcon);
@@ -60,3 +61,4 @@ customElements.define('wox-context-menu', WoxContextMenu);
 customElements.define('wox-gradient-editor', WoxGradientEditor);
 customElements.define('wox-gradient-selector', WoxGradientSelector);
 customElements.define('wox-date-picker', WoxDatePicker);
+customElements.define('wox-theme-toggle', WoxThemeToggle);

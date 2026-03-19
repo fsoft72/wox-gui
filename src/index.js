@@ -30,3 +30,5 @@ export { WoxContextMenu } from './wox-context-menu.js';
 export { WoxGradientEditor, gradientToCSS, cssToGradient } from './wox-gradient-editor.js';
 export { WoxGradientSelector } from './wox-gradient-selector.js';
 export { WoxDatePicker } from './wox-date-picker.js';
+export { WoxTheme } from './wox-theme.js';
+export { WoxThemeToggle } from './wox-theme-toggle.js';
