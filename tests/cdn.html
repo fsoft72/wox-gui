@@ -34,6 +34,9 @@
     <h1>CDN Bundle Test</h1>
     <p class="subtitle">Loaded via <code>dist/wox-gui.cdn.js</code> — no theme &lt;link&gt;, no register import.</p>
 
+    <!-- ── Theme Toggle ── -->
+    <div style="margin-bottom: 16px;"><wox-theme-toggle></wox-theme-toggle></div>
+
     <!-- ── Automated checks ── -->
     <h2>Automated Checks</h2>
     <div class="card" id="checks"></div>
@@ -192,10 +195,10 @@
             'wox-section', 'wox-tab', 'wox-tabs', 'wox-toolbar-group', 'wox-toolbar',
             'wox-panel', 'wox-menubar', 'wox-statusbar', 'wox-modal', 'wox-datagrid',
             'wox-toast', 'wox-context-menu', 'wox-gradient-editor',
-            'wox-gradient-selector', 'wox-date-picker',
+            'wox-gradient-selector', 'wox-date-picker', 'wox-theme-toggle',
         ];
         const missing = EXPECTED_TAGS.filter(tag => !customElements.get(tag));
-        addCheck(`All 28 custom elements registered (missing: ${missing.length})`, missing.length === 0);
+        addCheck(`All 29 custom elements registered (missing: ${missing.length})`, missing.length === 0);
         if (missing.length > 0) {
             addCheck(`  Missing: ${missing.join(', ')}`, false);
         }
