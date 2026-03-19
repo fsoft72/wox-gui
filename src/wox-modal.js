@@ -14,21 +14,21 @@ const STYLES = `
         opacity: 1; transition: opacity 0.2s ease;
     }
     .box {
-        background: #1e1e24; border: 1px solid var(--wox-border, #333);
+        background: var(--wox-bg-toolbar, #1e1e24); border: 1px solid var(--wox-border, #333);
         border-radius: var(--wox-radius-2xl, 12px); padding: 24px;
         min-width: 300px; max-width: var(--width, 400px);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: var(--wox-shadow-xl);
         transform: translateY(0) scale(1);
         transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .title { font-size: var(--wox-font-size-2xl, 16px); color: var(--wox-text-hi, #fff); font-weight: 500; }
     .close-btn {
-        background: none; border: none; color: #666; font-size: 18px; cursor: pointer;
+        background: none; border: none; color: var(--wox-text-secondary, #666); font-size: 18px; cursor: pointer;
         padding: 4px 8px; border-radius: var(--wox-radius-sm, 3px); transition: all 0.12s;
     }
-    .close-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
-    .body { color: #bbb; font-size: var(--wox-font-size-xl, 14px); margin-bottom: 24px; line-height: 1.5; }
+    .close-btn:hover { background: var(--wox-bg-hover); color: var(--wox-text-hi, #fff); }
+    .body { color: var(--wox-text-primary, #bbb); font-size: var(--wox-font-size-xl, 14px); margin-bottom: 24px; line-height: 1.5; }
     .footer { display: flex; justify-content: flex-end; gap: 12px; }
     .btn {
         padding: 8px 16px; border-radius: var(--wox-radius-md, 6px);
@@ -38,7 +38,7 @@ const STYLES = `
     .btn-secondary { background: var(--wox-border, #333); color: var(--wox-text-primary, #eee); }
     .btn-secondary:hover { background: var(--wox-border-light, #444); }
     .btn-primary { background: var(--wox-accent, #00e5ff); color: var(--wox-text-hi, #fff); }
-    .btn-primary:hover { background: #3bb3d9; }
+    .btn-primary:hover { filter: brightness(0.85); }
 `;
 
 /**
