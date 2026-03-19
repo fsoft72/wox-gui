@@ -1,21 +1,23 @@
 # CHANGES.md
 
-## 2026-03-19 — Light-mode toast palette (Task 16)
+## 2026-03-19 — Light mode support
+
+Complete light theme for the entire component library, activated via `data-wox-theme="light"` on `<html>`.
 
 ### Added
-- **`src/wox-toast.js`**: Added `TYPE_PALETTE_LIGHT` constant with light-theme colour values for success, error, warning, and info toast types. Added `_getPalette()` helper that selects the correct palette based on `data-wox-theme` attribute. Close button mouseleave colour now adapts to the active theme.
-
-## 2026-03-19 — Light theme foundation (Tasks 1-4)
-
-### Added
-- **`css/wox-theme.css`**: Appended `:root[data-wox-theme="light"]` block with 23 CSS variable overrides for backgrounds, text, accent, borders, semantic colors, and shadows.
-- **`src/wox-theme.js`**: New `WoxTheme` static utility class with `get()`, `set()`, `toggle()`, and `auto()` methods. Manages the `data-wox-theme` attribute on `<html>`, persists to localStorage, dispatches `wox-theme-change` events.
-- **`src/wox-theme-toggle.js`**: New `<wox-theme-toggle>` web component — sun/moon Material Icon button that calls `WoxTheme.toggle()`. Supports `auto` attribute for OS preference detection. Listens for `wox-theme-change` to stay in sync.
+- **Light theme CSS variables** (`css/wox-theme.css`): 23 CSS variable overrides under `:root[data-wox-theme="light"]` covering backgrounds, text, accent, borders, semantic colors, and shadows.
+- **`WoxTheme` utility** (`src/wox-theme.js`): Static class with `get()`, `set()`, `toggle()`, and `auto()` methods. Manages the `data-wox-theme` attribute, persists to `localStorage`, and dispatches `wox-theme-change` events.
+- **`<wox-theme-toggle>`** (`src/wox-theme-toggle.js`): Sun/moon icon button that calls `WoxTheme.toggle()`. Supports `auto` attribute for OS `prefers-color-scheme` detection. Listens for `wox-theme-change` to keep icon in sync.
+- **Light-mode toast palette** (`src/wox-toast.js`): `TYPE_PALETTE_LIGHT` constant with light-appropriate colours for success, error, warning, and info toasts. `_getPalette()` helper selects the correct palette based on active theme.
+- **Documentation**: `docs/theming.md` Light Mode section, `docs/wox-theme-toggle.md`, updated `docs/index.md`.
+- **Demo pages**: Added `<wox-theme-toggle>` to `demo/showcase.html` and `demo/catalog.html`.
+- **CDN test**: Added `<wox-theme-toggle>` to `tests/cdn.html` and updated expected element count to 29.
 
 ### Changed
+- **Hardcoded colors replaced with CSS variables** across ~10 components: `wox-button`, `wox-input`, `wox-slider`, `wox-color-picker`, `wox-menu-item`, `wox-menu`, `wox-menubar`, `wox-layer-item`, `wox-tabs`, `wox-datagrid`, and `wox-section`. All hardcoded hex colours (`#fff`, `#000`, `#1e1e22`, `#333`, etc.) replaced with the appropriate `--wox-*` variable so they adapt to both themes.
 - **`src/index.js`**: Added barrel exports for `WoxTheme` and `WoxThemeToggle`.
-- **`src/register.js`**: Added `WoxThemeToggle` import and `customElements.define('wox-theme-toggle', WoxThemeToggle)`.
-- **`src/cdn.js`**: Added `WoxTheme` and `WoxThemeToggle` to both export and import blocks, registered `wox-theme-toggle` custom element, appended light theme CSS overrides to `THEME_CSS` constant.
+- **`src/register.js`**: Registers `wox-theme-toggle` custom element.
+- **`src/cdn.js`**: Exports `WoxTheme` and `WoxThemeToggle`, registers the toggle element, includes light theme CSS in the injected stylesheet.
 
 ## 2026-03-09 — Add CDN test page
 
