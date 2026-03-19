@@ -6,7 +6,7 @@ const STYLES = `
     :host { display: inline-block; position: relative; }
     .tip {
         position: fixed; z-index: var(--wox-z-overlay, 10000);
-        background: #222; color: var(--wox-text-hi, #fff); border: 1px solid var(--wox-border-light, #444);
+        background: var(--wox-bg-toolbar, #222); color: var(--wox-text-hi, #fff); border: 1px solid var(--wox-border-light, #444);
         border-radius: var(--wox-radius-sm, 3px); padding: 4px 8px; font-size: var(--wox-font-size-md, 11px);
         white-space: nowrap; pointer-events: none;
         opacity: 0; transition: opacity var(--wox-transition-fast, 0.12s);
