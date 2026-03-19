@@ -106,7 +106,7 @@ const STYLES = `
     .btn-secondary { background: var(--wox-border, #333); color: var(--wox-text-primary, #eee); }
     .btn-secondary:hover { background: var(--wox-border-light, #444); }
     .btn-primary { background: var(--wox-accent, #00e5ff); color: var(--wox-text-hi, #fff); }
-    .btn-primary:hover { background: #3bb3d9; }
+    .btn-primary:hover { filter: brightness(0.85); }
 `;
 
 /**
