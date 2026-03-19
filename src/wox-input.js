@@ -20,7 +20,7 @@ const STYLES = `
         box-shadow: var(--wox-shadow-input, inset 0 1px 3px rgba(0, 0, 0, 0.2));
     }
     input[type="number"] { text-align: right; }
-    input:focus { outline: none; border-color: var(--wox-accent, #00e5ff); background: #222; box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1), var(--wox-shadow-input, inset 0 1px 3px rgba(0, 0, 0, 0.2)); }
+    input:focus { outline: none; border-color: var(--wox-accent, #00e5ff); background: var(--wox-bg-hover, #222); box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1), var(--wox-shadow-input, inset 0 1px 3px rgba(0, 0, 0, 0.2)); }
     input:disabled { opacity: 0.4; cursor: not-allowed; }
     input.has-unit { padding-right: 28px; }
     .suffix { position: absolute; right: 8px; font-size: var(--wox-font-size-sm, 10px); color: var(--wox-text-secondary, #999); pointer-events: none; }
