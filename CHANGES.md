@@ -1,5 +1,17 @@
 # CHANGES.md
 
+## 2026-03-19 — Light theme foundation (Tasks 1-4)
+
+### Added
+- **`css/wox-theme.css`**: Appended `:root[data-wox-theme="light"]` block with 23 CSS variable overrides for backgrounds, text, accent, borders, semantic colors, and shadows.
+- **`src/wox-theme.js`**: New `WoxTheme` static utility class with `get()`, `set()`, `toggle()`, and `auto()` methods. Manages the `data-wox-theme` attribute on `<html>`, persists to localStorage, dispatches `wox-theme-change` events.
+- **`src/wox-theme-toggle.js`**: New `<wox-theme-toggle>` web component — sun/moon Material Icon button that calls `WoxTheme.toggle()`. Supports `auto` attribute for OS preference detection. Listens for `wox-theme-change` to stay in sync.
+
+### Changed
+- **`src/index.js`**: Added barrel exports for `WoxTheme` and `WoxThemeToggle`.
+- **`src/register.js`**: Added `WoxThemeToggle` import and `customElements.define('wox-theme-toggle', WoxThemeToggle)`.
+- **`src/cdn.js`**: Added `WoxTheme` and `WoxThemeToggle` to both export and import blocks, registered `wox-theme-toggle` custom element, appended light theme CSS overrides to `THEME_CSS` constant.
+
 ## 2026-03-09 — Add CDN test page
 
 ### Added
