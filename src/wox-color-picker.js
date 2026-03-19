@@ -25,18 +25,18 @@ const STYLES = `
         background: var(--wox-bg-section-header, #22222a); border-bottom: 1px solid var(--wox-border-section, #2e2e2e);
         display: flex; justify-content: space-between; align-items: center; cursor: move;
     }
-    .cp-title { font-size: var(--wox-font-size-base, 12px); font-weight: 600; color: #c0c0c0; letter-spacing: 0.5px; text-transform: uppercase; }
+    .cp-title { font-size: var(--wox-font-size-base, 12px); font-weight: 600; color: var(--wox-text-secondary, #c0c0c0); letter-spacing: 0.5px; text-transform: uppercase; }
     .cp-close {
-        background: none; border: none; color: #666; cursor: pointer; font-size: 14px;
+        background: none; border: none; color: var(--wox-text-secondary, #666); cursor: pointer; font-size: 14px;
         padding: 2px 6px; border-radius: var(--wox-radius-sm, 3px); transition: all var(--wox-transition-fast);
     }
-    .cp-close:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+    .cp-close:hover { background: var(--wox-bg-hover); color: var(--wox-text-hi, #fff); }
     .cp-wheel { border-radius: 50%; cursor: crosshair; display: block; }
     .cp-alpha-wrap { width: ${ALPHA_W}px; position: relative; height: ${ALPHA_H}px; border-radius: 7px; cursor: pointer; }
     .cp-alpha-canvas { display: block; border-radius: 7px; width: ${ALPHA_W}px; height: ${ALPHA_H}px; }
     .cp-alpha-knob {
         position: absolute; top: -3px; width: 20px; height: 20px; border-radius: 50%;
-        border: 2.5px solid #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        border: 2.5px solid var(--wox-text-hi, #fff); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
         background: transparent; pointer-events: none;
     }
     .cp-bottom { width: 100%; display: flex; align-items: center; gap: 10px; }
@@ -47,13 +47,13 @@ const STYLES = `
     }
     .cp-hexwrap { flex: 1; display: flex; flex-direction: column; gap: 3px; }
     .cp-hex {
-        background: #27272b; border: 1px solid var(--wox-border-light, #444);
-        border-radius: var(--wox-radius-md, 6px); color: #e8e8e8;
+        background: var(--wox-bg-input, #27272b); border: 1px solid var(--wox-border-light, #444);
+        border-radius: var(--wox-radius-md, 6px); color: var(--wox-text-hi, #e8e8e8);
         font-size: var(--wox-font-size-base, 12px); font-family: var(--wox-font-mono, monospace);
         padding: 6px 8px; width: 100%; transition: border var(--wox-transition-fast);
     }
     .cp-hex:focus { outline: none; border-color: var(--wox-accent, #00e5ff); }
-    .cp-hex-label { font-size: var(--wox-font-size-xs, 9px); color: #555; letter-spacing: 1px; text-align: center; text-transform: uppercase; }
+    .cp-hex-label { font-size: var(--wox-font-size-xs, 9px); color: var(--wox-text-secondary, #555); letter-spacing: 1px; text-align: center; text-transform: uppercase; }
 `;
 
 /**
