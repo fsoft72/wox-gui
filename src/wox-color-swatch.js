@@ -8,13 +8,13 @@ const STYLES = `
     .swatch {
         width: var(--size, 24px); height: var(--size, 24px);
         border-radius: var(--wox-radius-sm, 3px); cursor: pointer;
-        border: 1px solid rgba(0, 0, 0, 0.5);
+        border: 1px solid var(--wox-border);
         box-shadow: var(--wox-shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.3));
         transition: all var(--wox-transition-fast, 0.12s);
         position: relative; overflow: hidden;
     }
     .swatch:hover { transform: scale(1.1); border-color: var(--wox-accent, #00e5ff); }
-    .swatch.selected { border-color: var(--wox-text-hi, #fff); border-width: 2px; box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
+    .swatch.selected { border-color: var(--wox-text-hi, #fff); border-width: 2px; box-shadow: var(--wox-shadow-accent); }
     .checker {
         position: absolute; inset: 0;
         background: repeating-conic-gradient(#888 0% 25%, #fff 0% 50%) 0 0 / 8px 8px;
