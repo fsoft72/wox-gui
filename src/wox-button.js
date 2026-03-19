@@ -32,7 +32,7 @@ const STYLES = `
         transition: all var(--wox-transition-smooth, 0.25s cubic-bezier(0.4, 0, 0.2, 1));
         position: relative; overflow: hidden;
     }
-    button.v-tile:hover { background: var(--wox-bg-hover, #2a2a2e); border-color: #555; color: var(--wox-text-primary, #eee); transform: translateY(-1px); }
+    button.v-tile:hover { background: var(--wox-bg-hover, #2a2a2e); border-color: var(--wox-border-light, #555); color: var(--wox-text-primary, #eee); transform: translateY(-1px); }
     button.v-tile:hover svg, button.v-tile:hover .material-icons { transform: scale(1.05); opacity: 1; }
     button.v-tile svg, button.v-tile .material-icons { display: block; width: 32px; height: 32px; transition: transform 0.2s; opacity: 0.8; font-size: 28px; }
     button.v-tile.delete:hover { border-color: var(--wox-danger, #f72585); color: var(--wox-danger, #f72585); background: rgba(247, 37, 133, 0.05); }
@@ -48,23 +48,23 @@ const STYLES = `
 
     /* dash variant */
     button.v-dash {
-        width: 42px; height: 26px; background: #1c1c21;
+        width: 42px; height: 26px; background: var(--wox-bg-panel, #1c1c21);
         border: 1px solid var(--wox-border, #333); border-radius: var(--wox-radius-lg, 8px);
         transition: all 0.2s;
     }
-    button.v-dash:hover { background: var(--wox-bg-hover, #2a2a2e); border-color: #555; transform: translateY(-1px); }
+    button.v-dash:hover { background: var(--wox-bg-hover, #2a2a2e); border-color: var(--wox-border-light, #555); transform: translateY(-1px); }
     button.v-dash.active { border-color: var(--wox-accent, #00e5ff); box-shadow: var(--wox-shadow-accent, 0 0 10px rgba(0, 229, 255, 0.3)); }
-    .dash-line { width: 16px; height: 3px; background: #666; border-radius: 1px; }
+    .dash-line { width: 16px; height: 3px; background: var(--wox-text-secondary, #666); border-radius: 1px; }
     button.v-dash.active .dash-line { background: var(--wox-accent, #00e5ff); }
-    .dash-line.dotted { background: radial-gradient(circle, currentColor 1px, transparent 1px); background-size: 4px 100%; color: #666; }
+    .dash-line.dotted { background: radial-gradient(circle, currentColor 1px, transparent 1px); background-size: 4px 100%; color: var(--wox-text-secondary, #666); }
     button.v-dash.active .dash-line.dotted { color: var(--wox-accent, #00e5ff); }
-    .dash-line.dashed { background: linear-gradient(to right, currentColor 6px, transparent 6px); background-size: 10px 100%; color: #666; }
+    .dash-line.dashed { background: linear-gradient(to right, currentColor 6px, transparent 6px); background-size: 10px 100%; color: var(--wox-text-secondary, #666); }
     button.v-dash.active .dash-line.dashed { color: var(--wox-accent, #00e5ff); }
-    .dash-line.longdash { background: linear-gradient(to right, currentColor 12px, transparent 4px); background-size: 16px 100%; color: #666; }
+    .dash-line.longdash { background: linear-gradient(to right, currentColor 12px, transparent 4px); background-size: 16px 100%; color: var(--wox-text-secondary, #666); }
     button.v-dash.active .dash-line.longdash { color: var(--wox-accent, #00e5ff); }
-    .dash-line.dotdash { background: linear-gradient(to right, currentColor 8px, transparent 4px, currentColor 2px, transparent 4px); background-size: 18px 100%; color: #666; }
+    .dash-line.dotdash { background: linear-gradient(to right, currentColor 8px, transparent 4px, currentColor 2px, transparent 4px); background-size: 18px 100%; color: var(--wox-text-secondary, #666); }
     button.v-dash.active .dash-line.dotdash { color: var(--wox-accent, #00e5ff); }
-    .dash-line.zigzag { background: repeating-linear-gradient(45deg, currentColor, currentColor 2px, transparent 2px, transparent 4px); color: #666; }
+    .dash-line.zigzag { background: repeating-linear-gradient(45deg, currentColor, currentColor 2px, transparent 2px, transparent 4px); color: var(--wox-text-secondary, #666); }
     button.v-dash.active .dash-line.zigzag { color: var(--wox-accent, #00e5ff); }
 
     .material-icons { font-family: 'Material Icons'; font-weight: normal; font-style: normal; display: inline-block; line-height: 1; text-transform: none; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; }
