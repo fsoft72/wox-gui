@@ -2,7 +2,7 @@
 
 A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, and CSS custom properties. Originally extracted from VectorWebGPU.
 
-**25 components** | **Dark theme** | **Zero dependencies** | **No build step**
+**26 components** | **Dark & light themes** | **Zero dependencies** | **No build step**
 
 ---
 
@@ -65,6 +65,13 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 | Component | Description |
 |-----------|-------------|
 | [wox-toast](./wox-toast.md) | Toast notifications with auto-dismiss, pause-on-hover, and dedup |
+
+### Theming
+
+| Component / Utility | Description |
+|---------------------|-------------|
+| [wox-theme-toggle](./wox-theme-toggle.md) | Sun/moon icon button for dark/light theme switching |
+| `WoxTheme` | Static utility class for programmatic theme control (`get`, `set`, `toggle`, `auto`) — see [Theming](./theming.md#light-mode) |
 
 ---
 

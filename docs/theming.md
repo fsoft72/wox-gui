@@ -161,3 +161,62 @@ Or scope overrides to a specific section:
 ```
 
 Because components use Shadow DOM, theme variables must be defined on ancestor elements (or `:root`) -- they inherit through the shadow boundary via CSS custom properties.
+
+---
+
+## Light Mode
+
+WOX-GUI ships with a built-in light theme. When activated, 23 CSS variables are overridden under `:root[data-wox-theme="light"]`, giving every component a light appearance with no extra work.
+
+### Activating Light Mode
+
+Set the `data-wox-theme` attribute on the `<html>` element:
+
+```js
+document.documentElement.dataset.woxTheme = 'light';
+```
+
+Remove the attribute (or delete it) to return to dark mode:
+
+```js
+delete document.documentElement.dataset.woxTheme;
+```
+
+### WoxTheme Utility
+
+For convenience, import the `WoxTheme` static utility class:
+
+```js
+import { WoxTheme } from 'wox-gui';
+```
+
+| Method | Description |
+|--------|-------------|
+| `WoxTheme.get()` | Returns `'dark'` or `'light'` |
+| `WoxTheme.set(theme)` | Sets the theme (`'dark'` or `'light'`). Updates the data attribute, persists to `localStorage`, and dispatches a `wox-theme-change` event on `document.documentElement`. |
+| `WoxTheme.toggle()` | Toggles between dark and light |
+| `WoxTheme.auto()` | Applies the OS `prefers-color-scheme` preference unless a saved `localStorage` value exists |
+
+### Toggle Component
+
+The `<wox-theme-toggle>` component renders a sun/moon icon button that calls `WoxTheme.toggle()` on click. It listens for `wox-theme-change` events to keep its icon in sync.
+
+```html
+<wox-theme-toggle></wox-theme-toggle>
+
+<!-- Respect OS preference on first load -->
+<wox-theme-toggle auto></wox-theme-toggle>
+```
+
+See [wox-theme-toggle](./wox-theme-toggle.md) for full documentation.
+
+### Overriding Light Theme Colors
+
+You can override specific light-mode variables by targeting the same selector with higher specificity or by loading your overrides after the default theme:
+
+```css
+:root[data-wox-theme="light"] {
+    --wox-accent: #0077b6;
+    --wox-bg-app: #fafafa;
+}
+```
