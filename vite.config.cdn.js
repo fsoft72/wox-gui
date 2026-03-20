@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import terser from '@rollup/plugin-terser';
 
 /**
  * Separate Vite config for the CDN bundle.
@@ -14,5 +15,16 @@ export default defineConfig({
     },
     outDir: 'dist',
     emptyOutDir: false,
+    rollupOptions: {
+      plugins: [
+        terser({
+          compress: true,
+          mangle: false,
+          format: {
+            comments: false,
+          },
+        }),
+      ],
+    },
   },
 });

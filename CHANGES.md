@@ -1,5 +1,13 @@
 # CHANGES.md
 
+## 2026-03-20 — Build minification
+
+### Added
+- **`@rollup/plugin-terser`** dev dependency for production JS minification.
+
+### Changed
+- **`vite.config.js`** and **`vite.config.cdn.js`**: Added `@rollup/plugin-terser` as a rollup output plugin to remove all JS comments and compact output (~21% size reduction).
+
 ## 2026-03-19 — Light mode support
 
 Complete light theme for the entire component library, activated via `data-wox-theme="light"` on `<html>`.

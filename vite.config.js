@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import terser from '@rollup/plugin-terser';
 
 export default defineConfig({
   build: {
@@ -9,6 +10,17 @@ export default defineConfig({
         'register': resolve(__dirname, 'src/register.js'),
       },
       formats: ['es'],
+    },
+    rollupOptions: {
+      plugins: [
+        terser({
+          compress: true,
+          mangle: false,
+          format: {
+            comments: false,
+          },
+        }),
+      ],
     },
   },
 });
