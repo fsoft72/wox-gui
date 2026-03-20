@@ -23,6 +23,7 @@ cp "$ROOT/demo/"*.html "$ROOT/dist-site/demo/"
 echo "Patching demo imports..."
 for f in "$ROOT/dist-site/demo/"*.html; do
     sed -i 's|../src/register.js|../dist/wox-gui.cdn.js|g' "$f"
+    sed -i 's|../src/index.js|../dist/wox-gui.cdn.js|g' "$f"
     sed -i 's|../css/wox-theme.css|../dist/wox-theme.css|g' "$f"
 done
 
