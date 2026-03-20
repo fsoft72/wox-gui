@@ -154,3 +154,15 @@ const THEME_CSS = `/* wox-theme.css — Global CSS custom properties for the WOX
 }`;
 
 _injectTheme();
+
+// ── Expose classes on window for non-import CDN usage ──
+Object.assign(window, {
+  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxInput, WoxSelect,
+  WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
+  WoxMenuItem, WoxMenu, WoxLayerItem,
+  WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
+  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal,
+  WoxDatagrid, WoxToast, WoxContextMenu,
+  WoxGradientEditor, WoxGradientSelector,
+  WoxDatePicker, WoxThemeToggle,
+});

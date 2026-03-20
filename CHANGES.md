@@ -1,5 +1,14 @@
 # CHANGES.md
 
+## 2026-03-20 — CDN global exposure and publish --force
+
+### Fixed
+- **`src/cdn.js`**: All component classes are now exposed on `window` after CDN script loads. Previously `WoxToast`, `WoxContextMenu`, and all other classes were only available via ES module `import` — using them as globals (e.g. `WoxToast.success(...)`) would fail with `undefined`.
+
+### Added
+- **`scripts/publish.sh`**: Added `--force` flag to skip the clean working tree check.
+- **`tests/cdn.html`**: Added checks verifying `window.WoxToast` and `window.WoxContextMenu` are available as globals.
+
 ## 2026-03-20 — LLM documentation file
 
 ### Added

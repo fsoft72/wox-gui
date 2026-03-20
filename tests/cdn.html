@@ -207,7 +207,11 @@
         const icon = document.querySelector('wox-icon');
         addCheck('wox-icon has shadowRoot', !!icon?.shadowRoot);
 
-        // 5. No duplicate theme injection
+        // 5. WoxToast and WoxContextMenu available as globals
+        addCheck('window.WoxToast available', typeof window.WoxToast === 'function');
+        addCheck('window.WoxContextMenu available', typeof window.WoxContextMenu === 'function');
+
+        // 6. No duplicate theme injection
         const themeCount = document.querySelectorAll('#wox-theme').length;
         addCheck(`Theme style injected exactly once (count: ${themeCount})`, themeCount === 1);
 
