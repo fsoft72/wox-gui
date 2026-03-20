@@ -8,6 +8,7 @@
 
 ### Updated
 - **`llms.md`**: Added CDN usage instructions (`jsdelivr.net`) to the Setup section.
+- **`scripts/publish.sh`**: Version bump now also updates CDN URL in `llms.md`.
 
 ## 2026-03-20 — Documentation audit and fixes
 

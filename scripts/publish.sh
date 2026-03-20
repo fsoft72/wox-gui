@@ -63,9 +63,9 @@ fi
 
 echo "Version: $CURRENT_VERSION -> $NEW_VERSION"
 
-# --- Update version references in AGENT.md and tests/cdn.html ---
+# --- Update version references in AGENT.md, tests/cdn.html, and llms.md ---
 
-for f in AGENT.md tests/cdn.html; do
+for f in AGENT.md tests/cdn.html llms.md; do
   if [ -f "$f" ]; then
     sed -i "s/@${CURRENT_VERSION}/@${NEW_VERSION}/g" "$f"
   fi
@@ -78,7 +78,7 @@ npm publish --access public
 
 # --- Git tag & commit ---
 
-git add package.json AGENT.md tests/cdn.html
+git add package.json AGENT.md tests/cdn.html llms.md
 git commit -m "chore: release v$NEW_VERSION"
 git tag -a "v$NEW_VERSION" -m "v$NEW_VERSION"
 
