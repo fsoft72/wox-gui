@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoxGUI — Web Component UI Library</title>
+    <link rel="stylesheet" href="./assets/site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>WoxGUI</h1>
+        <p class="tagline">28 Web Components. Zero dependencies. Dark &amp; light themes.</p>
+        <div class="install-block">
+            <code>npm install wox-gui</code>
+        </div>
+        <div class="cta-row">
+            <a href="#getting-started" class="btn btn-primary">Get Started</a>
+            <a href="https://github.com/fsoft72/wox-gui" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Shadow DOM</h3>
+                <p>Full style isolation per component</p>
+            </div>
+            <div class="feature-card">
+                <h3>CSS Custom Properties</h3>
+                <p>70+ theme variables, dark &amp; light</p>
+            </div>
+            <div class="feature-card">
+                <h3>Tree-shakable ESM</h3>
+                <p>Import only what you use</p>
+            </div>
+            <div class="feature-card">
+                <h3>CDN One-liner</h3>
+                <p>Single script tag, no build step</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section id="getting-started" class="getting-started">
+        <h2>Getting Started</h2>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+                <h3>Install</h3>
+                <pre><code>npm install wox-gui</code></pre>
+                <p class="step-alt">Or use the CDN — no build step required:</p>
+                <pre><code>&lt;script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.4/dist/wox-gui.cdn.js"&gt;&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+                <h3>Import</h3>
+                <pre><code>// Register all components
+import 'wox-gui/register';
+
+// Or import selectively (tree-shakable)
+import { WoxButton, WoxInput } from 'wox-gui';</code></pre>
+            </div>
+        </div>
+
+        <div class="step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+                <h3>Use</h3>
+                <pre><code>&lt;wox-button variant="text" glow&gt;Click me&lt;/wox-button&gt;
+&lt;wox-input label="Name" placeholder="Enter your name"&gt;&lt;/wox-input&gt;</code></pre>
+            </div>
+        </div>
+
+        <a href="https://github.com/fsoft72/wox-gui/blob/master/docs/getting-started.md" target="_blank" rel="noopener" class="docs-link">Full documentation →</a>
+    </section>
+
+    <!-- Live Demos -->
+    <section class="demos">
+        <h2>Live Demos</h2>
+        <div class="demo-grid">
+            <a href="./demo/showcase.html" class="demo-card">
+                <span class="demo-icon material-icons">palette</span>
+                <h3>Showcase</h3>
+                <p>All components &amp; patterns</p>
+            </a>
+            <a href="./demo/catalog.html" class="demo-card">
+                <span class="demo-icon material-icons">list_alt</span>
+                <h3>Catalog</h3>
+                <p>Interactive API reference</p>
+            </a>
+            <a href="./demo/editor.html" class="demo-card">
+                <span class="demo-icon material-icons">dashboard</span>
+                <h3>Editor Layout</h3>
+                <p>Full app layout demo</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>
+            MIT License · v0.1.4 · &copy; Copyright 2026
+            <a href="https://www.os3.it" target="_blank" rel="noopener">OS3 srl</a>
+            — By Fabio
+            <a href="https://github.com/fsoft72" target="_blank" rel="noopener">(fsoft72)</a>
+            and Andrea
+            <a href="https://github.com/wox76" target="_blank" rel="noopener">(wox76)</a>
+            Rotondo
+        </p>
+    </footer>
+
+</body>
+</html>
