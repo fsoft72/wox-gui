@@ -1,5 +1,11 @@
 # CHANGES.md
 
+## 2026-03-20 — LLM documentation file
+
+### Added
+- **`llms.md`**: Single consolidated documentation file for LLM consumption, covering all 28 components, theming, and setup.
+- **`scripts/build-site.sh`**: Copies `llms.md` to `dist-site/` during site build so it's served at `/wox-gui/llms.md`.
+
 ## 2026-03-20 — Documentation audit and fixes
 
 ### Added

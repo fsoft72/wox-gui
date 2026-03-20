@@ -27,4 +27,8 @@ for f in "$ROOT/dist-site/demo/"*.html; do
     sed -i 's|../css/wox-theme.css|../dist/wox-theme.css|g' "$f"
 done
 
+# 5. Copy llms.md for LLM documentation
+echo "Copying llms.md..."
+cp "$ROOT/llms.md" "$ROOT/dist-site/"
+
 echo "Site built to dist-site/"
