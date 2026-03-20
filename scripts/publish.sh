@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Publish wox-gui to npm.
-# Usage: ./scripts/publish.sh [patch|minor|major|<version>]
+# Usage: ./scripts/publish.sh [--force] [patch|minor|major|<version>]
 #
 # Steps:
 #   1. Ensure working tree is clean
@@ -11,6 +11,12 @@
 #   5. Create a git tag and commit the version bump
 #
 set -euo pipefail
+
+FORCE=false
+if [ "${1:-}" = "--force" ]; then
+  FORCE=true
+  shift
+fi
 
 BUMP="${1:-patch}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -29,7 +35,7 @@ if ! command -v npm &>/dev/null; then
   exit 1
 fi
 
-if [ -n "$(git status --porcelain)" ]; then
+if [ "$FORCE" = false ] && [ -n "$(git status --porcelain)" ]; then
   echo "Error: working tree is not clean. Commit or stash your changes first." >&2
   exit 1
 fi
