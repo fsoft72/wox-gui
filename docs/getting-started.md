@@ -142,6 +142,7 @@ wox-gui/
     wox-theme.css        # CSS custom properties (theme)
   src/
     wox-base.js          # WoxElement base class
+    wox-fx.js            # Shared FX styles (glow, pulse)
     wox-icon.js          # <wox-icon>
     wox-separator.js     # <wox-separator>
     wox-badge.js         # <wox-badge>
@@ -150,10 +151,15 @@ wox-gui/
     wox-slider.js        # <wox-slider>
     wox-color-swatch.js  # <wox-color-swatch>
     wox-tooltip.js       # <wox-tooltip>
+    wox-select.js        # <wox-select>
+    wox-date-picker.js   # <wox-date-picker>
     wox-color-picker.js  # <wox-color-picker>
     wox-menu-item.js     # <wox-menu-item>
     wox-menu.js          # <wox-menu>
+    wox-context-menu.js  # <wox-context-menu>
     wox-layer-item.js    # <wox-layer-item>
+    wox-gradient-editor.js  # <wox-gradient-editor>
+    wox-gradient-selector.js # <wox-gradient-selector>
     wox-section.js       # <wox-section>
     wox-tab.js           # <wox-tab>
     wox-tabs.js          # <wox-tabs>
@@ -163,17 +169,10 @@ wox-gui/
     wox-menubar.js       # <wox-menubar>
     wox-statusbar.js     # <wox-statusbar>
     wox-modal.js         # <wox-modal>
-    wox-date-picker.js   # <wox-date-picker>
-    wox-select.js        # <wox-select>
     wox-datagrid.js      # <wox-datagrid>
     wox-toast.js         # <wox-toast>
     wox-theme.js         # WoxTheme utility class
     wox-theme-toggle.js  # <wox-theme-toggle>
-    wox-gradient-editor.js  # <wox-gradient-editor>
-    wox-gradient-selector.js # <wox-gradient-selector>
-    wox-color-picker.js  # <wox-color-picker>
-    wox-context-menu.js  # <wox-context-menu>
-    wox-fx.js            # Shared FX styles (glow, pulse)
     index.js             # Barrel export for all components
   demo/
     catalog.html         # Component catalog demo

@@ -27,13 +27,13 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 | [wox-slider](./wox-slider.md) | Custom range slider with label and value display |
 | [wox-color-swatch](./wox-color-swatch.md) | Clickable color preview square with alpha support |
 | [wox-tooltip](./wox-tooltip.md) | Hover tooltip wrapper with 4 positions |
-| [wox-select](./wox-select.md) | Single and multi-select dropdown with search |
-| [wox-date-picker](./wox-date-picker.md) | Calendar date picker with single and range selection |
 
 ### Composite
 
 | Component | Description |
 |-----------|-------------|
+| [wox-select](./wox-select.md) | Single and multi-select dropdown with search |
+| [wox-date-picker](./wox-date-picker.md) | Calendar date picker with single and range selection |
 | [wox-color-picker](./wox-color-picker.md) | HSV wheel color picker with alpha and hex input |
 | [wox-menu-item](./wox-menu-item.md) | Menu entry with icon, shortcut, and submenu support |
 | [wox-menu](./wox-menu.md) | Dropdown menu with click/hover/context triggers |
