@@ -20,6 +20,12 @@ All components extend `WoxElement` (a lightweight `HTMLElement` base class with 
 <script type="module" src="src/index.js"></script>
 ```
 
+Or use the CDN build (no install required):
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.4/dist/wox-gui.cdn.js"></script>
+```
+
 Or import selectively:
 
 ```js
