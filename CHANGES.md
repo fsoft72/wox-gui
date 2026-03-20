@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-03-20 — MIT License
+
+### Added
+- **`LICENSE`**: MIT license file. Copyright OS3 srl, authors Fabio Rotondo and Andrea Rotondo.
+
 ## 2026-03-20 — Build minification
 
 ### Added
