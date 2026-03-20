@@ -26,6 +26,8 @@ Or use the CDN build (no install required):
 <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.5/dist/wox-gui.cdn.js"></script>
 ```
 
+The CDN build registers all custom elements, injects the theme, and exposes every class (e.g. `WoxToast`, `WoxContextMenu`, `WoxModal`, …) on `window` as globals — no `import` needed.
+
 Or import selectively:
 
 ```js
