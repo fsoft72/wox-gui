@@ -19,7 +19,7 @@ Multi-variant button component supporting icon buttons, text buttons, tile butto
 | `disabled` | `boolean` | `false` | Disabled state (presence attribute) |
 | `color` | `string` | — | Custom accent color (used by `tile` variant) |
 | `size` | `string` | — | Size override in pixels |
-| `dash` | `string` | — | Dash pattern for `dash` variant (see below) |
+| `dash` | `string` | `"solid"` | Dash pattern for `dash` variant (see below) |
 | `glow` | `boolean` | `false` | Enable animated neon glow effect (`tile` variant with `color`) |
 | `pulse` | `boolean` | `false` | Enable opacity pulse animation (`tile` variant). Composable with `glow`. |
 

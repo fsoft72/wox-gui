@@ -1,5 +1,18 @@
 # CHANGES.md
 
+## 2026-03-20 — Documentation audit and fixes
+
+### Added
+- **`docs/wox-date-picker.md`**: Full documentation for the `<wox-date-picker>` component (attributes, events, JS API, examples).
+
+### Fixed
+- **`docs/theming.md`**: Corrected font size variable names — `--wox-font-xs` → `--wox-font-size-xs` (all 7 entries plus example).
+- **`docs/wox-layer-item.md`**: Fixed icon names for `ellipse` (`circle` → `radio_button_unchecked`) and `text` (`title` → `text_fields`).
+- **`docs/wox-separator.md`**: Fixed `spacing` default value (`—` → `"0"`) and clarified direction-dependent margin behavior.
+- **`docs/wox-button.md`**: Fixed `dash` default value (`—` → `"solid"`).
+- **`docs/index.md`**: Added missing `<wox-select>` and `<wox-date-picker>` to component index; updated count to 28.
+- **`docs/getting-started.md`**: Added missing source files to project structure listing.
+
 ## 2026-03-20 — GitHub Pages showcase site
 
 ### Added

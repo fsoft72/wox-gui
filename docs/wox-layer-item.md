@@ -24,10 +24,10 @@ A layer panel row component with type icon, name, visibility toggle, lock toggle
 | `type` value | Icon | Description |
 |-------------|------|-------------|
 | `"rectangle"` | `crop_square` | Rectangle shape |
-| `"ellipse"` | `circle` | Ellipse / circle shape |
+| `"ellipse"` | `radio_button_unchecked` | Ellipse / circle shape |
 | `"path"` | `timeline` | Vector path |
 | `"image"` | `image` | Image / bitmap |
-| `"text"` | `title` | Text element |
+| `"text"` | `text_fields` | Text element |
 | `"group"` | `folder` | Group container |
 | `"layer"` | `layers` | Layer |
 

@@ -13,7 +13,7 @@ A thin divider line for visually separating content. Supports horizontal and ver
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `direction` | `string` | `"h"` | Orientation: `"h"` (horizontal) or `"v"` (vertical) |
-| `spacing` | `string` | — | CSS margin value (e.g. `"8px"`, `"12px"`) applied to both sides |
+| `spacing` | `string` | `"0"` | CSS margin value (e.g. `"8px"`, `"12px"`). Applied as top/bottom for horizontal, left/right for vertical |
 
 ---
 

@@ -89,13 +89,13 @@ Based on an 8px grid system:
 
 | Variable | Default |
 |----------|---------|
-| `--wox-font-xs` | `9px` |
-| `--wox-font-sm` | `10px` |
-| `--wox-font-md` | `11px` |
-| `--wox-font-base` | `12px` |
-| `--wox-font-lg` | `13px` |
-| `--wox-font-xl` | `14px` |
-| `--wox-font-2xl` | `16px` |
+| `--wox-font-size-xs` | `9px` |
+| `--wox-font-size-sm` | `10px` |
+| `--wox-font-size-md` | `11px` |
+| `--wox-font-size-base` | `12px` |
+| `--wox-font-size-lg` | `13px` |
+| `--wox-font-size-xl` | `14px` |
+| `--wox-font-size-2xl` | `16px` |
 
 ---
 
@@ -147,7 +147,7 @@ Override variables at the `:root` level in your own stylesheet:
     --wox-bg-panel: #1f1f24;
 
     /* Larger base font */
-    --wox-font-base: 14px;
+    --wox-font-size-base: 14px;
 }
 ```
 
