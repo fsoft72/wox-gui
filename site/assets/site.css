@@ -1,0 +1,332 @@
+/* WoxGUI Landing Page Styles */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0d0d0d;
+    color: #e6edf3;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    color: #8cb4ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ── Hero ── */
+
+.hero {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 40%, #252525 70%, #1a1a1a 100%);
+    text-align: center;
+    padding: 80px 24px 64px;
+    border-bottom: 1px solid #222;
+}
+
+.hero h1 {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: #f0f0f0;
+}
+
+.tagline {
+    font-size: 18px;
+    color: #888;
+    margin: 12px 0 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.install-block {
+    display: inline-block;
+    background: #161616;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 12px 24px;
+    margin-bottom: 28px;
+}
+
+.install-block code {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 15px;
+    color: #8cb4ff;
+}
+
+.cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-primary {
+    background: #e0e0e0;
+    color: #111;
+}
+
+.btn-primary:hover {
+    background: #fff;
+    text-decoration: none;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #444;
+    color: #ccc;
+}
+
+.btn-outline:hover {
+    border-color: #888;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ── Features ── */
+
+.features {
+    padding: 48px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    border-bottom: 1px solid #222;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.feature-card {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.feature-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 4px;
+}
+
+.feature-card p {
+    font-size: 13px;
+    color: #666;
+}
+
+/* ── Getting Started ── */
+
+.getting-started {
+    padding: 48px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    border-bottom: 1px solid #222;
+}
+
+.getting-started h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e6edf3;
+    margin-bottom: 32px;
+}
+
+.step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ccc;
+}
+
+.step-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.step-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #e6edf3;
+    margin-bottom: 12px;
+}
+
+.step-content pre {
+    background: #141414;
+    border: 1px solid #282828;
+    border-radius: 8px;
+    padding: 14px 18px;
+    overflow-x: auto;
+    margin-bottom: 8px;
+}
+
+.step-content code {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 13px;
+    color: #8cb4ff;
+    line-height: 1.5;
+}
+
+.step-alt {
+    font-size: 13px;
+    color: #666;
+    margin: 8px 0;
+}
+
+.docs-link {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #8cb4ff;
+    margin-top: 8px;
+}
+
+.docs-link:hover {
+    color: #aaccff;
+}
+
+/* ── Live Demos ── */
+
+.demos {
+    padding: 48px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    border-bottom: 1px solid #222;
+}
+
+.demos h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e6edf3;
+    margin-bottom: 24px;
+}
+
+.demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.demo-card {
+    background: #141414;
+    border: 1px solid #282828;
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.demo-card:hover {
+    background: #1a1a1a;
+    border-color: #444;
+    text-decoration: none;
+}
+
+.demo-icon {
+    font-size: 32px;
+    color: #666;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.demo-card:hover .demo-icon {
+    color: #888;
+}
+
+.demo-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 4px;
+}
+
+.demo-card p {
+    font-size: 12px;
+    color: #666;
+}
+
+/* ── Footer ── */
+
+.site-footer {
+    padding: 32px 24px;
+    text-align: center;
+}
+
+.site-footer p {
+    font-size: 13px;
+    color: #555;
+}
+
+.site-footer a {
+    color: #777;
+}
+
+.site-footer a:hover {
+    color: #aaa;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 640px) {
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .tagline {
+        font-size: 15px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .demo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .cta-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}
