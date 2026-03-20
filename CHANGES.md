@@ -1,5 +1,15 @@
 # CHANGES.md
 
+## 2026-03-20 — GitHub Pages showcase site
+
+### Added
+- **`site/index.html`**: Landing page with hero, feature grid, getting started guide, and live demo links.
+- **`site/assets/site.css`**: Dark-themed styles for the landing page with responsive breakpoints.
+- **`vite.config.site.js`**: Vite config for building the site to `dist-site/` with base path `/wox-gui/`.
+- **`scripts/build-site.sh`**: Build script that compiles the site, copies CDN bundle and demo pages, and patches demo imports.
+- **`.github/workflows/deploy-site.yml`**: GitHub Actions workflow to build and deploy to GitHub Pages on push to master.
+- **`build:site`** npm script: runs library build then site build in one command.
+
 ## 2026-03-20 — MIT License
 
 ### Added
