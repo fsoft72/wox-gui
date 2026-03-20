@@ -23,7 +23,7 @@ All components extend `WoxElement` (a lightweight `HTMLElement` base class with 
 Or use the CDN build (no install required):
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.4/dist/wox-gui.cdn.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.5/dist/wox-gui.cdn.js"></script>
 ```
 
 Or import selectively:

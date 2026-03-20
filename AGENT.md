@@ -110,7 +110,7 @@ The CDN bundle is a **single self-contained file** (164KB) with zero imports. It
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- WOX-GUI: registers all components + injects theme CSS variables -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.4/dist/wox-gui.cdn.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.5/dist/wox-gui.cdn.js"></script>
 </head>
 <body>
     <!-- Components are immediately available -->
@@ -125,15 +125,15 @@ The CDN bundle also **re-exports all classes**, so you can import from the same 
 
 ```html
 <script type="module">
-    import { WoxToast, WoxContextMenu } from 'https://cdn.jsdelivr.net/npm/wox-gui@0.1.4/dist/wox-gui.cdn.js';
+    import { WoxToast, WoxContextMenu } from 'https://cdn.jsdelivr.net/npm/wox-gui@0.1.5/dist/wox-gui.cdn.js';
 
     WoxToast.success('Hello from CDN!');
 </script>
 ```
 
-Also available via unpkg: `https://unpkg.com/wox-gui@0.1.4/dist/wox-gui.cdn.js`
+Also available via unpkg: `https://unpkg.com/wox-gui@0.1.5/dist/wox-gui.cdn.js`
 
-**Important:** Always pin the version (`@0.1.4`) — unversioned URLs may serve a stale cached version.
+**Important:** Always pin the version (`@0.1.5`) — unversioned URLs may serve a stale cached version.
 
 ## Component Inventory (28 components)
 
