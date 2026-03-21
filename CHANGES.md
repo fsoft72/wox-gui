@@ -1,5 +1,13 @@
 # CHANGES.md
 
+## 2026-03-21 — Extract version bump script
+
+### Added
+- **`scripts/version.sh`**: Standalone script to bump version and update all version references (`package.json`, `AGENT.md`, `tests/cdn.html`, `llms.md`) without publishing.
+
+### Changed
+- **`scripts/publish.sh`**: Now delegates version bumping to `scripts/version.sh` instead of duplicating the logic.
+
 ## 2026-03-21 — Fix CDN window globals stripped by terser
 
 ### Fixed

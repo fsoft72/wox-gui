@@ -6,7 +6,7 @@
 # Steps:
 #   1. Ensure working tree is clean
 #   2. Run the build
-#   3. Bump the version (default: patch)
+#   3. Bump the version (via scripts/version.sh)
 #   4. Publish to npm
 #   5. Create a git tag and commit the version bump
 #
@@ -54,28 +54,8 @@ pnpm run build
 
 # --- Version bump ---
 
-CURRENT_VERSION="$(node -p "require('./package.json').version")"
-
-if [[ "$BUMP" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-  NEW_VERSION="$BUMP"
-else
-  NEW_VERSION="$(npm version "$BUMP" --no-git-tag-version)"
-  NEW_VERSION="${NEW_VERSION#v}"
-fi
-
-if [ "$BUMP" != "$NEW_VERSION" ] && [[ "$BUMP" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-  npm version "$NEW_VERSION" --no-git-tag-version >/dev/null
-fi
-
-echo "Version: $CURRENT_VERSION -> $NEW_VERSION"
-
-# --- Update version references in AGENT.md, tests/cdn.html, and llms.md ---
-
-for f in AGENT.md tests/cdn.html llms.md; do
-  if [ -f "$f" ]; then
-    sed -i "s/@${CURRENT_VERSION}/@${NEW_VERSION}/g" "$f"
-  fi
-done
+"$ROOT/scripts/version.sh" "$BUMP"
+NEW_VERSION="$(node -p "require('./package.json').version")"
 
 # --- Publish ---
 
