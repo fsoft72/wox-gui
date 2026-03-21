@@ -6,7 +6,8 @@
   "main": "./dist/wox-gui.js",
   "module": "./dist/wox-gui.js",
   "sideEffects": [
-    "./dist/register.js"
+    "./dist/register.js",
+    "./dist/wox-gui.cdn.js"
   ],
   "exports": {
     ".": "./dist/wox-gui.js",

@@ -1,5 +1,11 @@
 # CHANGES.md
 
+## 2026-03-21 — Fix CDN window globals stripped by terser
+
+### Fixed
+- **`src/cdn.js`**: Replaced `Object.assign(window, {...})` with individual `window.X = X` assignments. Terser's `compress` was stripping the `Object.assign` call as dead code, so the built CDN bundle had no window globals despite the source code intending to set them.
+- **`package.json`**: Added `./dist/wox-gui.cdn.js` to `sideEffects` to prevent bundlers from tree-shaking the CDN entry point.
+
 ## 2026-03-20 — CDN global exposure and publish --force
 
 ### Fixed

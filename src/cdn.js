@@ -156,13 +156,33 @@ const THEME_CSS = `/* wox-theme.css — Global CSS custom properties for the WOX
 _injectTheme();
 
 // ── Expose classes on window for non-import CDN usage ──
-Object.assign(window, {
-  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxInput, WoxSelect,
-  WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
-  WoxMenuItem, WoxMenu, WoxLayerItem,
-  WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
-  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal,
-  WoxDatagrid, WoxToast, WoxContextMenu,
-  WoxGradientEditor, WoxGradientSelector,
-  WoxDatePicker, WoxThemeToggle,
-});
+// Individual assignments prevent terser/rollup from stripping them as dead code.
+window.WoxIcon = WoxIcon;
+window.WoxSeparator = WoxSeparator;
+window.WoxBadge = WoxBadge;
+window.WoxButton = WoxButton;
+window.WoxInput = WoxInput;
+window.WoxSelect = WoxSelect;
+window.WoxSlider = WoxSlider;
+window.WoxColorSwatch = WoxColorSwatch;
+window.WoxTooltip = WoxTooltip;
+window.WoxColorPicker = WoxColorPicker;
+window.WoxMenuItem = WoxMenuItem;
+window.WoxMenu = WoxMenu;
+window.WoxLayerItem = WoxLayerItem;
+window.WoxSection = WoxSection;
+window.WoxTab = WoxTab;
+window.WoxTabs = WoxTabs;
+window.WoxToolbarGroup = WoxToolbarGroup;
+window.WoxToolbar = WoxToolbar;
+window.WoxPanel = WoxPanel;
+window.WoxMenubar = WoxMenubar;
+window.WoxStatusbar = WoxStatusbar;
+window.WoxModal = WoxModal;
+window.WoxDatagrid = WoxDatagrid;
+window.WoxToast = WoxToast;
+window.WoxContextMenu = WoxContextMenu;
+window.WoxGradientEditor = WoxGradientEditor;
+window.WoxGradientSelector = WoxGradientSelector;
+window.WoxDatePicker = WoxDatePicker;
+window.WoxThemeToggle = WoxThemeToggle;
