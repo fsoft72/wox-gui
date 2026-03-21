@@ -1,5 +1,11 @@
 # CHANGES.md
 
+## 2026-03-21 — Track demo/catalog.html version in bump script
+
+### Fixed
+- **`scripts/version.sh`**: Now updates `v{VERSION}` in `demo/catalog.html` (About modal) during version bumps.
+- **`scripts/publish.sh`**: Stages `demo/catalog.html` in the release commit.
+
 ## 2026-03-21 — Include site in version bumps
 
 ### Fixed

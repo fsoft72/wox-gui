@@ -56,6 +56,12 @@ if [ -f site/index.html ]; then
   sed -i "s/v${CURRENT_VERSION}/v${NEW_VERSION}/g" site/index.html
 fi
 
+# About modal version in demo/catalog.html
+if [ -f demo/catalog.html ]; then
+  sed -i "s/v${CURRENT_VERSION}/v${NEW_VERSION}/g" demo/catalog.html
+  echo "  Updated demo/catalog.html"
+fi
+
 echo ""
 echo "Bumped to v$NEW_VERSION"
-echo "Files changed: package.json, AGENT.md, tests/cdn.html, llms.md, site/index.html"
+echo "Files changed: package.json, AGENT.md, tests/cdn.html, llms.md, site/index.html, demo/catalog.html"

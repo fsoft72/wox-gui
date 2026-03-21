@@ -64,7 +64,7 @@ npm publish --access public
 
 # --- Git tag & commit ---
 
-git add package.json AGENT.md tests/cdn.html llms.md site/index.html
+git add package.json AGENT.md tests/cdn.html llms.md site/index.html demo/catalog.html
 git commit -m "chore: release v$NEW_VERSION"
 git tag -a "v$NEW_VERSION" -m "v$NEW_VERSION"
 
