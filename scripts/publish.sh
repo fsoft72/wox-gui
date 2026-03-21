@@ -54,7 +54,7 @@ pnpm run build
 
 # --- Version bump ---
 
-"$ROOT/scripts/version.sh" "$BUMP"
+# "$ROOT/scripts/version.sh" "$BUMP"
 NEW_VERSION="$(node -p "require('./package.json').version")"
 
 # --- Publish ---
