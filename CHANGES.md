@@ -1,5 +1,12 @@
 # CHANGES.md
 
+## 2026-03-21 — Include site in version bumps
+
+### Fixed
+- **`site/index.html`**: Updated stale version from `0.1.4` to `0.1.5` (CDN URL and footer).
+- **`scripts/version.sh`**: Now also updates `site/index.html` (both CDN URL and footer `vX.Y.Z`).
+- **`scripts/publish.sh`**: Stages `site/index.html` in the release commit.
+
 ## 2026-03-21 — Extract version bump script
 
 ### Added

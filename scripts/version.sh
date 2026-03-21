@@ -8,6 +8,7 @@
 #   - AGENT.md
 #   - tests/cdn.html
 #   - llms.md
+#   - site/index.html
 #
 set -euo pipefail
 
@@ -40,15 +41,21 @@ fi
 
 echo "Version: $CURRENT_VERSION -> $NEW_VERSION"
 
-# --- Update version references in AGENT.md, tests/cdn.html, and llms.md ---
+# --- Update version references ---
 
-for f in AGENT.md tests/cdn.html llms.md; do
+# CDN URLs: @0.1.5 -> @0.1.6
+for f in AGENT.md tests/cdn.html llms.md site/index.html; do
   if [ -f "$f" ]; then
     sed -i "s/@${CURRENT_VERSION}/@${NEW_VERSION}/g" "$f"
     echo "  Updated $f"
   fi
 done
 
+# Footer version: v0.1.5 -> v0.1.6
+if [ -f site/index.html ]; then
+  sed -i "s/v${CURRENT_VERSION}/v${NEW_VERSION}/g" site/index.html
+fi
+
 echo ""
 echo "Bumped to v$NEW_VERSION"
-echo "Files changed: package.json, AGENT.md, tests/cdn.html, llms.md"
+echo "Files changed: package.json, AGENT.md, tests/cdn.html, llms.md, site/index.html"
