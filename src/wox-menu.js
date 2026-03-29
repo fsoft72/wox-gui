@@ -25,6 +25,7 @@ const STYLES = `
  * @attr {string}  trigger - "click" (default), "hover", or "context"
  * @fires wox-open  - When menu opens
  * @fires wox-close - When menu closes
+ * @fires wox-click - Emitted with { label } when clicked and no children are present
  */
 class WoxMenu extends WoxElement {
     static observedAttributes = ['label', 'open', 'trigger'];
@@ -70,7 +71,11 @@ class WoxMenu extends WoxElement {
         if (triggerMode === 'click') {
             trigger.addEventListener('click', (e) => {
                 e.stopPropagation();
-                this._toggle();
+                if (this.children.length === 0) {
+                    this.emit('wox-click', { label: this.getAttribute('label') || '' });
+                } else {
+                    this._toggle();
+                }
             });
         } else if (triggerMode === 'hover') {
             this.addEventListener('mouseenter', () => this._open());

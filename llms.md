@@ -257,16 +257,27 @@ Multi-variant button (icon, text, tile, dash) with optional glow effects.
 | `dash` | `string` | `"solid"` | Dash pattern: `"solid"`, `"dotted"`, `"dashed"`, `"longdash"`, `"dotdash"`, `"zigzag"` |
 | `glow` | `boolean` | `false` | Neon glow effect (`tile` + `color`) |
 | `pulse` | `boolean` | `false` | Opacity pulse animation. Composable with `glow` |
+| `border-color` | `string` | — | Custom border color; applies to all variants in all states |
+| `icon-color` | `string` | — | Custom icon color; overrides inherited text color on the icon only |
+| `text-color` | `string` | — | Custom text/label color; also controls `dash-line` fill in `dash` variant |
 
 | Event | Detail | Description |
 |-------|--------|-------------|
 | `wox-click` | `{ originalEvent }` | Click (not emitted when `disabled`) |
+
+When `border-color`, `icon-color`, or `text-color` are set they persist through hover and active states — visual feedback is still provided by the background change. They can be combined freely with `color` (tile accent) and `glow`/`pulse`.
 
 ```html
 <wox-button variant="icon" icon="near_me" active></wox-button>
 <wox-button variant="text" icon="add" label="Create"></wox-button>
 <wox-button variant="tile" icon="star" label="Fav" color="#f72585" glow></wox-button>
 <wox-button variant="dash" dash="dashed"></wox-button>
+
+<!-- Custom colors -->
+<wox-button variant="icon" icon="star" border-color="#ffd600" icon-color="#ffd600"></wox-button>
+<wox-button variant="text" icon="bolt" label="Flash" border-color="#f72585" icon-color="#f72585" text-color="#f72585"></wox-button>
+<wox-button variant="tile" icon="layers" label="Layer" icon-color="#4cc9f0" text-color="#4cc9f0"></wox-button>
+<wox-button variant="dash" dash="dashed" border-color="#4361ee" text-color="#4cc9f0" active></wox-button>
 ```
 
 ---
@@ -546,10 +557,13 @@ Dropdown menu with click/hover/context triggers.
 |-------|--------|-------------|
 | `wox-open` | — | Menu opened |
 | `wox-close` | — | Menu closed |
+| `wox-click` | `{ label }` | Emitted when clicked with no children (acts as a plain button) |
 
 **Slot:** `default` — `<wox-menu-item>` children.
 
 Auto-closes on item selection, outside click, or menubar navigation. Viewport-flips to stay visible.
+
+When no `<wox-menu-item>` children are present, clicking the trigger emits `wox-click` instead of opening a dropdown — useful for top-level menu actions that don't have a submenu.
 
 ```html
 <wox-menu label="File">

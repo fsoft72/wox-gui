@@ -1,5 +1,18 @@
 # CHANGES.md
 
+## 2026-03-29 — wox-button: border-color / icon-color / text-color; wox-menu: clickable title
+
+### Added
+- **`src/wox-button.js`**: Three new attributes for all variants:
+  - `border-color` — custom border color, persists across default/hover/active states
+  - `icon-color` — custom color for the Material Icons element only
+  - `text-color` — custom text/label color; also controls `dash-line` fill in the `dash` variant
+- **`src/wox-menu.js`**: When the menu has no children, clicking the trigger emits `wox-click { label }` instead of opening an empty dropdown.
+
+### Changed
+- **`demo/catalog.html`**: Added "Border color", "Icon color", "Text color", and "Combined" demo rows to the Button section.
+- **`llms.md`**: Updated `wox-button` attribute table and `wox-menu` event table.
+
 ## 2026-03-21 — Track demo/catalog.html version in bump script
 
 ### Fixed
