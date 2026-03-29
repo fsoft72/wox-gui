@@ -1137,7 +1137,7 @@
             <wox-icon name="palette" size="40" color="var(--wox-accent)" glow></wox-icon>
             <div>
                 <div style="font-size:18px;font-weight:600;color:var(--wox-text-hi)">WoxGUI</div>
-                <div style="font-size:12px;color:var(--wox-accent)">v0.1.7</div>
+                <div style="font-size:12px;color:var(--wox-accent)">v0.1.8</div>
             </div>
         </div>
         <wox-separator></wox-separator>
@@ -1168,7 +1168,7 @@
         <wox-badge></wox-badge>
         &nbsp; WoxGUI Showcase — 28 components
     </span>
-    <span slot="center" id="status-zoom">Zoom: 100% &nbsp;|&nbsp; CDN v0.1.7</span>
+    <span slot="center" id="status-zoom">Zoom: 100% &nbsp;|&nbsp; CDN v0.1.8</span>
     <span slot="right" id="status-right">Hover a component to explore</span>
 </wox-statusbar>
 
@@ -1360,7 +1360,7 @@ let zoomLevel = 100;
 
 function applyZoom() {
     document.querySelector('.main-content').style.zoom = `${zoomLevel}%`;
-    document.getElementById('status-zoom').innerHTML = `Zoom: ${zoomLevel}% &nbsp;|&nbsp; CDN v0.1.7`;
+    document.getElementById('status-zoom').innerHTML = `Zoom: ${zoomLevel}% &nbsp;|&nbsp; CDN v0.1.8`;
 }
 
 document.getElementById('menu-zoom-in').addEventListener('wox-select', () => {
