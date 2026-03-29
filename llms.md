@@ -258,6 +258,7 @@ Multi-variant button (icon, text, tile, dash) with optional glow effects.
 | `glow` | `boolean` | `false` | Neon glow effect (`tile` + `color`) |
 | `pulse` | `boolean` | `false` | Opacity pulse animation. Composable with `glow` |
 | `border-color` | `string` | — | Custom border color; applies to all variants in all states |
+| `border-style` | `string` | `"solid"` | CSS border-style: `"solid"`, `"dashed"`, `"dotted"`, `"double"`, etc. |
 | `icon-color` | `string` | — | Custom icon color; overrides inherited text color on the icon only |
 | `text-color` | `string` | — | Custom text/label color; also controls `dash-line` fill in `dash` variant |
 
@@ -278,6 +279,12 @@ When `border-color`, `icon-color`, or `text-color` are set they persist through 
 <wox-button variant="text" icon="bolt" label="Flash" border-color="#f72585" icon-color="#f72585" text-color="#f72585"></wox-button>
 <wox-button variant="tile" icon="layers" label="Layer" icon-color="#4cc9f0" text-color="#4cc9f0"></wox-button>
 <wox-button variant="dash" dash="dashed" border-color="#4361ee" text-color="#4cc9f0" active></wox-button>
+
+<!-- Custom border style -->
+<wox-button variant="icon" icon="star" border-style="dashed"></wox-button>
+<wox-button variant="icon" icon="bolt" border-style="dotted" border-color="#f72585" icon-color="#f72585"></wox-button>
+<wox-button variant="text" icon="add" label="Create" border-style="dashed" border-color="#4cc9f0" text-color="#4cc9f0"></wox-button>
+<wox-button variant="tile" icon="near_me" label="Select" border-style="dashed"></wox-button>
 ```
 
 ---

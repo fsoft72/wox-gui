@@ -7,7 +7,7 @@ const STYLES = `
     :host { display: inline-block; }
     button {
         display: flex; align-items: center; justify-content: center; gap: 6px;
-        background: transparent; border: 1px solid var(--wox-btn-border, var(--wox-border)); color: var(--wox-btn-text, var(--wox-text-secondary, #999));
+        background: transparent; border: 1px solid var(--wox-btn-border, var(--wox-border)); border-style: var(--wox-btn-border-style, solid); color: var(--wox-btn-text, var(--wox-text-secondary, #999));
         cursor: pointer; font-family: var(--wox-font, sans-serif); font-size: var(--wox-font-size-base, 12px);
         transition: all var(--wox-transition-fast, 0.12s); border-radius: var(--wox-radius-sm, 3px);
         padding: 0; margin: 0; line-height: 1; user-select: none;
@@ -27,7 +27,7 @@ const STYLES = `
     /* tile variant */
     button.v-tile {
         flex-direction: column; gap: 6px; background: var(--wox-bg-toolbar, #1e1e22);
-        border: 1px solid var(--wox-border, #333); border-radius: var(--wox-radius-xl, 10px);
+        border: 1px solid var(--wox-border, #333); border-style: var(--wox-btn-border-style, solid); border-radius: var(--wox-radius-xl, 10px);
         padding: 12px 10px; min-width: 68px; font-size: var(--wox-font-size-sm, 10px);
         font-weight: 500; text-transform: uppercase;
         transition: all var(--wox-transition-smooth, 0.25s cubic-bezier(0.4, 0, 0.2, 1));
@@ -50,7 +50,7 @@ const STYLES = `
     /* dash variant */
     button.v-dash {
         width: 42px; height: 26px; background: var(--wox-bg-panel, #1c1c21);
-        border: 1px solid var(--wox-border, #333); border-radius: var(--wox-radius-lg, 8px);
+        border: 1px solid var(--wox-border, #333); border-style: var(--wox-btn-border-style, solid); border-radius: var(--wox-radius-lg, 8px);
         transition: all 0.2s;
     }
     button.v-dash:hover { background: var(--wox-bg-hover, #2a2a2e); border-color: var(--wox-btn-border, var(--wox-border-light, #555)); transform: translateY(-1px); }
@@ -84,6 +84,7 @@ const STYLES = `
  * @attr {boolean} glow         - Enable neon glow effect (requires color)
  * @attr {boolean} pulse        - Enable opacity pulse animation (composable with glow)
  * @attr {string}  border-color - Custom border color (all variants)
+ * @attr {string}  border-style - CSS border-style: "solid" (default), "dashed", "dotted", "double", etc.
  * @attr {string}  icon-color   - Custom icon color, overrides inherited text color (all variants)
  * @attr {string}  text-color   - Custom text/label color, also controls dash-line color (all variants)
  * @fires wox-click - Emitted on click with no detail
@@ -101,6 +102,7 @@ class WoxButton extends WoxElement {
 		"glow",
 		"pulse",
 		"border-color",
+		"border-style",
 		"icon-color",
 		"text-color",
 	];
@@ -125,6 +127,7 @@ class WoxButton extends WoxElement {
 		const glow = this.hasAttribute("glow");
 		const pulse = this.hasAttribute("pulse");
 		const borderColor = this.getAttribute("border-color") || "";
+		const borderStyle = this.getAttribute("border-style") || "";
 		const iconColor = this.getAttribute("icon-color") || "";
 		const textColor = this.getAttribute("text-color") || "";
 
@@ -160,6 +163,7 @@ class WoxButton extends WoxElement {
 		const styleVars = [];
 		if (color) styleVars.push(`--wox-fx-color:${color}`);
 		if (borderColor) styleVars.push(`--wox-btn-border:${borderColor}`);
+		if (borderStyle) styleVars.push(`--wox-btn-border-style:${borderStyle}`);
 		if (iconColor) styleVars.push(`--wox-btn-icon:${iconColor}`);
 		if (textColor) styleVars.push(`--wox-btn-text:${textColor}`);
 

@@ -1,5 +1,12 @@
 # CHANGES.md
 
+## 2026-03-29 — wox-button: border-style attribute
+
+### Added
+- **`src/wox-button.js`**: `border-style` attribute — sets CSS border-style (`solid`, `dashed`, `dotted`, `double`, etc.) on all variants.
+- **`demo/catalog.html`**: Added "Border style" and "Style + color" demo rows to the Button section.
+- **`llms.md`**: Added `border-style` to attribute table and code examples.
+
 ## 2026-03-29 — wox-button: border-color / icon-color / text-color; wox-menu: clickable title
 
 ### Added
