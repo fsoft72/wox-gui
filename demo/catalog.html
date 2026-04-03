@@ -539,7 +539,7 @@
         <!-- ── INPUT ── -->
         <section class="component-section" id="input">
             <h2 class="section-title">Input <span class="section-tag">&lt;wox-input&gt;</span></h2>
-            <p class="section-desc">Text and number inputs with units and drag scrubbing on labels.</p>
+            <p class="section-desc">Supports text, number, password, email, url, tel, search, color, date, time, datetime-local, and range types.</p>
             <div class="demo-card">
                 <div class="demo-row" style="align-items:flex-start;">
                     <wox-input type="text" label="Layer Name" placeholder="Enter name…" style="width:200px"></wox-input>
@@ -552,6 +552,22 @@
                     <wox-input type="number" label="Opacity" value="100" min="0" max="100" step="1" unit="%" style="width:120px"></wox-input>
                     <wox-input type="number" label="Rotation" value="0" min="-360" max="360" step="1" unit="deg" style="width:120px"></wox-input>
                     <wox-input type="text" label="Disabled" value="Read only" disabled style="width:160px"></wox-input>
+                </div>
+                <div class="demo-row" style="align-items:flex-start;">
+                    <wox-input type="password" label="Password" placeholder="Enter password…" style="width:180px"></wox-input>
+                    <wox-input type="email" label="Email" placeholder="user@example.com" style="width:200px"></wox-input>
+                    <wox-input type="url" label="Website" placeholder="https://…" style="width:200px"></wox-input>
+                    <wox-input type="tel" label="Phone" placeholder="+1 555 000 0000" style="width:160px"></wox-input>
+                </div>
+                <div class="demo-row" style="align-items:flex-start;">
+                    <wox-input type="search" label="Search" placeholder="Search…" style="width:200px"></wox-input>
+                    <wox-input type="color" label="Fill Color" value="#00e5ff" style="width:80px"></wox-input>
+                    <wox-input type="date" label="Start Date" style="width:160px"></wox-input>
+                    <wox-input type="time" label="Start Time" style="width:120px"></wox-input>
+                </div>
+                <div class="demo-row" style="align-items:flex-start;">
+                    <wox-input type="datetime-local" label="Event Date" style="width:220px"></wox-input>
+                    <wox-input type="range" label="Volume" value="50" min="0" max="100" step="1" style="width:200px"></wox-input>
                 </div>
             </div>
         </section>

@@ -291,34 +291,43 @@ When `border-color`, `icon-color`, or `text-color` are set they persist through 
 
 ### wox-input
 
-Text and number input with units and drag scrubbing.
+Input field supporting multiple types with optional label, unit suffix, and drag scrubbing.
 
 **Tag:** `<wox-input>` — **Class:** `WoxInput`
 
+**Supported types:** `text` (default), `number`, `password`, `email`, `url`, `tel`, `search`, `color`, `date`, `time`, `datetime-local`, `range`.
+
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `type` | `string` | `"text"` | `"text"` or `"number"` |
+| `type` | `string` | `"text"` | Input type (see list above) |
 | `value` | `string` | — | Current input value |
 | `label` | `string` | — | Label text above the input |
-| `unit` | `string` | — | Unit suffix (e.g. `"px"`, `"%"`, `"deg"`) |
+| `unit` | `string` | — | Unit suffix (e.g. `"px"`, `"%"`, `"deg"`) — ignored for `color`/`range` |
 | `placeholder` | `string` | — | Placeholder text |
-| `min` | `number` | — | Minimum value (number only) |
-| `max` | `number` | — | Maximum value (number only) |
-| `step` | `number` | — | Step increment (number only) |
+| `min` | `number` | — | Minimum value (`number`/`range` only) |
+| `max` | `number` | — | Maximum value (`number`/`range` only) |
+| `step` | `number` | — | Step increment (`number`/`range` only) |
 | `disabled` | `boolean` | `false` | Disabled state |
 
 | Event | Detail | Description |
 |-------|--------|-------------|
-| `wox-input` | `{ value }` | Every keystroke. Number mode emits `parseFloat(value)` |
+| `wox-input` | `{ value }` | Every keystroke. `number`/`range` mode emits `parseFloat(value)` |
 | `wox-change` | `{ value }` | On blur or Enter |
 
 **JS property:** `value` — gets or sets the current value programmatically.
 
 **Drag scrubbing:** Click and drag on the label to adjust number values by step.
 
+**Notes:** `date`/`time`/`datetime-local` use dark color-scheme for native pickers. Invalid type values fall back to `"text"`.
+
 ```html
 <wox-input type="number" label="X" value="100" min="0" max="1920" step="1" unit="px"></wox-input>
 <wox-input type="text" label="Name" placeholder="Layer name"></wox-input>
+<wox-input type="password" label="Password" placeholder="Enter password…"></wox-input>
+<wox-input type="email" label="Email" placeholder="user@example.com"></wox-input>
+<wox-input type="color" label="Fill" value="#00e5ff"></wox-input>
+<wox-input type="date" label="Start Date"></wox-input>
+<wox-input type="range" label="Volume" value="50" min="0" max="100"></wox-input>
 ```
 
 ---

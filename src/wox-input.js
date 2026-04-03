@@ -1,6 +1,9 @@
-// wox-input.js — Text/number input with unit suffix and label drag-scrubbing
+// wox-input.js — Input field supporting text, number, password, email, url, tel, search, color, date, time, datetime-local, range
 
 import { WoxElement } from './wox-base.js';
+
+const VALID_TYPES = ['text', 'number', 'password', 'email', 'url', 'tel', 'search', 'color', 'date', 'time', 'datetime-local', 'range'];
+const NUMERIC_TYPES = ['number', 'range'];
 
 const STYLES = `
     :host { display: inline-block; }
@@ -24,21 +27,39 @@ const STYLES = `
     input:disabled { opacity: 0.4; cursor: not-allowed; }
     input.has-unit { padding-right: 28px; }
     .suffix { position: absolute; right: 8px; font-size: var(--wox-font-size-sm, 10px); color: var(--wox-text-secondary, #999); pointer-events: none; }
+    input[type="color"] {
+        padding: 2px; height: 32px; cursor: pointer;
+        border-radius: var(--wox-radius-md, 6px);
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+    input[type="color"]::-webkit-color-swatch { border: none; border-radius: 3px; }
+    input[type="color"]::-moz-color-swatch { border: none; border-radius: 3px; }
+    input[type="date"], input[type="time"], input[type="datetime-local"] {
+        color-scheme: dark;
+    }
+    input[type="search"]::-webkit-search-cancel-button { filter: invert(0.7); }
+    input[type="range"] {
+        padding: 0; background: transparent; border: none; box-shadow: none;
+        accent-color: var(--wox-accent, #00e5ff);
+        height: 20px; cursor: pointer;
+    }
+    input[type="range"]:focus { box-shadow: none; border: none; }
 `;
 
 /**
- * <wox-input> — Text or number input with optional unit suffix and drag scrubbing.
- * @attr {string}  type     - "text" or "number" (default "text")
- * @attr {string}  value    - Current value
- * @attr {string}  unit     - Unit suffix displayed inside the field (e.g. "px", "%")
- * @attr {string}  label    - Label text above the input
- * @attr {number}  min      - Minimum value (number type)
- * @attr {number}  max      - Maximum value (number type)
- * @attr {number}  step     - Step value (number type)
+ * <wox-input> — Input field with optional label, unit suffix, and drag scrubbing for numeric types.
+ * Supports: text, number, password, email, url, tel, search, color, date, time, datetime-local, range.
+ * @attr {string}  type        - Input type (default "text")
+ * @attr {string}  value       - Current value
+ * @attr {string}  unit        - Unit suffix displayed inside the field (e.g. "px", "%")
+ * @attr {string}  label       - Label text above the input
+ * @attr {number}  min         - Minimum value (number/range types)
+ * @attr {number}  max         - Maximum value (number/range types)
+ * @attr {number}  step        - Step value (number/range types)
  * @attr {string}  placeholder - Placeholder text
- * @attr {boolean} disabled - Disabled state
- * @fires wox-input  - On each keystroke, detail: { value }
- * @fires wox-change - On blur/enter, detail: { value }
+ * @attr {boolean} disabled    - Disabled state
+ * @fires wox-input  - On each keystroke/change, detail: { value }
+ * @fires wox-change - On blur/enter/commit, detail: { value }
  */
 class WoxInput extends WoxElement {
     static observedAttributes = ['type', 'value', 'unit', 'label', 'min', 'max', 'step', 'placeholder', 'disabled'];
@@ -72,7 +93,8 @@ class WoxInput extends WoxElement {
 
     /** @private */
     _render = () => {
-        const type = this.getAttribute('type') || 'text';
+        const rawType = this.getAttribute('type') || 'text';
+        const type = VALID_TYPES.includes(rawType) ? rawType : 'text';
         const value = this.getAttribute('value') || '';
         const unit = this.getAttribute('unit') || '';
         const label = this.getAttribute('label') || '';
@@ -82,15 +104,18 @@ class WoxInput extends WoxElement {
         const placeholder = this.getAttribute('placeholder') || '';
         const disabled = this.hasAttribute('disabled');
 
+        const isNumeric = NUMERIC_TYPES.includes(type);
         const isNumber = type === 'number';
-        const numAttrs = isNumber ? `${min !== null ? ` min="${min}"` : ''}${max !== null ? ` max="${max}"` : ''}${step !== null ? ` step="${step}"` : ''}` : '';
+        const isColor = type === 'color';
+        const numAttrs = isNumeric ? `${min !== null ? ` min="${min}"` : ''}${max !== null ? ` max="${max}"` : ''}${step !== null ? ` step="${step}"` : ''}` : '';
+        const showUnit = unit && !isColor && type !== 'range';
 
         this.render(STYLES, `
             <div class="wrapper">
-                ${label ? `<label class="${isNumber ? 'scrub' : ''}">${label}${unit ? `<span class="unit">${unit}</span>` : ''}</label>` : ''}
+                ${label ? `<label class="${isNumber ? 'scrub' : ''}">${label}${showUnit ? `<span class="unit">${unit}</span>` : ''}</label>` : ''}
                 <div class="input-wrap">
-                    <input type="${isNumber ? 'number' : 'text'}" value="${value}" placeholder="${placeholder}" ${numAttrs} ${disabled ? 'disabled' : ''} class="${unit && !label ? 'has-unit' : ''}">
-                    ${unit && !label ? `<span class="suffix">${unit}</span>` : ''}
+                    <input type="${type}" value="${value}" placeholder="${placeholder}" ${numAttrs} ${disabled ? 'disabled' : ''} class="${showUnit && !label ? 'has-unit' : ''}">
+                    ${showUnit && !label ? `<span class="suffix">${unit}</span>` : ''}
                 </div>
             </div>
         `);
@@ -98,12 +123,12 @@ class WoxInput extends WoxElement {
         const input = this.$('input');
 
         input.addEventListener('input', () => {
-            const v = isNumber ? parseFloat(input.value) : input.value;
+            const v = isNumeric ? parseFloat(input.value) : input.value;
             this.emit('wox-input', { value: v });
         });
 
         input.addEventListener('change', () => {
-            const v = isNumber ? parseFloat(input.value) : input.value;
+            const v = isNumeric ? parseFloat(input.value) : input.value;
             this.emit('wox-change', { value: v });
         });
 

@@ -1,5 +1,20 @@
 # CHANGES.md
 
+## 2026-04-03 — wox-input: support all standard input types
+
+### Added
+- **`src/wox-input.js`**: Support for all standard HTML input types: `password`, `email`, `url`, `tel`, `search`, `color`, `date`, `time`, `datetime-local`, `range` (in addition to existing `text` and `number`).
+  - `color` type renders a native color picker with dark-theme styling.
+  - `date`, `time`, `datetime-local` use `color-scheme: dark` for native picker integration.
+  - `range` type renders a native range slider with accent color.
+  - `number` and `range` share numeric handling (`parseFloat`, `min`/`max`/`step`).
+  - Invalid type values fall back to `"text"`.
+- **`demo/catalog.html`**: Added demo rows for password, email, url, tel, search, color, date, time, datetime-local, and range inputs.
+
+### Changed
+- **`docs/wox-input.md`**: Updated with supported types table, new examples, and notes.
+- **`llms.md`**: Updated wox-input section with new types list, attributes, and examples.
+
 ## 2026-03-29 — wox-button: border-style attribute
 
 ### Added
