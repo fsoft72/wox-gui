@@ -1,6 +1,6 @@
 {
   "name": "wox-gui",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "WOX — Web Component UI library",
   "type": "module",
   "main": "./dist/wox-gui.js",
