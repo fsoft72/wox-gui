@@ -23,7 +23,7 @@ All components extend `WoxElement` (a lightweight `HTMLElement` base class with 
 Or use the CDN build (no install required):
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.9/dist/wox-gui.cdn.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.1.10/dist/wox-gui.cdn.js"></script>
 ```
 
 The CDN build registers all custom elements, injects the theme, and exposes every class (e.g. `WoxToast`, `WoxContextMenu`, `WoxModal`, …) on `window` as globals — no `import` needed.
