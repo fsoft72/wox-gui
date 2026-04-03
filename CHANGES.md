@@ -1,5 +1,11 @@
 # CHANGES.md
 
+## 2026-04-03 — fix: thick button borders when theme CSS not loaded
+
+### Fixed
+- **`demo/catalog.html`**: Added missing `<link rel="stylesheet" href="../css/wox-theme.css">`. Without the theme, CSS custom properties were undefined causing buttons to render with browser-default 3px borders.
+- **`src/wox-button.js`**: Added final `#333` fallback to nested `var()` in base button border: `var(--wox-btn-border, var(--wox-border, #333))`. Prevents "invalid at computed-value time" when both custom properties are undefined.
+
 ## 2026-04-03 — wox-input: support all standard input types
 
 ### Added

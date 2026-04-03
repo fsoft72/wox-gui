@@ -7,7 +7,7 @@ const STYLES = `
     :host { display: inline-block; }
     button {
         display: flex; align-items: center; justify-content: center; gap: 6px;
-        background: transparent; border: 1px solid var(--wox-btn-border, var(--wox-border)); border-style: var(--wox-btn-border-style, solid); color: var(--wox-btn-text, var(--wox-text-secondary, #999));
+        background: transparent; border: 1px solid var(--wox-btn-border, var(--wox-border, #333)); border-style: var(--wox-btn-border-style, solid); color: var(--wox-btn-text, var(--wox-text-secondary, #999));
         cursor: pointer; font-family: var(--wox-font, sans-serif); font-size: var(--wox-font-size-base, 12px);
         transition: all var(--wox-transition-fast, 0.12s); border-radius: var(--wox-radius-sm, 3px);
         padding: 0; margin: 0; line-height: 1; user-select: none;
