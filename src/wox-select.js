@@ -13,6 +13,15 @@ const STYLES = `
         outline: none;
     }
 
+    label {
+        font-size: var(--wox-font-size-sm, 10px);
+        color: var(--wox-text-secondary, #999);
+        display: block;
+        margin-bottom: 3px;
+        cursor: default;
+        user-select: none;
+    }
+
     :host(:focus) .trigger,
     :host(:focus-within) .trigger {
         border-color: var(--wox-accent, #00e5ff);
@@ -210,6 +219,7 @@ const _esc = (str) => String(str)
  * @attr {boolean} multiple    - Enables multi-select with tag chips
  * @attr {boolean} searchable  - Shows a search input inside the dropdown
  * @attr {string}  placeholder - Placeholder text when nothing is selected
+ * @attr {string}  label       - Label text displayed above the select
  * @attr {boolean} disabled    - Disables the component
  * @attr {string}  value       - Selected value (or JSON array for multiple)
  * @attr {string}  options     - JSON array of { value, label, image? } objects
@@ -220,7 +230,7 @@ const _esc = (str) => String(str)
  * @fires wox-search - On search input change, detail: { query }
  */
 class WoxSelect extends WoxElement {
-    static observedAttributes = ['multiple', 'searchable', 'placeholder', 'disabled', 'value', 'options'];
+    static observedAttributes = ['multiple', 'searchable', 'placeholder', 'disabled', 'value', 'options', 'label'];
 
     /** @type {boolean} */
     _isOpen = false;
@@ -327,6 +337,9 @@ class WoxSelect extends WoxElement {
     get searchable() { return this.hasAttribute('searchable'); }
     set searchable(v) { v ? this.setAttribute('searchable', '') : this.removeAttribute('searchable'); }
 
+    get label() { return this.getAttribute('label') || ''; }
+    set label(v) { v ? this.setAttribute('label', v) : this.removeAttribute('label'); }
+
     get placeholder() { return this.getAttribute('placeholder') || 'Select an option'; }
     set placeholder(v) { this.setAttribute('placeholder', v); }
 
@@ -377,16 +390,7 @@ class WoxSelect extends WoxElement {
         this._focusedIndex = -1;
         this._filteredOptions = [...this.options];
 
-        const trigger = this.$('.trigger');
-        if (trigger) {
-            const rect = trigger.getBoundingClientRect();
-            const spaceBelow = window.innerHeight - rect.bottom;
-            const spaceAbove = rect.top;
-            this._openUpward = spaceBelow < 210 && spaceAbove > spaceBelow;
-        }
-
         this._render();
-        this._updateDropdownPosition();
 
         if (this.searchable) {
             requestAnimationFrame(() => {
@@ -525,6 +529,7 @@ class WoxSelect extends WoxElement {
 
             const spaceBelow = window.innerHeight - triggerRect.bottom;
             const spaceAbove = triggerRect.top;
+            this._openUpward = spaceBelow < 210 && spaceAbove > spaceBelow;
 
             dropdown.style.top = '';
             dropdown.style.bottom = '';
@@ -662,7 +667,10 @@ class WoxSelect extends WoxElement {
             dropdownHtml = `<div class="dropdown">${searchHtml}${optionsHtml}</div>`;
         }
 
+        const labelHtml = this.label ? `<label>${_esc(this.label)}</label>` : '';
+
         this.render(STYLES, `
+            ${labelHtml}
             <div class="trigger" tabindex="-1">
                 <div class="selected-content">${selectedHtml}</div>
                 <div class="arrow${this._isOpen ? ' open' : ''}"></div>

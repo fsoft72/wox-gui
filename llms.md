@@ -23,7 +23,7 @@ All components extend `WoxElement` (a lightweight `HTMLElement` base class with 
 Or use the CDN build (no install required):
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.2.0/dist/wox-gui.cdn.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.2.1/dist/wox-gui.cdn.js"></script>
 ```
 
 The CDN build registers all custom elements, injects the theme, and exposes every class (e.g. `WoxToast`, `WoxContextMenu`, `WoxModal`, …) on `window` as globals — no `import` needed.
@@ -420,6 +420,7 @@ Searchable single or multi-select dropdown with keyboard navigation.
 | `multiple` | `boolean` | `false` | Multi-select mode with tag chips |
 | `searchable` | `boolean` | `false` | Shows search input inside dropdown |
 | `placeholder` | `string` | `"Select an option"` | Placeholder text |
+| `label` | `string` | — | Label text displayed above the select |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `value` | `string\|string[]` | `""` | Selected value (JS property) |
 | `options` | `string` | `"[]"` | JSON array of `{ value, label, image? }` objects |
