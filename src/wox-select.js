@@ -132,6 +132,18 @@ const STYLES = `
         max-height: 200px;
         overflow-y: auto;
         scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: var(--wox-border-light, #444) transparent;
+    }
+
+    .dropdown::-webkit-scrollbar { width: 4px; }
+    .dropdown::-webkit-scrollbar-track { background: transparent; }
+    .dropdown::-webkit-scrollbar-thumb {
+        background: var(--wox-border-light, #444);
+        border-radius: 2px;
+    }
+    .dropdown::-webkit-scrollbar-thumb:hover {
+        background: var(--wox-text-secondary, #999);
     }
 
     .search-input {

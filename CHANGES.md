@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-04-05 — style: wox-select thin themed scrollbar
+
+### Changed
+- **`src/wox-select.js`**: Dropdown scrollbar is now 4px wide with `--wox-border-light` thumb on transparent track, using both `scrollbar-width`/`scrollbar-color` (Firefox) and `::-webkit-scrollbar` pseudo-elements (Chrome/Safari).
+
 ## 2026-04-05 — fix: wox-select dropdown mispositioned inside modals
 
 ### Fixed
