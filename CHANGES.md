@@ -1,5 +1,14 @@
 # CHANGES.md
 
+## 2026-04-05 — fix: wox-select/wox-menu `wox-close` event bubbling breaks parent modals
+
+### Fixed
+- **`src/wox-select.js`**: `wox-open` and `wox-close` events now dispatch with `bubbles: false` and `composed: false` (via direct `dispatchEvent` instead of `this.emit()`). Previously, when a `wox-select` was inside a `wox-modal`, the select's `_boundDocumentClick` handler would fire on any outside click, call `close()`, and emit a composed+bubbling `wox-close` that propagated up to the modal — causing the modal to close immediately after opening.
+- **`src/wox-menu.js`**: Same fix — `wox-open` and `wox-close` now dispatch non-bubbling. Prevents the same event collision when menus are nested inside modals.
+
+### Changed
+- **`tests/test-select.html`**: Updated to use local source (`../src/cdn.js`) instead of CDN for development testing.
+
 ## 2026-04-03 — fix: thick button borders when theme CSS not loaded
 
 ### Fixed

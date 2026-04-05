@@ -42,10 +42,10 @@ class WoxMenu extends WoxElement {
             if (this.hasAttribute('open')) {
                 dd.classList.add('open');
                 this._positionDropdown();
-                this.emit('wox-open', {});
+                this.dispatchEvent(new CustomEvent('wox-open', { detail: {} }));
             } else {
                 dd.classList.remove('open');
-                this.emit('wox-close', {});
+                this.dispatchEvent(new CustomEvent('wox-close', { detail: {} }));
             }
             return;
         }

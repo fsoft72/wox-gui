@@ -381,7 +381,7 @@ class WoxSelect extends WoxElement {
             });
         }
 
-        this.emit('wox-open', null);
+        this.dispatchEvent(new CustomEvent('wox-open', { detail: null }));
     }
 
     /** Closes the dropdown */
@@ -401,7 +401,7 @@ class WoxSelect extends WoxElement {
         }
 
         this._render();
-        this.emit('wox-close', null);
+        this.dispatchEvent(new CustomEvent('wox-close', { detail: null }));
     }
 
     /** Toggles the dropdown open/closed */

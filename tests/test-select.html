@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoxGUI Select Test</title>
+  <script type="module" src="../src/cdn.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 40px; background: #1a1a2e; color: #eee; }
+  </style>
+</head>
+<body>
+
+  <h2>WoxGUI Select in Modal Test</h2>
+
+  <wox-button variant="text" label="Open dialog" id="btn-open"></wox-button>
+
+  <wox-modal id="test-modal" title="Select test" closable width="500px">
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <wox-select id="sel-downloads" placeholder="Max downloads"
+        options='[{"value":"","label":"Unlimited"},{"value":"1","label":"1"},{"value":"5","label":"5"},{"value":"10","label":"10"},{"value":"25","label":"25"},{"value":"50","label":"50"},{"value":"100","label":"100"}]'>
+      </wox-select>
+
+      <wox-select id="sel-expiry" placeholder="Expiry"
+        options='[{"value":"","label":"Never"},{"value":"1","label":"1h"},{"value":"6","label":"6h"},{"value":"12","label":"12h"},{"value":"24","label":"1 day"},{"value":"72","label":"3 days"},{"value":"168","label":"7 days"},{"value":"720","label":"30 days"}]'>
+      </wox-select>
+
+      <p id="output" style="color:#888;font-size:13px;">Selected: —</p>
+
+    </div>
+    <div slot="footer">
+      <wox-button variant="text" label="Close" id="btn-close"></wox-button>
+    </div>
+  </wox-modal>
+
+  <script type="module">
+    const modal = document.querySelector('#test-modal');
+    const btnOpen = document.querySelector('#btn-open');
+    const btnClose = document.querySelector('#btn-close');
+    const selDownloads = document.querySelector('#sel-downloads');
+    const selExpiry = document.querySelector('#sel-expiry');
+    const output = document.querySelector('#output');
+
+    btnOpen.addEventListener('wox-click', () => {
+      modal.setAttribute('open', '');
+    });
+
+    btnClose.addEventListener('wox-click', () => {
+      modal.removeAttribute('open');
+    });
+
+    modal.addEventListener('wox-close', () => {
+      modal.removeAttribute('open');
+    });
+
+    selDownloads.addEventListener('wox-change', (e) => {
+      output.textContent = `Selected: downloads=${e.detail.value}, expiry=${selExpiry.value}`;
+    });
+
+    selExpiry.addEventListener('wox-change', (e) => {
+      output.textContent = `Selected: downloads=${selDownloads.value}, expiry=${e.detail.value}`;
+    });
+  </script>
+
+</body>
+</html>
