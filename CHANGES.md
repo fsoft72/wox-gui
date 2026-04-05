@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## 2026-04-05 — fix: wox-select dropdown mispositioned inside modals
+
+### Fixed
+- **`src/wox-select.js`**: Dropdown switched from `position: fixed` to `position: absolute` with host-relative positioning. The `position: fixed` approach broke inside modals because the modal's `backdrop-filter` and `transform` properties create new containing blocks, making fixed coordinates relative to the modal box instead of the viewport. With `position: absolute` and the host's existing `position: relative`, the dropdown is now correctly placed below (or above) the trigger regardless of ancestor transforms. Removed the now-unnecessary `_calculateDropdownPosition` method; `_updateDropdownPosition` handles everything directly.
+
 ## 2026-04-05 — fix: wox-select/wox-menu `wox-close` event bubbling breaks parent modals
 
 ### Fixed

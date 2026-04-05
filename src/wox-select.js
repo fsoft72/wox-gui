@@ -121,7 +121,9 @@ const STYLES = `
     .arrow.open { transform: rotate(180deg); }
 
     .dropdown {
-        position: fixed;
+        position: absolute;
+        left: 0;
+        width: 100%;
         z-index: var(--wox-z-dropdown, 1000);
         background: var(--wox-bg-panel, #17171a);
         border: 1px solid var(--wox-border, #333);
@@ -395,8 +397,7 @@ class WoxSelect extends WoxElement {
         const dropdown = this.$('.dropdown');
         if (dropdown) {
             dropdown.style.top = '';
-            dropdown.style.left = '';
-            dropdown.style.width = '';
+            dropdown.style.bottom = '';
             dropdown.style.maxHeight = '';
         }
 
@@ -498,52 +499,31 @@ class WoxSelect extends WoxElement {
     };
 
     /** @private */
-    _calculateDropdownPosition = () => {
-        const trigger = this.$('.trigger');
-        if (!trigger) return null;
-
-        const rect = trigger.getBoundingClientRect();
-        const viewportH = window.innerHeight;
-        const viewportW = window.innerWidth;
-        const maxH = 200;
-        const margin = 2;
-        const pad = 10;
-
-        const spaceBelow = viewportH - rect.bottom;
-        const spaceAbove = rect.top;
-        const width = rect.width;
-        const left = Math.max(0, Math.min(rect.left, viewportW - width));
-
-        if (this._openUpward) {
-            return {
-                bottom: viewportH - rect.top + margin,
-                left,
-                width,
-                maxHeight: Math.max(100, Math.min(maxH, spaceAbove - pad)),
-            };
-        }
-        return {
-            top: rect.bottom + margin,
-            left,
-            width,
-            maxHeight: Math.max(100, Math.min(maxH, spaceBelow - pad)),
-        };
-    };
-
-    /** @private */
     _updateDropdownPosition = () => {
         requestAnimationFrame(() => {
             const dropdown = this.$('.dropdown');
-            if (!dropdown) return;
-            const pos = this._calculateDropdownPosition();
-            if (!pos) return;
+            const trigger = this.$('.trigger');
+            if (!dropdown || !trigger) return;
+
+            const triggerRect = trigger.getBoundingClientRect();
+            const triggerH = trigger.offsetHeight;
+            const margin = 2;
+            const maxH = 200;
+            const pad = 10;
+
+            const spaceBelow = window.innerHeight - triggerRect.bottom;
+            const spaceAbove = triggerRect.top;
+
             dropdown.style.top = '';
             dropdown.style.bottom = '';
-            if (pos.top !== undefined) dropdown.style.top = `${pos.top}px`;
-            if (pos.bottom !== undefined) dropdown.style.bottom = `${pos.bottom}px`;
-            dropdown.style.left = `${pos.left}px`;
-            dropdown.style.width = `${pos.width}px`;
-            dropdown.style.maxHeight = `${pos.maxHeight}px`;
+
+            if (this._openUpward) {
+                dropdown.style.bottom = `${triggerH + margin}px`;
+                dropdown.style.maxHeight = `${Math.max(100, Math.min(maxH, spaceAbove - pad))}px`;
+            } else {
+                dropdown.style.top = `${triggerH + margin}px`;
+                dropdown.style.maxHeight = `${Math.max(100, Math.min(maxH, spaceBelow - pad))}px`;
+            }
         });
     };
 
