@@ -27,6 +27,14 @@ const STYLES = `
     input:disabled { opacity: 0.4; cursor: not-allowed; }
     input.has-unit { padding-right: 28px; }
     .suffix { position: absolute; right: 8px; font-size: var(--wox-font-size-sm, 10px); color: var(--wox-text-secondary, #999); pointer-events: none; }
+    input.has-toggle { padding-right: 30px; }
+    .pwd-toggle {
+        position: absolute; right: 6px; background: none; border: none; cursor: pointer;
+        color: var(--wox-text-secondary, #999); padding: 2px; display: flex; align-items: center;
+        font-family: 'Material Symbols Rounded'; font-size: 16px; line-height: 1;
+        transition: color var(--wox-transition-normal, 0.2s);
+    }
+    .pwd-toggle:hover { color: var(--wox-text-primary, #eee); }
     input[type="color"] {
         padding: 2px; height: 32px; cursor: pointer;
         border-radius: var(--wox-radius-md, 6px);
@@ -107,14 +115,17 @@ class WoxInput extends WoxElement {
         const isNumeric = NUMERIC_TYPES.includes(type);
         const isNumber = type === 'number';
         const isColor = type === 'color';
+        const isPassword = type === 'password';
         const numAttrs = isNumeric ? `${min !== null ? ` min="${min}"` : ''}${max !== null ? ` max="${max}"` : ''}${step !== null ? ` step="${step}"` : ''}` : '';
         const showUnit = unit && !isColor && type !== 'range';
+        const inputClass = isPassword ? 'has-toggle' : (showUnit && !label ? 'has-unit' : '');
 
         this.render(STYLES, `
             <div class="wrapper">
                 ${label ? `<label class="${isNumber ? 'scrub' : ''}">${label}${showUnit ? `<span class="unit">${unit}</span>` : ''}</label>` : ''}
                 <div class="input-wrap">
-                    <input type="${type}" value="${value}" placeholder="${placeholder}" ${numAttrs} ${disabled ? 'disabled' : ''} class="${showUnit && !label ? 'has-unit' : ''}">
+                    <input type="${type}" value="${value}" placeholder="${placeholder}" ${numAttrs} ${disabled ? 'disabled' : ''} class="${inputClass}">
+                    ${isPassword ? `<button type="button" class="pwd-toggle" tabindex="-1">visibility_off</button>` : ''}
                     ${showUnit && !label ? `<span class="suffix">${unit}</span>` : ''}
                 </div>
             </div>
@@ -137,6 +148,16 @@ class WoxInput extends WoxElement {
                 input.blur();
             }
         });
+
+        // Password visibility toggle
+        if (isPassword) {
+            const toggle = this.$('.pwd-toggle');
+            toggle.addEventListener('click', () => {
+                const visible = input.type === 'text';
+                input.type = visible ? 'password' : 'text';
+                toggle.textContent = visible ? 'visibility_off' : 'visibility';
+            });
+        }
 
         // Drag scrubbing on label for number inputs
         if (isNumber && label) {

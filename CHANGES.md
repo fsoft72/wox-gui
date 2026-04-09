@@ -1,5 +1,11 @@
 # CHANGES.md
 
+## 2026-04-09 — wox-input: password visibility toggle
+
+### Added
+- **`src/wox-input.js`**: Password inputs now show an eye icon toggle button (Material Symbols `visibility` / `visibility_off`) that switches between masked and plain text. The button is positioned inside the input on the right side, styled with theme variables, and does not steal focus (`tabindex="-1"`).
+- **`docs/wox-input.md`**: Documented the password visibility toggle feature.
+
 ## 2026-04-05 — style: wox-select thin themed scrollbar
 
 ### Changed

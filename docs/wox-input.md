@@ -14,7 +14,7 @@ Input field with optional label, unit display, numeric drag-scrubbing, and a pub
 |------|-------------|
 | `text` | Standard text input (default) |
 | `number` | Numeric input with drag scrubbing, min/max/step |
-| `password` | Masked password input |
+| `password` | Masked password input with visibility toggle |
 | `email` | Email address with browser validation |
 | `url` | URL with browser validation |
 | `tel` | Telephone number input |
@@ -77,6 +77,10 @@ When `unit` is set without a `label`, the unit is rendered inside the input on t
 ```html
 <wox-input type="number" value="75" unit="%"></wox-input>
 ```
+
+### Password visibility toggle
+
+Password inputs include an eye icon button that toggles between masked and visible text. The icon switches between `visibility_off` (masked) and `visibility` (visible).
 
 ### Drag scrubbing
 

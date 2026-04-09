@@ -317,6 +317,8 @@ Input field supporting multiple types with optional label, unit suffix, and drag
 
 **JS property:** `value` — gets or sets the current value programmatically.
 
+**Password toggle:** Password inputs show an eye icon to toggle visibility (masked ↔ plain text).
+
 **Drag scrubbing:** Click and drag on the label to adjust number values by step.
 
 **Notes:** `date`/`time`/`datetime-local` use dark color-scheme for native pickers. Invalid type values fall back to `"text"`.
