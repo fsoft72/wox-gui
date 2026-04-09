@@ -28,11 +28,11 @@ const STYLES = `
     input.has-unit { padding-right: 28px; }
     .suffix { position: absolute; right: 8px; font-size: var(--wox-font-size-sm, 10px); color: var(--wox-text-secondary, #999); pointer-events: none; }
     input.has-toggle { padding-right: 30px; }
+    .material-icons { font-family: 'Material Icons'; font-weight: normal; font-style: normal; display: inline-block; line-height: 1; text-transform: none; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; }
     .pwd-toggle {
         position: absolute; right: 6px; background: none; border: none; cursor: pointer;
         color: var(--wox-text-secondary, #999); padding: 2px; display: flex; align-items: center;
-        font-family: 'Material Symbols Rounded'; font-size: 16px; line-height: 1;
-        transition: color var(--wox-transition-normal, 0.2s);
+        font-size: 16px; transition: color var(--wox-transition-normal, 0.2s);
     }
     .pwd-toggle:hover { color: var(--wox-text-primary, #eee); }
     input[type="color"] {
@@ -125,7 +125,7 @@ class WoxInput extends WoxElement {
                 ${label ? `<label class="${isNumber ? 'scrub' : ''}">${label}${showUnit ? `<span class="unit">${unit}</span>` : ''}</label>` : ''}
                 <div class="input-wrap">
                     <input type="${type}" value="${value}" placeholder="${placeholder}" ${numAttrs} ${disabled ? 'disabled' : ''} class="${inputClass}">
-                    ${isPassword ? `<button type="button" class="pwd-toggle" tabindex="-1">visibility_off</button>` : ''}
+                    ${isPassword ? `<button type="button" class="pwd-toggle" tabindex="-1"><span class="material-icons">visibility_off</span></button>` : ''}
                     ${showUnit && !label ? `<span class="suffix">${unit}</span>` : ''}
                 </div>
             </div>
@@ -152,10 +152,11 @@ class WoxInput extends WoxElement {
         // Password visibility toggle
         if (isPassword) {
             const toggle = this.$('.pwd-toggle');
+            const icon = toggle.querySelector('.material-icons');
             toggle.addEventListener('click', () => {
                 const visible = input.type === 'text';
                 input.type = visible ? 'password' : 'text';
-                toggle.textContent = visible ? 'visibility_off' : 'visibility';
+                icon.textContent = visible ? 'visibility_off' : 'visibility';
             });
         }
 
