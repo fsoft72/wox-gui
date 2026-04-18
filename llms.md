@@ -934,10 +934,24 @@ Dialog overlay with backdrop, escape key, and animations.
 
 **Slots:** `default` — body, `footer` — custom buttons (replaces default Cancel/OK).
 
+**Opening programmatically:** Use `modal.setAttribute('open', '')` or `modal.open()` — do **not** assign `modal.open = true`, since `open` is a method, not a boolean property. To close, use `modal.removeAttribute('open')` or `modal.close()`.
+
 ```html
 <wox-modal open title="Confirm Action">
     <p>Are you sure?</p>
 </wox-modal>
+```
+
+```js
+// Open
+modal.setAttribute('open', '');   // attribute form
+modal.open();                     // method form
+modal.openState = true;           // property form
+
+// Close
+modal.removeAttribute('open');
+modal.close();
+modal.openState = false;
 ```
 
 ---
