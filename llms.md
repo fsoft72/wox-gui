@@ -268,24 +268,83 @@ Multi-variant button (icon, text, tile, dash) with optional glow effects.
 
 When `border-color`, `icon-color`, or `text-color` are set they persist through hover and active states — visual feedback is still provided by the background change. They can be combined freely with `color` (tile accent) and `glow`/`pulse`.
 
+**Semantic color tokens** (map these to WoxGUI theme variables):
+
+| Mode | Color | CSS Variable |
+|------|-------|-------------|
+| primary | `#00e5ff` | `--wox-accent` |
+| success | `#4cc9f0` | `--wox-success` |
+| danger | `#f72585` | `--wox-danger` |
+| warning | `#ffd600` | — |
+| info | `#4361ee` | `--wox-intersect` |
+
 ```html
-<wox-button variant="icon" icon="near_me" active></wox-button>
+<!-- ── Basic variants ─────────────────────────────────────── -->
+<wox-button variant="icon" icon="near_me"></wox-button>
 <wox-button variant="text" icon="add" label="Create"></wox-button>
-<wox-button variant="text" icon="bolt" label="Flash" color="#f72585" glow></wox-button>
-<wox-button variant="tile" icon="star" label="Fav" color="#f72585" glow></wox-button>
+<wox-button variant="tile" icon="layers" label="Layers"></wox-button>
 <wox-button variant="dash" dash="dashed"></wox-button>
 
-<!-- Custom colors -->
-<wox-button variant="icon" icon="star" border-color="#ffd600" icon-color="#ffd600"></wox-button>
-<wox-button variant="text" icon="bolt" label="Flash" border-color="#f72585" icon-color="#f72585" text-color="#f72585"></wox-button>
-<wox-button variant="tile" icon="layers" label="Layer" icon-color="#4cc9f0" text-color="#4cc9f0"></wox-button>
-<wox-button variant="dash" dash="dashed" border-color="#4361ee" text-color="#4cc9f0" active></wox-button>
+<!-- ── Icon-only — semantic modes ────────────────────────── -->
+<!-- primary -->
+<wox-button variant="icon" icon="star" border-color="#00e5ff" icon-color="#00e5ff"></wox-button>
+<!-- success -->
+<wox-button variant="icon" icon="check_circle" border-color="#4cc9f0" icon-color="#4cc9f0"></wox-button>
+<!-- danger -->
+<wox-button variant="icon" icon="delete" border-color="#f72585" icon-color="#f72585"></wox-button>
+<!-- warning -->
+<wox-button variant="icon" icon="warning" border-color="#ffd600" icon-color="#ffd600"></wox-button>
+<!-- info -->
+<wox-button variant="icon" icon="info" border-color="#4361ee" icon-color="#4361ee"></wox-button>
 
-<!-- Custom border style -->
+<!-- ── Text — semantic modes ──────────────────────────────── -->
+<!-- primary -->
+<wox-button variant="text" icon="send" label="Submit" border-color="#00e5ff" icon-color="#00e5ff" text-color="#00e5ff"></wox-button>
+<!-- success -->
+<wox-button variant="text" icon="check" label="Confirm" border-color="#4cc9f0" icon-color="#4cc9f0" text-color="#4cc9f0"></wox-button>
+<!-- danger -->
+<wox-button variant="text" icon="delete_forever" label="Delete" border-color="#f72585" icon-color="#f72585" text-color="#f72585"></wox-button>
+<!-- warning -->
+<wox-button variant="text" icon="warning_amber" label="Caution" border-color="#ffd600" icon-color="#ffd600" text-color="#ffd600"></wox-button>
+<!-- info -->
+<wox-button variant="text" icon="info_outline" label="Details" border-color="#4361ee" icon-color="#4361ee" text-color="#4361ee"></wox-button>
+
+<!-- ── Tile — semantic modes ──────────────────────────────── -->
+<!-- primary -->
+<wox-button variant="tile" icon="rocket_launch" label="Launch" color="#00e5ff"></wox-button>
+<!-- success -->
+<wox-button variant="tile" icon="task_alt" label="Done" color="#4cc9f0"></wox-button>
+<!-- danger -->
+<wox-button variant="tile" icon="dangerous" label="Reset" color="#f72585"></wox-button>
+<!-- warning -->
+<wox-button variant="tile" icon="report_problem" label="Alert" color="#ffd600"></wox-button>
+<!-- info -->
+<wox-button variant="tile" icon="help_outline" label="Help" color="#4361ee"></wox-button>
+
+<!-- ── Glow effects ───────────────────────────────────────── -->
+<wox-button variant="text" icon="bolt" label="Flash" color="#00e5ff" glow></wox-button>
+<wox-button variant="tile" icon="star" label="Fav" color="#f72585" glow></wox-button>
+<wox-button variant="tile" icon="notifications" label="Alert" color="#ffd600" glow pulse></wox-button>
+
+<!-- ── States ────────────────────────────────────────────── -->
+<wox-button variant="icon" icon="near_me" active></wox-button>
+<wox-button variant="text" icon="edit" label="Edit" active border-color="#00e5ff" icon-color="#00e5ff" text-color="#00e5ff"></wox-button>
+<wox-button variant="text" icon="block" label="Disabled" disabled></wox-button>
+<wox-button variant="tile" icon="lock" label="Locked" disabled></wox-button>
+
+<!-- ── Custom border style ───────────────────────────────── -->
 <wox-button variant="icon" icon="star" border-style="dashed"></wox-button>
 <wox-button variant="icon" icon="bolt" border-style="dotted" border-color="#f72585" icon-color="#f72585"></wox-button>
 <wox-button variant="text" icon="add" label="Create" border-style="dashed" border-color="#4cc9f0" text-color="#4cc9f0"></wox-button>
 <wox-button variant="tile" icon="near_me" label="Select" border-style="dashed"></wox-button>
+
+<!-- ── Dash patterns ─────────────────────────────────────── -->
+<wox-button variant="dash" dash="solid"></wox-button>
+<wox-button variant="dash" dash="dotted" border-color="#00e5ff" text-color="#00e5ff"></wox-button>
+<wox-button variant="dash" dash="dashed" border-color="#4cc9f0" text-color="#4cc9f0"></wox-button>
+<wox-button variant="dash" dash="longdash" border-color="#f72585" text-color="#f72585"></wox-button>
+<wox-button variant="dash" dash="dotdash" border-color="#ffd600" text-color="#ffd600"></wox-button>
+<wox-button variant="dash" dash="zigzag" border-color="#4361ee" text-color="#4361ee" active></wox-button>
 ```
 
 ---
