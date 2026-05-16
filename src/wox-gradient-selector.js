@@ -456,21 +456,17 @@ class WoxGradientSelector extends WoxElement {
             });
         }
 
-        // Speed slider
+        // Speed slider — same handler for both input + change events
         const speedSlider = this.$('.speed-row wox-slider');
         if ( speedSlider ) {
-            speedSlider.addEventListener('wox-input', (e) => {
+            const onSpeedChange = (e) => {
                 this._animationSpeed = e.detail.value;
                 const animRow = this.$('.anim-type-row');
                 if ( animRow ) animRow.style.display = this._animationSpeed > 0 ? '' : 'none';
                 this._emitChange();
-            });
-            speedSlider.addEventListener('wox-change', (e) => {
-                this._animationSpeed = e.detail.value;
-                const animRow = this.$('.anim-type-row');
-                if ( animRow ) animRow.style.display = this._animationSpeed > 0 ? '' : 'none';
-                this._emitChange();
-            });
+            };
+            speedSlider.addEventListener('wox-input', onSpeedChange);
+            speedSlider.addEventListener('wox-change', onSpeedChange);
         }
 
         // Animation type select

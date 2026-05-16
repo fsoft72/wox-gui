@@ -35,7 +35,7 @@
 - [x] **[Memory] `WoxElement` base methods are arrow functions defined per-instance** — `render`, `emit`, `$`, and `$$` are arrow function class fields, so each component instance carries its own copy instead of sharing via the prototype. Converting them to regular prototype methods saves memory proportional to the number of mounted components.
   - File: `src/wox-base.js`
 
-- [ ] **[Perf] `wox-gradient-selector` speed slider duplicates identical handlers for `wox-input` and `wox-change`** — both events trigger the same exact code block (update `_animationSpeed`, toggle anim row visibility, emit change). Extract to a shared handler and register it once for both events.
+- [x] **[Perf] `wox-gradient-selector` speed slider duplicates identical handlers for `wox-input` and `wox-change`** — both events trigger the same exact code block (update `_animationSpeed`, toggle anim row visibility, emit change). Extract to a shared handler and register it once for both events.
   - File: `src/wox-gradient-selector.js` (`_bindEvents`, lines ~443-455)
 
 ## Low / Nice to have
