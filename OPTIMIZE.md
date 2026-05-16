@@ -32,7 +32,7 @@
 - [x] **[Perf] `wox-select` rebuilds the full shadow DOM on every open/close** — `open()`, `close()`, `_handleSearch()`, and `selectOption()` all call `_render()` which replaces `shadowRoot.innerHTML`. The trigger and dropdown could be rendered once; open/close should only toggle a CSS class or `display` style.
   - File: `src/wox-select.js` (`_render`, `open`, `close`)
 
-- [ ] **[Memory] `WoxElement` base methods are arrow functions defined per-instance** — `render`, `emit`, `$`, and `$$` are arrow function class fields, so each component instance carries its own copy instead of sharing via the prototype. Converting them to regular prototype methods saves memory proportional to the number of mounted components.
+- [x] **[Memory] `WoxElement` base methods are arrow functions defined per-instance** — `render`, `emit`, `$`, and `$$` are arrow function class fields, so each component instance carries its own copy instead of sharing via the prototype. Converting them to regular prototype methods saves memory proportional to the number of mounted components.
   - File: `src/wox-base.js`
 
 - [ ] **[Perf] `wox-gradient-selector` speed slider duplicates identical handlers for `wox-input` and `wox-change`** — both events trigger the same exact code block (update `_animationSpeed`, toggle anim row visibility, emit change). Extract to a shared handler and register it once for both events.

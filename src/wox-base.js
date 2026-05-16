@@ -29,30 +29,34 @@ export class WoxElement extends HTMLElement {
      * @param {string} css  - Component-specific CSS
      * @param {string} html - Component markup
      */
-    render = (css, html) => {
+    render(css, html) {
         this.shadowRoot.innerHTML = `<style>${WoxElement.BASE_STYLES}${css}</style>${html}`;
-    };
+    }
 
     /**
      * Dispatches a composed, bubbling CustomEvent.
      * @param {string} name   - Event name
      * @param {*}      detail - Event payload
      */
-    emit = (name, detail) => {
+    emit(name, detail) {
         this.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
-    };
+    }
 
     /**
      * Query shortcut for a single element inside the shadow root.
      * @param {string} sel - CSS selector
      * @returns {Element|null}
      */
-    $ = (sel) => this.shadowRoot.querySelector(sel);
+    $(sel) {
+        return this.shadowRoot.querySelector(sel);
+    }
 
     /**
      * Query shortcut for all matching elements inside the shadow root.
      * @param {string} sel - CSS selector
      * @returns {NodeList}
      */
-    $$ = (sel) => this.shadowRoot.querySelectorAll(sel);
+    $$(sel) {
+        return this.shadowRoot.querySelectorAll(sel);
+    }
 }
