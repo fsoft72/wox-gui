@@ -150,6 +150,10 @@ class WoxGradientSelector extends WoxElement {
     _open = false;
     /** @private — Saved gradients array */
     _gradients = [];
+    /** @private — Cached CSS string → gradient name for O(1) label lookup */
+    _cssToName = new Map();
+    /** @private — Cached gradient id → CSS string */
+    _cssById = new Map();
     /** @private — Gradient currently being edited in the modal */
     _editingGradient = null;
     /** @private — Name captured from the modal name input */
@@ -208,6 +212,7 @@ class WoxGradientSelector extends WoxElement {
             const raw = localStorage.getItem(STORAGE_KEY);
             if ( raw ) {
                 this._gradients = JSON.parse(raw);
+                this._rebuildCssCache();
                 return;
             }
         } catch ( e ) {
@@ -223,10 +228,26 @@ class WoxGradientSelector extends WoxElement {
      * @private
      */
     _persistGradients = () => {
+        this._rebuildCssCache();
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this._gradients));
         } catch ( e ) {
             // Ignore quota errors
+        }
+    };
+
+    /**
+     * Rebuild CSS lookup caches from the current `_gradients` array.
+     * Called whenever the gradient list changes (load, save, delete).
+     * @private
+     */
+    _rebuildCssCache = () => {
+        this._cssToName.clear();
+        this._cssById.clear();
+        for ( const g of this._gradients ) {
+            const css = gradientToCSS(g);
+            this._cssToName.set(css, g.name);
+            this._cssById.set(g.id, css);
         }
     };
 
@@ -272,10 +293,7 @@ class WoxGradientSelector extends WoxElement {
     _labelForValue = (value) => {
         if ( ! value ) return 'None';
         if ( _isGradient(value) ) {
-            for ( const g of this._gradients ) {
-                if ( gradientToCSS(g) === value ) return g.name;
-            }
-            return 'Custom Gradient';
+            return this._cssToName.get(value) || 'Custom Gradient';
         }
         return value;
     };
@@ -590,7 +608,7 @@ class WoxGradientSelector extends WoxElement {
 
         // Saved gradients
         this._gradients.forEach(g => {
-            const css = gradientToCSS(g);
+            const css = this._cssById.get(g.id) || gradientToCSS(g);
             const isPreset = g.id.startsWith(PRESET_PREFIX);
             const dupBtn = isPreset
                 ? `<button class="dropdown-item-btn" data-dup-id="${g.id}" title="Duplicate gradient">&#x2398;</button>`

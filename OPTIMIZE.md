@@ -23,7 +23,7 @@
 
 ## Medium
 
-- [ ] **[Perf] `_labelForValue` runs O(n) `gradientToCSS` calls on every preview update** — for each update it iterates all saved gradients and calls `gradientToCSS` on each to find a name match. Cache the CSS string per gradient on save/load, or look up by gradient ID stored alongside the current value.
+- [x] **[Perf] `_labelForValue` runs O(n) `gradientToCSS` calls on every preview update** — for each update it iterates all saved gradients and calls `gradientToCSS` on each to find a name match. Cache the CSS string per gradient on save/load, or look up by gradient ID stored alongside the current value.
   - File: `src/wox-gradient-selector.js` (`_labelForValue`, called from `_updatePreview` and `_build`)
 
 - [ ] **[Perf] `JSON.parse(JSON.stringify(...))` used as deep clone throughout** — used 6+ times across the gradient components. Replace with `structuredClone()` (supported in all target browsers), which is faster, handles more types, and is semantically clearer.
