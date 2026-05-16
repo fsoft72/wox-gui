@@ -229,7 +229,6 @@ class WoxDatagrid extends WoxElement {
             const input = this.$('.cell-input');
             if (input) {
                 const { rowIndex, key } = this._editingCell;
-                const sorted = this._getSortedRows();
                 let originalVal = sorted[rowIndex][key] != null ? sorted[rowIndex][key] : '';
 
                 // Strip HTML if present for clean editing

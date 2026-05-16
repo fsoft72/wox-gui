@@ -40,7 +40,7 @@
 
 ## Low / Nice to have
 
-- [ ] **[Perf] `_getSortedRows()` called twice inside the same render path** — inside `_render()` the sorted array is computed at line 169, then computed again at line 215 (shadowed variable) when setting up the cell-edit input. Cache the first result in a local variable.
+- [x] **[Perf] `_getSortedRows()` called twice inside the same render path** — inside `_render()` the sorted array is computed at line 169, then computed again at line 215 (shadowed variable) when setting up the cell-edit input. Cache the first result in a local variable.
   - File: `src/wox-datagrid.js` (`_render`)
 
 - [ ] **[Correctness] `wox-gradient-editor` stop `indexOf` is O(n) per handle** — `_renderStops` iterates the sorted copy and uses `indexOf` to map each stop back to its original index. For small stop counts (typically 2-5) this is acceptable, but storing the original index as a `data-index` on the element at sort time is cleaner and avoids any reference-equality surprises.
