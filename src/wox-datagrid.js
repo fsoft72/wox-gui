@@ -130,8 +130,12 @@ class WoxDatagrid extends WoxElement {
     /** @private */
     _editingCell = null; // { rowIndex: number, key: string }
 
+    /** @private */
+    _eventsBound = false;
+
     connectedCallback() {
         this._render();
+        this._bindEvents();
     }
 
     /**
@@ -221,8 +225,6 @@ class WoxDatagrid extends WoxElement {
             </div>
         `);
 
-        this._bindEvents();
-
         if (this._editingCell) {
             const input = this.$('.cell-input');
             if (input) {
@@ -277,107 +279,115 @@ class WoxDatagrid extends WoxElement {
         this._render();
     };
 
-    /** @private */
+    /**
+     * Bind delegated event handlers once on shadow root containers.
+     * Re-renders no longer re-attach listeners.
+     * @private
+     */
     _bindEvents = () => {
-        // Sort on header click
-        this.$$('.header-cell').forEach(cell => {
-            cell.addEventListener('click', (e) => {
-                if (e.target.closest('.resize-handle')) return;
-                const idx = Number(cell.dataset.col);
-                const col = this._columns[idx];
-                if (col.sortable === false) return;
+        if (this._eventsBound) return;
+        this._eventsBound = true;
 
-                if (this._sortKey === col.key) {
-                    this._sortDir = this._sortDir === 'asc' ? 'desc' : 'asc';
-                } else {
-                    this._sortKey = col.key;
-                    this._sortDir = 'asc';
-                }
+        const root = this.shadowRoot;
 
-                this.emit('wox-sort', { key: this._sortKey, direction: this._sortDir });
-                this._render();
-            });
+        // ── Header: sort on click ──
+        root.addEventListener('click', (e) => {
+            if (!e.target.closest('.header')) return;
+            if (e.target.closest('.resize-handle')) return;
+            const cell = e.target.closest('.header-cell');
+            if (!cell) return;
+            const col = this._columns[Number(cell.dataset.col)];
+            if (!col || col.sortable === false) return;
 
-            // Reordering via Drag & Drop
-            cell.addEventListener('dragstart', (e) => {
-                const idx = cell.dataset.col;
-                e.dataTransfer.setData('text/plain', idx);
-                cell.classList.add('dragging');
-            });
-
-            cell.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                cell.classList.add('drag-over');
-            });
-
-            cell.addEventListener('dragleave', () => {
-                cell.classList.remove('drag-over');
-            });
-
-            cell.addEventListener('drop', (e) => {
-                e.preventDefault();
-                cell.classList.remove('drag-over');
-                const fromIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
-                const toIdx = parseInt(cell.dataset.col, 10);
-
-                if (fromIdx !== toIdx) {
-                    this._swapColumns(fromIdx, toIdx);
-                }
-            });
-
-            cell.addEventListener('dragend', () => {
-                cell.classList.remove('dragging');
-            });
+            if (this._sortKey === col.key) {
+                this._sortDir = this._sortDir === 'asc' ? 'desc' : 'asc';
+            } else {
+                this._sortKey = col.key;
+                this._sortDir = 'asc';
+            }
+            this.emit('wox-sort', { key: this._sortKey, direction: this._sortDir });
+            this._render();
         });
 
-        // Row click
-        this.$$('.row').forEach(row => {
-            row.addEventListener('click', () => {
-                const ri = Number(row.dataset.row);
-                const sorted = this._getSortedRows();
-                this.emit('wox-row-click', { row: sorted[ri], index: ri });
-            });
-
-            row.querySelectorAll('.cell').forEach(cell => {
-                cell.addEventListener('dblclick', (e) => {
-                    e.stopPropagation();
-                    const ri = Number(row.dataset.row);
-                    const key = cell.dataset.key;
-                    // Check if column is editable (default yes for now unless specified otherwise)
-                    const colIdx = this._columns.findIndex(c => c.key === key);
-                    if (this._columns[colIdx].editable === false) return;
-
-                    this._editingCell = { rowIndex: ri, key: key };
-                    this._render();
-                });
-            });
+        // ── Header: column drag & drop reorder ──
+        root.addEventListener('dragstart', (e) => {
+            const cell = e.target.closest('.header-cell');
+            if (!cell) return;
+            e.dataTransfer.setData('text/plain', cell.dataset.col);
+            cell.classList.add('dragging');
+        });
+        root.addEventListener('dragover', (e) => {
+            const cell = e.target.closest('.header-cell');
+            if (!cell) return;
+            e.preventDefault();
+            cell.classList.add('drag-over');
+        });
+        root.addEventListener('dragleave', (e) => {
+            const cell = e.target.closest('.header-cell');
+            if (cell) cell.classList.remove('drag-over');
+        });
+        root.addEventListener('drop', (e) => {
+            const cell = e.target.closest('.header-cell');
+            if (!cell) return;
+            e.preventDefault();
+            cell.classList.remove('drag-over');
+            const fromIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+            const toIdx = parseInt(cell.dataset.col, 10);
+            if (fromIdx !== toIdx) this._swapColumns(fromIdx, toIdx);
+        });
+        root.addEventListener('dragend', (e) => {
+            const cell = e.target.closest('.header-cell');
+            if (cell) cell.classList.remove('dragging');
         });
 
-        // Column resize
-        this.$$('.resize-handle').forEach(handle => {
-            handle.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const ci = Number(handle.dataset.col);
-                const startX = e.clientX;
-                const startW = this._colWidths[ci];
-                handle.classList.add('active');
+        // ── Header: column resize ──
+        root.addEventListener('mousedown', (e) => {
+            const handle = e.target.closest('.resize-handle');
+            if (!handle) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const ci = Number(handle.dataset.col);
+            const startX = e.clientX;
+            const startW = this._colWidths[ci];
+            handle.classList.add('active');
 
-                const onMove = (ev) => {
-                    const delta = ev.clientX - startX;
-                    this._colWidths[ci] = Math.max(MIN_COL_WIDTH, startW + delta);
-                    this._applyWidths();
-                };
+            const onMove = (ev) => {
+                this._colWidths[ci] = Math.max(MIN_COL_WIDTH, startW + (ev.clientX - startX));
+                this._applyWidths();
+            };
+            const onUp = () => {
+                handle.classList.remove('active');
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onUp);
+            };
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+        });
 
-                const onUp = () => {
-                    handle.classList.remove('active');
-                    document.removeEventListener('mousemove', onMove);
-                    document.removeEventListener('mouseup', onUp);
-                };
+        // ── Body: row click ──
+        root.addEventListener('click', (e) => {
+            if (!e.target.closest('.body')) return;
+            const row = e.target.closest('.row');
+            if (!row) return;
+            const ri = Number(row.dataset.row);
+            const sorted = this._getSortedRows();
+            this.emit('wox-row-click', { row: sorted[ri], index: ri });
+        });
 
-                document.addEventListener('mousemove', onMove);
-                document.addEventListener('mouseup', onUp);
-            });
+        // ── Body: cell dblclick to edit ──
+        root.addEventListener('dblclick', (e) => {
+            if (!e.target.closest('.body')) return;
+            const cell = e.target.closest('.cell');
+            const row = e.target.closest('.row');
+            if (!cell || !row) return;
+            e.stopPropagation();
+            const ri = Number(row.dataset.row);
+            const key = cell.dataset.key;
+            const colIdx = this._columns.findIndex(c => c.key === key);
+            if (colIdx < 0 || this._columns[colIdx].editable === false) return;
+
+            this._editingCell = { rowIndex: ri, key };
+            this._render();
         });
     };
 
