@@ -68,9 +68,72 @@ class WoxModal extends WoxElement {
         if (name === 'open') {
             if (this.hasAttribute('open')) this._attachKeyHandler();
             else this._detachKeyHandler();
+            return;
         }
-        this._render();
+        if (!this._built) {
+            this._render();
+            return;
+        }
+        this._applyAttr(name);
     }
+
+    /**
+     * Apply a single attribute change in-place to existing DOM.
+     * @private
+     * @param {string} name
+     */
+    _applyAttr = (name) => {
+        const box = this.$('.box');
+        if (!box) { this._render(); return; }
+
+        switch (name) {
+            case 'title': {
+                const titleEl = this.$('.title');
+                if (titleEl) titleEl.textContent = this.getAttribute('title') || '';
+                return;
+            }
+            case 'width':
+                box.style.setProperty('--width', this.getAttribute('width') || '400px');
+                return;
+            case 'color': {
+                const color = this.getAttribute('color') || '';
+                if (color) box.style.setProperty('--wox-fx-color', color);
+                else box.style.removeProperty('--wox-fx-color');
+                return;
+            }
+            case 'glow':
+                box.classList.toggle('glow', this.hasAttribute('glow'));
+                return;
+            case 'pulse':
+                box.classList.toggle('pulse', this.hasAttribute('pulse'));
+                return;
+            case 'closable':
+                this._syncCloseButton();
+                return;
+        }
+    };
+
+    /**
+     * Add/remove the close button without rebuilding the rest of the modal.
+     * @private
+     */
+    _syncCloseButton = () => {
+        const closable = !this.hasAttribute('closable') || this.getAttribute('closable') !== 'false';
+        const header = this.$('.header');
+        let btn = this.$('.close-btn');
+        if (closable && !btn) {
+            btn = document.createElement('button');
+            btn.className = 'close-btn';
+            btn.innerHTML = '&#x2715;';
+            btn.addEventListener('click', () => {
+                this.removeAttribute('open');
+                this.emit('wox-close', {});
+            });
+            header.appendChild(btn);
+        } else if (!closable && btn) {
+            btn.remove();
+        }
+    };
 
     disconnectedCallback() {
         this._detachKeyHandler();
@@ -78,20 +141,19 @@ class WoxModal extends WoxElement {
 
     /** @private */
     _render = () => {
-        const title = this.getAttribute('title') || '';
         const closable = !this.hasAttribute('closable') || this.getAttribute('closable') !== 'false';
         const width = this.getAttribute('width') || '400px';
         const color = this.getAttribute('color') || '';
         const glow = this.hasAttribute('glow');
         const pulse = this.hasAttribute('pulse');
         const fxClasses = [glow ? 'glow' : '', pulse ? 'pulse' : ''].filter(Boolean).join(' ');
-        const fxStyle = color ? ` style="--wox-fx-color:${color}"` : '';
+        const boxStyle = `--width:${width}${color ? `;--wox-fx-color:${color}` : ''}`;
 
-        this.render(`${STYLES} ${FX_STYLES} .box { --width: ${width}; }`, `
+        this.render(`${STYLES} ${FX_STYLES}`, `
             <div class="overlay">
-                <div class="box ${fxClasses}"${fxStyle}>
+                <div class="box ${fxClasses}" style="${boxStyle}">
                     <div class="header">
-                        <span class="title">${title}</span>
+                        <span class="title"></span>
                         ${closable ? '<button class="close-btn">&#x2715;</button>' : ''}
                     </div>
                     <div class="body"><slot></slot></div>
@@ -104,6 +166,9 @@ class WoxModal extends WoxElement {
                 </div>
             </div>
         `);
+
+        this.$('.title').textContent = this.getAttribute('title') || '';
+        this._built = true;
 
         // Backdrop click to close
         this.$('.overlay').addEventListener('click', (e) => {

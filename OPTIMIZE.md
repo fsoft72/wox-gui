@@ -18,7 +18,7 @@
 - [x] **[Perf] `wox-input` does a full shadow-DOM rebuild on every attribute change** — changing `disabled`, `placeholder`, or any non-value attribute destroys and recreates the `<input>` element, losing focus and cursor position. Only `value` is handled incrementally. Other attributes should update existing DOM nodes in-place.
   - File: `src/wox-input.js` (`attributeChangedCallback`, `_render`)
 
-- [ ] **[Perf] `wox-modal` re-renders (full innerHTML) on every observed attribute change** — with six observed attributes (`title`, `width`, `closable`, `color`, `glow`, `pulse`), the entire modal chrome is rebuilt and all event listeners re-attached for each change. Cache the rendered state and update individual attributes in-place.
+- [x] **[Perf] `wox-modal` re-renders (full innerHTML) on every observed attribute change** — with six observed attributes (`title`, `width`, `closable`, `color`, `glow`, `pulse`), the entire modal chrome is rebuilt and all event listeners re-attached for each change. Cache the rendered state and update individual attributes in-place.
   - File: `src/wox-modal.js` (`attributeChangedCallback`, `_render`)
 
 ## Medium
