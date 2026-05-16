@@ -182,6 +182,26 @@ class WoxContextMenu extends WoxElement {
         WoxContextMenu._el.style.display = 'none';
     };
 
+    /**
+     * Tear down the singleton: remove the menu element from the DOM, detach
+     * global click/contextmenu/keydown listeners, and reset internal state.
+     * Call this on SPA navigation or unmount paths to avoid listener leaks.
+     */
+    static destroy = () => {
+        if (WoxContextMenu._listenersReady) {
+            document.removeEventListener('click', WoxContextMenu._onClickOutside, true);
+            document.removeEventListener('contextmenu', WoxContextMenu._onClickOutside, true);
+            document.removeEventListener('keydown', WoxContextMenu._onKeyDown, true);
+            WoxContextMenu._listenersReady = false;
+        }
+        if (WoxContextMenu._el) {
+            WoxContextMenu._el.remove();
+            WoxContextMenu._el = null;
+        }
+        const styleEl = document.getElementById(STYLE_ID);
+        if (styleEl) styleEl.remove();
+    };
+
     /* ── Private global handlers ── */
 
     /**

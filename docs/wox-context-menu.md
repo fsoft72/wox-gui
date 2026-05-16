@@ -16,6 +16,7 @@ Singleton right-click context menu with icons, keyboard shortcuts, and viewport 
 |--------|------------|-------------|
 | `WoxContextMenu.show(event, items)` | `MouseEvent`, `Array<Item>` | Show the menu at the pointer position |
 | `WoxContextMenu.hide()` | -- | Dismiss the menu |
+| `WoxContextMenu.destroy()` | -- | Remove the singleton menu and detach all global listeners (call on SPA navigation / teardown) |
 
 ---
 

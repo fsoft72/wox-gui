@@ -665,6 +665,7 @@ Right-click context menu (static API).
 |---------------|------------|-------------|
 | `WoxContextMenu.show(event, items)` | `MouseEvent`, `Array` | Show at pointer position |
 | `WoxContextMenu.hide()` | — | Dismiss |
+| `WoxContextMenu.destroy()` | — | Remove menu + detach global listeners (SPA teardown) |
 
 **Item properties:** `{ label, icon?, action?, disabled?, divider?, shortcut? }`
 

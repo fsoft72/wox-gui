@@ -46,7 +46,7 @@
 - [x] **[Correctness] `wox-gradient-editor` stop `indexOf` is O(n) per handle** — `_renderStops` iterates the sorted copy and uses `indexOf` to map each stop back to its original index. For small stop counts (typically 2-5) this is acceptable, but storing the original index as a `data-index` on the element at sort time is cleaner and avoids any reference-equality surprises.
   - File: `src/wox-gradient-editor.js` (`_renderStops`, line 194)
 
-- [ ] **[UX] `wox-context-menu` global listeners are registered once and never removed** — `_listenersReady` is set to `true` on first `show()` and global `click`/`contextmenu`/`keydown` handlers are attached permanently. If the component is ever used in a teardown scenario (e.g. SPA navigation), these listeners leak. Add a `WoxContextMenu.destroy()` that removes them.
+- [x] **[UX] `wox-context-menu` global listeners are registered once and never removed** — `_listenersReady` is set to `true` on first `show()` and global `click`/`contextmenu`/`keydown` handlers are attached permanently. If the component is ever used in a teardown scenario (e.g. SPA navigation), these listeners leak. Add a `WoxContextMenu.destroy()` that removes them.
   - File: `src/wox-context-menu.js` (`show`, `_listenersReady`)
 
 - [ ] **[Quality] `wox-slider` duplicates value-format logic between `_formatVal()` and the inline `update()` closure in `_attachDrag()`** — the unit/step formatting is written twice. `update()` should call `_formatVal()` instead of repeating the branching logic.
