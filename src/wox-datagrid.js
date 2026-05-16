@@ -92,6 +92,21 @@ const DEFAULT_COL_WIDTH = 120;
 const MIN_COL_WIDTH = 40;
 
 /**
+ * Escapes a value for safe insertion into HTML text content.
+ * @param {*} v
+ * @returns {string}
+ */
+const _escapeHtml = (v) => {
+    if (v == null) return '';
+    return String(v)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+};
+
+/**
  * <wox-datagrid> — Sortable data grid with resizable columns.
  *
  * Data is set via JavaScript properties:
@@ -173,7 +188,7 @@ class WoxDatagrid extends WoxElement {
             const cls = [isSorted ? 'sorted' : '', isSorted && this._sortDir === 'desc' ? 'desc' : ''].filter(Boolean).join(' ');
             const sortable = col.sortable !== false;
             return `<div class="header-cell ${cls}" data-col="${i}" style="width:${this._colWidths[i]}px" draggable="true">
-                <span class="label-text">${col.label || col.key}</span>
+                <span class="label-text">${_escapeHtml(col.label || col.key)}</span>
                 ${sortable ? '<span class="sort-arrow">&#9650;</span>' : ''}
                 <div class="resize-handle" data-col="${i}"></div>
             </div>`;
@@ -189,12 +204,12 @@ class WoxDatagrid extends WoxElement {
                     const val = row[col.key] != null ? row[col.key] : '';
 
                     if (isEditing) {
-                        return `<div class="cell${align}" style="width:${this._colWidths[ci]}px" data-key="${col.key}">
+                        return `<div class="cell${align}" style="width:${this._colWidths[ci]}px" data-key="${_escapeHtml(col.key)}">
                             <input class="cell-input" spellcheck="false">
                         </div>`;
                     }
 
-                    return `<div class="cell${align}" style="width:${this._colWidths[ci]}px" data-key="${col.key}">${val}</div>`;
+                    return `<div class="cell${align}" style="width:${this._colWidths[ci]}px" data-key="${_escapeHtml(col.key)}">${_escapeHtml(val)}</div>`;
                 }).join('');
                 return `<div class="row ${parity}" data-row="${ri}">${cells}</div>`;
             }).join('');
