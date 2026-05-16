@@ -15,7 +15,7 @@
 - [x] **[Perf] Datagrid re-binds all event listeners after every `_render()` call** — `_bindEvents()` attaches click/dblclick/drag/resize handlers to every header cell, row, and cell on each sort, column swap, or cell edit. For 100 rows × 10 columns that is ~1 000 listener registrations per user interaction. Use event delegation on the `.header` and `.body` containers instead.
   - File: `src/wox-datagrid.js` (`_bindEvents`, `_render`)
 
-- [ ] **[Perf] `wox-input` does a full shadow-DOM rebuild on every attribute change** — changing `disabled`, `placeholder`, or any non-value attribute destroys and recreates the `<input>` element, losing focus and cursor position. Only `value` is handled incrementally. Other attributes should update existing DOM nodes in-place.
+- [x] **[Perf] `wox-input` does a full shadow-DOM rebuild on every attribute change** — changing `disabled`, `placeholder`, or any non-value attribute destroys and recreates the `<input>` element, losing focus and cursor position. Only `value` is handled incrementally. Other attributes should update existing DOM nodes in-place.
   - File: `src/wox-input.js` (`attributeChangedCallback`, `_render`)
 
 - [ ] **[Perf] `wox-modal` re-renders (full innerHTML) on every observed attribute change** — with six observed attributes (`title`, `width`, `closable`, `color`, `glow`, `pulse`), the entire modal chrome is rebuilt and all event listeners re-attached for each change. Cache the rendered state and update individual attributes in-place.

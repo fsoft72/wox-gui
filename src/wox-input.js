@@ -78,14 +78,37 @@ class WoxInput extends WoxElement {
 
     attributeChangedCallback(name) {
         if (!this.isConnected) return;
-        if (name === 'value') {
-            const input = this.$('input');
-            if (input && document.activeElement !== this) {
-                input.value = this.getAttribute('value') || '';
-            }
+        const input = this.$('input');
+        if (!input) {
+            this._render();
             return;
         }
-        this._render();
+
+        // In-place updates that preserve focus/cursor state
+        switch (name) {
+            case 'value':
+                if (document.activeElement !== this) {
+                    input.value = this.getAttribute('value') || '';
+                }
+                return;
+            case 'placeholder':
+                input.placeholder = this.getAttribute('placeholder') || '';
+                return;
+            case 'disabled':
+                input.disabled = this.hasAttribute('disabled');
+                return;
+            case 'min':
+            case 'max':
+            case 'step': {
+                const v = this.getAttribute(name);
+                if (v === null) input.removeAttribute(name);
+                else input.setAttribute(name, v);
+                return;
+            }
+            default:
+                // type/unit/label require structural change
+                this._render();
+        }
     }
 
     get value() {
