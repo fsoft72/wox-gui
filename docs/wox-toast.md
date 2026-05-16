@@ -30,6 +30,7 @@ The optional `opts` object passed to any static method:
 | `duration` | `number` | `4000` | Auto-dismiss delay in ms. Set to `0` to disable auto-dismiss |
 | `closable` | `boolean` | `true` | Show a close button on the toast |
 | `position` | `string` | `'BR'` | Screen position code (see below) |
+| `html` | `boolean` | `false` | Render `msg` as HTML instead of plain text. **Caller is responsible for sanitizing input** — only enable for trusted strings to avoid XSS |
 
 ---
 
@@ -89,6 +90,14 @@ WoxToast.info('New message received', { position: 'TR' });
 ```javascript
 WoxToast.error('Connection lost. Retrying...', { duration: 0 });
 ```
+
+### HTML content (opt-in)
+
+```javascript
+WoxToast.info('Saved <b>document.txt</b>', { html: true });
+```
+
+> By default messages are rendered as plain text. Pass `html: true` only when the content is trusted/sanitized.
 
 ### All types
 

@@ -179,4 +179,4 @@ Drag column headers to change their visual order. The component updates its inte
 - The grid uses these theme variables: `--wox-bg-panel`, `--wox-bg-toolbar`, `--wox-bg-hover`, `--wox-bg-section-header`, `--wox-border`, `--wox-border-section`, `--wox-border-light`, `--wox-accent`, `--wox-text-primary`, `--wox-text-secondary`, `--wox-text-hi`
 - Set a fixed `height` on the element for the scrollable body to work
 - The component uses `display: block` by default and fills its container width
-- Cell content is rendered directly into the cell template. Plain text values are the safest default if you do not intentionally want HTML markup rendered inside cells
+- Cell values and column labels are HTML-escaped before rendering — pass raw strings safely. HTML markup in cell data is rendered as text, not parsed as DOM (XSS-safe)

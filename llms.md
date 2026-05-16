@@ -1063,7 +1063,9 @@ Toast notifications with auto-dismiss and deduplication (static API).
 | `WoxToast.warning(msg, opts?)` | `string`, `object` | Orange warning toast |
 | `WoxToast.info(msg, opts?)` | `string`, `object` | Blue info toast |
 
-**Options:** `{ duration: 4000, closable: true, position: 'BR' }`
+**Options:** `{ duration: 4000, closable: true, position: 'BR', html: false }`
+
+`html: true` renders `msg` as HTML (default is plain text — safe against XSS). Only enable for trusted content.
 
 **Position codes:** `TL`, `TC`, `TR`, `BL`, `BC`, `BR`
 
