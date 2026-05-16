@@ -7,7 +7,7 @@
 - [x] **[XSS] Datagrid renders cell values via `innerHTML` unsanitized** — `row[col.key]` is injected directly into the cell template string; any HTML or script in data executes in the page context.
   - File: `src/wox-datagrid.js` (line 197)
 
-- [ ] **[XSS] Toast `message` param injected into `innerHTML`** — the public API accepts "plain text or simple HTML", but callers passing user-generated content are silently vulnerable to XSS. Use `textContent` for the default path and opt-in HTML only explicitly.
+- [x] **[XSS] Toast `message` param injected into `innerHTML`** — the public API accepts "plain text or simple HTML", but callers passing user-generated content are silently vulnerable to XSS. Use `textContent` for the default path and opt-in HTML only explicitly.
   - File: `src/wox-toast.js` (line 205)
 
 ## High

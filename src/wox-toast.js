@@ -168,11 +168,12 @@ const _getContainer = (pos) => {
 /**
  * Show a toast notification.
  * @param {string} type - Toast type: success | error | warning | info
- * @param {string} message - Message text (plain text or simple HTML)
+ * @param {string} message - Message text (treated as plain text by default; pass opts.html=true to render HTML — caller is responsible for sanitization)
  * @param {object} [opts] - Options
  * @param {number} [opts.duration=4000] - Auto-dismiss ms (0 = no auto-dismiss)
  * @param {boolean} [opts.closable=true] - Show close button
  * @param {string} [opts.position='BR'] - Position code (TL, TC, TR, BL, BC, BR)
+ * @param {boolean} [opts.html=false] - Opt-in: render `message` as HTML instead of plain text
  */
 const _show = (type, message, opts = {}) => {
 	_injectStyles();
@@ -186,6 +187,7 @@ const _show = (type, message, opts = {}) => {
 		duration = DEFAULT_DURATION,
 		closable = true,
 		position = 'BR',
+		html: asHtml = false,
 	} = opts;
 
 	const isLight = document.documentElement.dataset.woxTheme === 'light';
@@ -200,16 +202,28 @@ const _show = (type, message, opts = {}) => {
 	el.style.borderLeftColor = palette.border;
 	el.style.color = palette.text;
 
-	let html = `
-		<span class="wox-toast-icon" style="color:${palette.icon}">${ICONS[type] || ICONS.info}</span>
-		<span class="wox-toast-message">${message}</span>
-	`;
+	const iconSpan = document.createElement('span');
+	iconSpan.className = 'wox-toast-icon';
+	iconSpan.style.color = palette.icon;
+	iconSpan.innerHTML = ICONS[type] || ICONS.info;
+	el.appendChild(iconSpan);
+
+	const msgSpan = document.createElement('span');
+	msgSpan.className = 'wox-toast-message';
+	if (asHtml) {
+		msgSpan.innerHTML = message;
+	} else {
+		msgSpan.textContent = message;
+	}
+	el.appendChild(msgSpan);
 
 	if (closable) {
-		html += `<button class="wox-toast-close" aria-label="Close">&times;</button>`;
+		const closeBtn = document.createElement('button');
+		closeBtn.className = 'wox-toast-close';
+		closeBtn.setAttribute('aria-label', 'Close');
+		closeBtn.innerHTML = '&times;';
+		el.appendChild(closeBtn);
 	}
-
-	el.innerHTML = html;
 
 	/* ── close button hover colour ── */
 	if (closable) {
