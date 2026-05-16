@@ -188,10 +188,13 @@ class WoxGradientEditor extends WoxElement {
         if ( ! stopsContainer ) return;
 
         stopsContainer.innerHTML = '';
-        const sorted = [...this._gradient.stops].sort((a, b) => a.position - b.position);
+        // Pair each stop with its original index, then sort by position.
+        // Avoids O(n) indexOf lookups per handle when mapping back to the source array.
+        const sorted = this._gradient.stops
+            .map((stop, idx) => ({ stop, idx }))
+            .sort((a, b) => a.stop.position - b.stop.position);
 
-        sorted.forEach((stop) => {
-            const idx = this._gradient.stops.indexOf(stop);
+        sorted.forEach(({ stop, idx }) => {
             const handle = document.createElement('div');
             handle.className = 'handle';
             handle.style.left = stop.position + '%';
