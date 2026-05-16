@@ -49,5 +49,5 @@
 - [x] **[UX] `wox-context-menu` global listeners are registered once and never removed** — `_listenersReady` is set to `true` on first `show()` and global `click`/`contextmenu`/`keydown` handlers are attached permanently. If the component is ever used in a teardown scenario (e.g. SPA navigation), these listeners leak. Add a `WoxContextMenu.destroy()` that removes them.
   - File: `src/wox-context-menu.js` (`show`, `_listenersReady`)
 
-- [ ] **[Quality] `wox-slider` duplicates value-format logic between `_formatVal()` and the inline `update()` closure in `_attachDrag()`** — the unit/step formatting is written twice. `update()` should call `_formatVal()` instead of repeating the branching logic.
+- [x] **[Quality] `wox-slider` duplicates value-format logic between `_formatVal()` and the inline `update()` closure in `_attachDrag()`** — the unit/step formatting is written twice. `update()` should call `_formatVal()` instead of repeating the branching logic.
   - File: `src/wox-slider.js` (`_attachDrag` → `update`, `_formatVal`)

@@ -124,7 +124,7 @@ class WoxSlider extends WoxElement {
 
     /** @private — Wire up drag interaction on the track */
     _attachDrag = () => {
-        const { min, max, step, unit } = this._getConfig();
+        const { min, max, step } = this._getConfig();
         const trackWrap = this.$('.track-wrap');
         const fill = this.$('.fill');
         const thumb = this.$('.thumb');
@@ -140,10 +140,7 @@ class WoxSlider extends WoxElement {
             const newPct = ((newVal - min) / (max - min)) * 100;
             fill.style.width = newPct + '%';
             thumb.style.left = newPct + '%';
-            if (valueEl) {
-                if (unit === '%') valueEl.textContent = Math.round(newVal * 100) + '%';
-                else valueEl.textContent = step < 1 ? newVal.toFixed(2) : String(newVal);
-            }
+            if (valueEl) valueEl.textContent = this._formatVal(newVal);
             return newVal;
         };
 
