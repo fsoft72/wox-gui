@@ -130,6 +130,7 @@ const STYLES = `
     .arrow.open { transform: rotate(180deg); }
 
     .dropdown {
+        display: none;
         position: absolute;
         left: 0;
         width: 100%;
@@ -144,6 +145,8 @@ const STYLES = `
         scrollbar-width: thin;
         scrollbar-color: var(--wox-border-light, #444) transparent;
     }
+
+    .dropdown.open { display: block; }
 
     .dropdown::-webkit-scrollbar { width: 4px; }
     .dropdown::-webkit-scrollbar-track { background: transparent; }
@@ -386,11 +389,15 @@ class WoxSelect extends WoxElement {
     /** Opens the dropdown */
     open() {
         if (this.disabled) return;
+        if (this._isOpen) return;
         this._isOpen = true;
         this._focusedIndex = -1;
+        this._searchValue = '';
         this._filteredOptions = [...this.options];
 
-        this._render();
+        this._renderDropdown();
+        this._setOpenState(true);
+        this._updateDropdownPosition();
 
         if (this.searchable) {
             requestAnimationFrame(() => {
@@ -404,6 +411,7 @@ class WoxSelect extends WoxElement {
 
     /** Closes the dropdown */
     close() {
+        if (!this._isOpen) return;
         this._isOpen = false;
         this._openUpward = false;
         this._focusedIndex = -1;
@@ -417,7 +425,7 @@ class WoxSelect extends WoxElement {
             dropdown.style.maxHeight = '';
         }
 
-        this._render();
+        this._setOpenState(false);
         this.dispatchEvent(new CustomEvent('wox-close', { detail: null }));
     }
 
@@ -438,10 +446,12 @@ class WoxSelect extends WoxElement {
             if (!this._selectedOptions.find((o) => o.value === value)) {
                 this._selectedOptions.push(opt);
             }
-            this._render();
+            this._renderTrigger();
+            this._renderDropdown();
         } else {
             this._selectedOptions = [opt];
-            this.close(); // close() calls _render() internally
+            this._renderTrigger();
+            this.close();
         }
 
         this.emit('wox-change', { value: this.value });
@@ -453,7 +463,8 @@ class WoxSelect extends WoxElement {
      */
     deselectOption(value) {
         this._selectedOptions = this._selectedOptions.filter((o) => o.value !== value);
-        this._render();
+        this._renderTrigger();
+        if (this._isOpen) this._renderDropdown();
         this.emit('wox-change', { value: this.value });
     }
 
@@ -486,7 +497,9 @@ class WoxSelect extends WoxElement {
             o.label.toLowerCase().includes(query.toLowerCase())
         );
         this._focusedIndex = -1;
-        this._render();
+        // Only repaint the options list — don't rebuild the search input itself,
+        // which would lose focus/caret position.
+        this._renderOptionsList();
         this.emit('wox-search', { query });
     };
 
@@ -615,18 +628,79 @@ class WoxSelect extends WoxElement {
         }
     };
 
-    /** @private */
+    /**
+     * Full render — used on first connect and on structural attribute changes
+     * (options, label, etc.). After the first call, prefers targeted refreshes
+     * via _renderTrigger / _renderDropdown to avoid losing focus/caret state.
+     * @private
+     */
     _render = () => {
         if (this._filteredOptions.length === 0 && this.options.length > 0) {
             this._filteredOptions = [...this.options];
         }
 
-        const wasSearchFocused = this.$('.search-input') === this.shadowRoot.activeElement;
+        if (!this._built) {
+            this._build();
+            return;
+        }
 
-        // Build selected content
-        let selectedHtml = '';
+        this._renderLabel();
+        this._renderTrigger();
+        if (this._isOpen) this._renderDropdown();
+    };
+
+    /**
+     * One-time shadow DOM skeleton. Trigger and dropdown elements live for the
+     * lifetime of the component; open/close only toggles a CSS class.
+     * @private
+     */
+    _build = () => {
+        this.render(STYLES, `
+            <label hidden></label>
+            <div class="trigger" tabindex="-1">
+                <div class="selected-content"></div>
+                <div class="arrow"></div>
+            </div>
+            <div class="dropdown">
+                <input type="text" class="search-input" placeholder="Search..." hidden>
+                <div class="options-list"></div>
+            </div>
+        `);
+
+        // mouseleave clears focused highlight — attached once.
+        const dropdown = this.$('.dropdown');
+        dropdown.addEventListener('mouseleave', () => {
+            if (this._keyboardNavigating) return;
+            this.$('.option.focused')?.classList.remove('focused');
+            this._focusedIndex = -1;
+        });
+
+        this._built = true;
+        this._renderLabel();
+        this._renderTrigger();
+        if (this._isOpen) this._renderDropdown();
+    };
+
+    /** @private */
+    _renderLabel = () => {
+        const lbl = this.$('label');
+        if (!lbl) return;
+        if (this.label) {
+            lbl.textContent = this.label;
+            lbl.hidden = false;
+        } else {
+            lbl.textContent = '';
+            lbl.hidden = true;
+        }
+    };
+
+    /** @private */
+    _renderTrigger = () => {
+        const slot = this.$('.selected-content');
+        if (!slot) return;
+
         if (this.multiple && this._selectedOptions.length > 0) {
-            selectedHtml = this._selectedOptions.map((o) => `
+            slot.innerHTML = this._selectedOptions.map((o) => `
                 <span class="tag">
                     ${o.image ? `<img src="${_esc(o.image)}" class="tag-img" alt="">` : ''}
                     ${_esc(o.label)}
@@ -635,73 +709,60 @@ class WoxSelect extends WoxElement {
             `).join('');
         } else if (this._selectedOptions.length > 0) {
             const o = this._selectedOptions[0];
-            selectedHtml = `<span class="single-value">
+            slot.innerHTML = `<span class="single-value">
                 ${o.image ? `<img src="${_esc(o.image)}" class="single-img" alt="">` : ''}
                 <span>${_esc(o.label)}</span>
             </span>`;
         } else {
-            selectedHtml = `<span class="placeholder">${_esc(this.placeholder)}</span>`;
+            slot.innerHTML = `<span class="placeholder">${_esc(this.placeholder)}</span>`;
         }
+    };
 
-        // Build dropdown
-        let dropdownHtml = '';
-        if (this._isOpen) {
-            const searchHtml = this.searchable
-                ? `<input type="text" class="search-input" placeholder="Search..." value="${_esc(this._searchValue)}">`
-                : '';
-
-            const optionsHtml = this._filteredOptions.length > 0
-                ? this._filteredOptions.map((o, i) => {
-                    const isSelected = this._selectedOptions.some((s) => s.value === o.value);
-                    const isFocused = i === this._focusedIndex;
-                    return `<div
-                        class="option${isSelected ? ' selected' : ''}${isFocused ? ' focused' : ''}"
-                        data-value="${_esc(o.value)}"
-                    >
-                        ${o.image ? `<img src="${_esc(o.image)}" class="option-img" alt="">` : ''}
-                        <span>${_esc(o.label)}</span>
-                    </div>`;
-                }).join('')
-                : '<div class="no-options">No options found</div>';
-
-            dropdownHtml = `<div class="dropdown">${searchHtml}${optionsHtml}</div>`;
-        }
-
-        const labelHtml = this.label ? `<label>${_esc(this.label)}</label>` : '';
-
-        this.render(STYLES, `
-            ${labelHtml}
-            <div class="trigger" tabindex="-1">
-                <div class="selected-content">${selectedHtml}</div>
-                <div class="arrow${this._isOpen ? ' open' : ''}"></div>
-            </div>
-            ${dropdownHtml}
-        `);
-
-        if (this._isOpen) {
-            const dropdown = this.$('.dropdown');
-            if (dropdown) {
-                // Safe to add per-render: the .dropdown element is recreated by innerHTML on each
-                // _render() call, so its listeners are discarded with it. No accumulation occurs.
-                dropdown.addEventListener('mouseleave', () => {
-                    if (this._keyboardNavigating) return;
-                    this.$('.option.focused')?.classList.remove('focused');
-                    this._focusedIndex = -1;
-                });
+    /**
+     * Repaint dropdown internals (search input visibility + options list).
+     * Does not rebuild the dropdown container itself.
+     * @private
+     */
+    _renderDropdown = () => {
+        const search = this.$('.search-input');
+        if (search) {
+            if (this.searchable) {
+                search.hidden = false;
+                if (search.value !== this._searchValue) search.value = this._searchValue;
+            } else {
+                search.hidden = true;
+                search.value = '';
             }
         }
+        this._renderOptionsList();
+    };
 
-        if (wasSearchFocused && this.searchable && this._isOpen) {
-            requestAnimationFrame(() => {
-                const input = this.$('.search-input');
-                if (input) {
-                    input.focus();
-                    input.setSelectionRange(input.value.length, input.value.length);
-                }
-            });
-        }
+    /** @private */
+    _renderOptionsList = () => {
+        const list = this.$('.options-list');
+        if (!list) return;
 
-        if (this._isOpen) this._updateDropdownPosition();
+        list.innerHTML = this._filteredOptions.length > 0
+            ? this._filteredOptions.map((o, i) => {
+                const isSelected = this._selectedOptions.some((s) => s.value === o.value);
+                const isFocused = i === this._focusedIndex;
+                return `<div
+                    class="option${isSelected ? ' selected' : ''}${isFocused ? ' focused' : ''}"
+                    data-value="${_esc(o.value)}"
+                >
+                    ${o.image ? `<img src="${_esc(o.image)}" class="option-img" alt="">` : ''}
+                    <span>${_esc(o.label)}</span>
+                </div>`;
+            }).join('')
+            : '<div class="no-options">No options found</div>';
+    };
+
+    /** @private — toggle visual open state without rebuilding DOM */
+    _setOpenState = (open) => {
+        const dropdown = this.$('.dropdown');
+        const arrow = this.$('.arrow');
+        if (dropdown) dropdown.classList.toggle('open', open);
+        if (arrow) arrow.classList.toggle('open', open);
     };
 }
 

@@ -29,7 +29,7 @@
 - [x] **[Perf] `JSON.parse(JSON.stringify(...))` used as deep clone throughout** — used 6+ times across the gradient components. Replace with `structuredClone()` (supported in all target browsers), which is faster, handles more types, and is semantically clearer.
   - Files: `src/wox-gradient-selector.js`, `src/wox-gradient-editor.js`
 
-- [ ] **[Perf] `wox-select` rebuilds the full shadow DOM on every open/close** — `open()`, `close()`, `_handleSearch()`, and `selectOption()` all call `_render()` which replaces `shadowRoot.innerHTML`. The trigger and dropdown could be rendered once; open/close should only toggle a CSS class or `display` style.
+- [x] **[Perf] `wox-select` rebuilds the full shadow DOM on every open/close** — `open()`, `close()`, `_handleSearch()`, and `selectOption()` all call `_render()` which replaces `shadowRoot.innerHTML`. The trigger and dropdown could be rendered once; open/close should only toggle a CSS class or `display` style.
   - File: `src/wox-select.js` (`_render`, `open`, `close`)
 
 - [ ] **[Memory] `WoxElement` base methods are arrow functions defined per-instance** — `render`, `emit`, `$`, and `$$` are arrow function class fields, so each component instance carries its own copy instead of sharing via the prototype. Converting them to regular prototype methods saves memory proportional to the number of mounted components.
