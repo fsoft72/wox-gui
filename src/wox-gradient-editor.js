@@ -122,7 +122,7 @@ class WoxGradientEditor extends WoxElement {
      * @param {{ type: string, angle: number, stops: Array<{color: string, position: number}> }} g
      */
     set gradient(g) {
-        this._gradient = JSON.parse(JSON.stringify(g));
+        this._gradient = structuredClone(g);
         if ( this.isConnected ) this._build();
     }
 
@@ -131,7 +131,7 @@ class WoxGradientEditor extends WoxElement {
      * @returns {{ type: string, angle: number, stops: Array<{color: string, position: number}> }|null}
      */
     get gradient() {
-        return this._gradient ? JSON.parse(JSON.stringify(this._gradient)) : null;
+        return this._gradient ? structuredClone(this._gradient) : null;
     }
 
     /**

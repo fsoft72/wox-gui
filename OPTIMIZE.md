@@ -26,7 +26,7 @@
 - [x] **[Perf] `_labelForValue` runs O(n) `gradientToCSS` calls on every preview update** — for each update it iterates all saved gradients and calls `gradientToCSS` on each to find a name match. Cache the CSS string per gradient on save/load, or look up by gradient ID stored alongside the current value.
   - File: `src/wox-gradient-selector.js` (`_labelForValue`, called from `_updatePreview` and `_build`)
 
-- [ ] **[Perf] `JSON.parse(JSON.stringify(...))` used as deep clone throughout** — used 6+ times across the gradient components. Replace with `structuredClone()` (supported in all target browsers), which is faster, handles more types, and is semantically clearer.
+- [x] **[Perf] `JSON.parse(JSON.stringify(...))` used as deep clone throughout** — used 6+ times across the gradient components. Replace with `structuredClone()` (supported in all target browsers), which is faster, handles more types, and is semantically clearer.
   - Files: `src/wox-gradient-selector.js`, `src/wox-gradient-editor.js`
 
 - [ ] **[Perf] `wox-select` rebuilds the full shadow DOM on every open/close** — `open()`, `close()`, `_handleSearch()`, and `selectOption()` all call `_render()` which replaces `shadowRoot.innerHTML`. The trigger and dropdown could be rendered once; open/close should only toggle a CSS class or `display` style.

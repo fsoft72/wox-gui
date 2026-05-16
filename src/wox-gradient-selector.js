@@ -680,7 +680,7 @@ class WoxGradientSelector extends WoxElement {
                 if ( e.target.hasAttribute('data-dup-id') ) return;
                 const gradient = this._getById(item.dataset.gradientId);
                 if ( ! gradient ) return;
-                this._gradient = JSON.parse(JSON.stringify(gradient));
+                this._gradient = structuredClone(gradient);
                 this._value = gradientToCSS(this._gradient);
                 this._updatePreview();
                 this._syncControls();
@@ -714,7 +714,7 @@ class WoxGradientSelector extends WoxElement {
                 const gradient = this._getById(btn.dataset.editId);
                 if ( ! gradient ) return;
                 this._closeDropdown();
-                this._openEditorDialog(JSON.parse(JSON.stringify(gradient)));
+                this._openEditorDialog(structuredClone(gradient));
             });
         });
 
@@ -746,7 +746,7 @@ class WoxGradientSelector extends WoxElement {
     _openEditorDialog = (existingGradient) => {
         let gradient;
         if ( existingGradient ) {
-            gradient = JSON.parse(JSON.stringify(existingGradient));
+            gradient = structuredClone(existingGradient);
         } else {
             gradient = cssToGradient(this._value);
             if ( ! gradient ) {
@@ -766,7 +766,7 @@ class WoxGradientSelector extends WoxElement {
             }
         }
 
-        this._editingGradient = JSON.parse(JSON.stringify(gradient));
+        this._editingGradient = structuredClone(gradient);
         this._editingName = gradient.name;
 
         // Set the gradient editor data
@@ -793,7 +793,7 @@ class WoxGradientSelector extends WoxElement {
     _applyFromEditor = (save) => {
         if ( ! this._editingGradient ) return;
 
-        const gradient = JSON.parse(JSON.stringify(this._editingGradient));
+        const gradient = structuredClone(this._editingGradient);
         if ( this._editingName ) gradient.name = this._editingName;
         gradient.id = this._editingOriginalId || gradient.id || _generateId();
 
@@ -801,7 +801,7 @@ class WoxGradientSelector extends WoxElement {
             this._save(gradient);
         }
 
-        this._gradient = JSON.parse(JSON.stringify(gradient));
+        this._gradient = structuredClone(gradient);
         this._value = gradientToCSS(this._gradient);
         this._updatePreview();
         this._syncControls();
