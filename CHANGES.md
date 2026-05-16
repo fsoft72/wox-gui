@@ -1,5 +1,32 @@
 # CHANGES.md
 
+## 2026-05-16 — optimization pass from OPTIMIZE.md
+
+### Security
+- **`src/wox-datagrid.js`**: Cell values and header labels are now HTML-escaped before being injected via `innerHTML`. Closes the XSS hole where any HTML/JS in row data executed in page context. Affects rendered output only — raw row data is unchanged.
+- **`src/wox-toast.js`**: `message` argument is rendered as plain text (`textContent`) by default. New opt-in `opts.html: true` preserves the previous HTML-rendering behavior for trusted content. Public API surface widened.
+
+### Performance
+- **`src/wox-datagrid.js`**: Replaced per-render listener attachment with delegated handlers bound once on `shadowRoot`. ~1000 `addEventListener` calls per interaction collapse to a fixed set. Also removed duplicate `_getSortedRows()` call inside `_render()`.
+- **`src/wox-input.js`**: `attributeChangedCallback` now updates `placeholder`, `disabled`, `min`, `max`, `step` in place on the existing `<input>` element. Avoids the full shadow-DOM rebuild that was losing focus and cursor position.
+- **`src/wox-modal.js`**: Attribute changes (`title`, `width`, `color`, `glow`, `pulse`, `closable`) update existing DOM in place instead of re-running `innerHTML`. Initial render still builds the full structure once. `title` now goes through `textContent` (defensive XSS hardening).
+- **`src/wox-select.js`**: Built shadow-DOM skeleton once; `open()`/`close()` now toggle a `.open` class on the dropdown rather than re-rendering. Search input keeps focus/caret across keystrokes via targeted `_renderOptionsList()`.
+- **`src/wox-gradient-selector.js`**: Added `_cssToName` / `_cssById` caches rebuilt on load/save/delete. `_labelForValue` is now O(1) instead of O(n) `gradientToCSS` calls per preview update. Speed-slider input + change handlers share a single closure.
+- **`src/wox-gradient-editor.js`**: Stop sort now carries the original index in a `{stop, idx}` pair; eliminates per-handle `indexOf` lookup.
+- **`src/wox-gradient-selector.js`**, **`src/wox-gradient-editor.js`**: All `JSON.parse(JSON.stringify(...))` deep clones replaced with `structuredClone()`.
+- **`src/wox-base.js`**: `render`, `emit`, `$`, `$$` converted from per-instance arrow-function class fields to prototype methods. Memory now scales with class count, not instance count.
+
+### Added
+- **`src/wox-context-menu.js`**: `WoxContextMenu.destroy()` static method removes the singleton element, detaches the global `click`/`contextmenu`/`keydown` listeners, and clears injected styles. Intended for SPA teardown / unmount paths to avoid listener leaks.
+
+### Refactored
+- **`src/wox-slider.js`**: Drag `update()` closure now calls `_formatVal()` for value display instead of duplicating the unit/step branching.
+
+### Docs
+- **`docs/wox-toast.md`**, **`llms.md`**: Documented `opts.html` flag with sanitization caveat.
+- **`docs/wox-datagrid.md`**: Noted that cell values and labels are HTML-escaped (HTML in data renders as text).
+- **`docs/wox-context-menu.md`**, **`llms.md`**: Documented `WoxContextMenu.destroy()`.
+
 ## 2026-04-09 — wox-input: password visibility toggle
 
 ### Added
