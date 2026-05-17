@@ -283,6 +283,7 @@
         <a class="nav-link" href="#tooltip">Tooltip</a>
 
         <h3>Inputs</h3>
+        <a class="nav-link" href="#checkbox">Checkbox</a>
         <a class="nav-link" href="#input">Input</a>
         <a class="nav-link" href="#slider">Slider</a>
         <a class="nav-link" href="#select">Select</a>
@@ -533,6 +534,26 @@
                     <wox-tooltip text="Text Tool (T)" position="top">
                         <wox-button variant="icon" icon="text_fields"></wox-button>
                     </wox-tooltip>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── CHECKBOX ── -->
+        <section class="component-section" id="checkbox">
+            <h2 class="section-title">Checkbox <span class="section-tag">&lt;wox-checkbox&gt;</span></h2>
+            <p class="section-desc">Binary checkbox with custom SVG checkmark and inline clickable label.</p>
+            <div class="demo-card">
+                <div class="demo-row">
+                    <wox-checkbox label="Enable shadows"></wox-checkbox>
+                    <wox-checkbox label="Auto-save" checked></wox-checkbox>
+                    <wox-checkbox label="Disabled" disabled></wox-checkbox>
+                    <wox-checkbox label="Disabled checked" checked disabled></wox-checkbox>
+                </div>
+                <div class="demo-row">
+                    <wox-checkbox></wox-checkbox>
+                    <wox-checkbox checked></wox-checkbox>
+                    <wox-checkbox label="With value" value="snap"></wox-checkbox>
+                    <wox-checkbox label="Large" style="--wox-checkbox-size: 18px"></wox-checkbox>
                 </div>
             </div>
         </section>

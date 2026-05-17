@@ -6,6 +6,7 @@ export { WoxIcon } from './wox-icon.js';
 export { WoxSeparator } from './wox-separator.js';
 export { WoxBadge } from './wox-badge.js';
 export { WoxButton } from './wox-button.js';
+export { WoxCheckbox } from './wox-checkbox.js';
 export { WoxInput } from './wox-input.js';
 export { WoxSelect } from './wox-select.js';
 export { WoxSlider } from './wox-slider.js';

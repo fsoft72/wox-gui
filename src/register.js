@@ -6,6 +6,7 @@ import {
   WoxSeparator,
   WoxBadge,
   WoxButton,
+  WoxCheckbox,
   WoxInput,
   WoxSelect,
   WoxSlider,
@@ -37,6 +38,7 @@ customElements.define('wox-icon', WoxIcon);
 customElements.define('wox-separator', WoxSeparator);
 customElements.define('wox-badge', WoxBadge);
 customElements.define('wox-button', WoxButton);
+customElements.define('wox-checkbox', WoxCheckbox);
 customElements.define('wox-input', WoxInput);
 customElements.define('wox-select', WoxSelect);
 customElements.define('wox-slider', WoxSlider);

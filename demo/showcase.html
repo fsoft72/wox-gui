@@ -417,6 +417,33 @@
                 </div>
             </div>
 
+            <!-- ─── CHECKBOXES ─── -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="accent-dot"></div>
+                    <h3>Checkboxes</h3>
+                </div>
+                <div class="section-card-body">
+                    <p class="label-sm mb-8">States</p>
+                    <div class="row mb-16" style="gap: 16px; flex-wrap: wrap;">
+                        <wox-checkbox label="Enable shadows"></wox-checkbox>
+                        <wox-checkbox label="Auto-save" checked></wox-checkbox>
+                        <wox-checkbox label="Disabled" disabled></wox-checkbox>
+                        <wox-checkbox label="Disabled checked" checked disabled></wox-checkbox>
+                    </div>
+                    <p class="label-sm mb-8">No label / with value</p>
+                    <div class="row mb-16" style="gap: 16px; flex-wrap: wrap;">
+                        <wox-checkbox></wox-checkbox>
+                        <wox-checkbox checked></wox-checkbox>
+                        <wox-checkbox label="Snap to grid" value="snap"></wox-checkbox>
+                    </div>
+                    <p class="label-sm mb-8">Custom size</p>
+                    <div class="row" style="gap: 16px; flex-wrap: wrap;">
+                        <wox-checkbox label="Large" style="--wox-checkbox-size: 18px"></wox-checkbox>
+                    </div>
+                </div>
+            </div>
+
             <!-- ─── COLOR SWATCHES & PICKER ─── -->
             <div class="section-card">
                 <div class="section-card-header">

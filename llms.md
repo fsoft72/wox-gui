@@ -1,6 +1,6 @@
 # WOX-GUI — Complete LLM Reference
 
-WOX-GUI is a zero-dependency, dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, and CSS custom properties. 28 components. Dark and light themes. No build step required.
+WOX-GUI is a zero-dependency, dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, and CSS custom properties. 29 components. Dark and light themes. No build step required.
 
 All components extend `WoxElement` (a lightweight `HTMLElement` base class with open Shadow DOM). Events follow a `wox-*` naming convention and bubble with `composed: true`.
 
@@ -345,6 +345,55 @@ When `border-color`, `icon-color`, or `text-color` are set they persist through 
 <wox-button variant="dash" dash="longdash" border-color="#f72585" text-color="#f72585"></wox-button>
 <wox-button variant="dash" dash="dotdash" border-color="#ffd600" text-color="#ffd600"></wox-button>
 <wox-button variant="dash" dash="zigzag" border-color="#4361ee" text-color="#4361ee" active></wox-button>
+```
+
+---
+
+### wox-checkbox
+
+Binary checkbox with custom-drawn SVG checkmark and inline clickable label.
+
+**Tag:** `<wox-checkbox>` — **Class:** `WoxCheckbox`
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `checked` | `boolean` | `false` | Checked state (presence attr) |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `label` | `string` | — | Text to the right of the box (clickable, `user-select: none`) |
+| `value` | `string` | — | Payload included in `wox-change` detail |
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `wox-change` | `{ checked: boolean, value: string }` | Fired on every toggle |
+
+**JS property:** `checkbox.checked` — get/set mirrors the `checked` presence attribute.
+
+**CSS variables:**
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--wox-checkbox-size` | `14px` | Box width and height |
+| `--wox-checkbox-bg` | `var(--wox-bg-input)` | Unchecked background |
+| `--wox-checkbox-border` | `var(--wox-border)` | Border color |
+| `--wox-checkbox-checked-bg` | `var(--wox-accent)` | Checked background + border |
+| `--wox-checkbox-check-color` | `#000` | SVG checkmark stroke |
+
+```html
+<!-- States -->
+<wox-checkbox label="Enable shadows"></wox-checkbox>
+<wox-checkbox label="Auto-save" checked></wox-checkbox>
+<wox-checkbox label="Disabled" disabled></wox-checkbox>
+<wox-checkbox label="Disabled checked" checked disabled></wox-checkbox>
+
+<!-- No label -->
+<wox-checkbox></wox-checkbox>
+<wox-checkbox checked></wox-checkbox>
+
+<!-- With value -->
+<wox-checkbox label="Snap to grid" value="snap"></wox-checkbox>
+
+<!-- Custom size -->
+<wox-checkbox label="Large" style="--wox-checkbox-size: 18px"></wox-checkbox>
 ```
 
 ---

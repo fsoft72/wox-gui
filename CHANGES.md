@@ -1,5 +1,10 @@
 # CHANGES.md
 
+## [next]
+
+### Added
+- **`src/wox-checkbox.js`**: New `<wox-checkbox>` component — binary checkbox with custom-drawn SVG checkmark, inline clickable label, `checked`/`disabled`/`label`/`value` attrs, fires `wox-change` with `{ checked, value }`. Themed via `--wox-checkbox-size`, `--wox-checkbox-bg`, `--wox-checkbox-border`, `--wox-checkbox-checked-bg`, `--wox-checkbox-check-color`.
+
 ## 2026-05-16 — optimization pass from OPTIMIZE.md
 
 ### Security

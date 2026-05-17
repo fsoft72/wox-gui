@@ -2,7 +2,7 @@
 
 A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, and CSS custom properties. Originally extracted from VectorWebGPU.
 
-**28 components** | **Dark & light themes** | **Zero dependencies** | **No build step**
+**29 components** | **Dark & light themes** | **Zero dependencies** | **No build step**
 
 ---
 
@@ -23,6 +23,7 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 | [wox-separator](./wox-separator.md) | Horizontal or vertical divider line |
 | [wox-badge](./wox-badge.md) | Dot, diamond, and text indicator badges |
 | [wox-button](./wox-button.md) | Multi-variant button (icon, text, tile, dash) with optional glow |
+| [wox-checkbox](./wox-checkbox.md) | Binary checkbox with SVG checkmark and inline label |
 | [wox-input](./wox-input.md) | Text and number input with units and drag scrubbing |
 | [wox-slider](./wox-slider.md) | Custom range slider with label and value display |
 | [wox-color-swatch](./wox-color-swatch.md) | Clickable color preview square with alpha support |
