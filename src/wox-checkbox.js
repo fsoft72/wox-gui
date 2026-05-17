@@ -40,8 +40,8 @@ const STYLES = `
         stroke-linejoin: round;
     }
     .label {
-        font-size: var(--wox-font-size-base, 12px);
-        color: var(--wox-text-primary, #eee);
+        font-size: var(--wox-font-size-sm, 10px);
+        color: var(--wox-text-secondary, #999);
         font-family: var(--wox-font, 'Inter', sans-serif);
         line-height: 1;
     }
