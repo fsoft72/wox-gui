@@ -4,7 +4,7 @@
 
 export {
   WoxElement, FX_STYLES,
-  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxInput, WoxSelect,
+  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxCheckbox, WoxInput, WoxSelect,
   WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
   WoxMenuItem, WoxMenu, WoxLayerItem,
   WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
@@ -16,7 +16,7 @@ export {
 } from './index.js';
 
 import {
-  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxInput, WoxSelect,
+  WoxIcon, WoxSeparator, WoxBadge, WoxButton, WoxCheckbox, WoxInput, WoxSelect,
   WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
   WoxMenuItem, WoxMenu, WoxLayerItem,
   WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
@@ -32,6 +32,7 @@ customElements.define('wox-icon', WoxIcon);
 customElements.define('wox-separator', WoxSeparator);
 customElements.define('wox-badge', WoxBadge);
 customElements.define('wox-button', WoxButton);
+customElements.define('wox-checkbox', WoxCheckbox);
 customElements.define('wox-input', WoxInput);
 customElements.define('wox-select', WoxSelect);
 customElements.define('wox-slider', WoxSlider);
@@ -161,6 +162,7 @@ window.WoxIcon = WoxIcon;
 window.WoxSeparator = WoxSeparator;
 window.WoxBadge = WoxBadge;
 window.WoxButton = WoxButton;
+window.WoxCheckbox = WoxCheckbox;
 window.WoxInput = WoxInput;
 window.WoxSelect = WoxSelect;
 window.WoxSlider = WoxSlider;
