@@ -3,7 +3,7 @@
 import { WoxElement } from './wox-base.js';
 
 const STYLES = `
-    :host { display: inline-block; }
+    :host { display: inline-block; vertical-align: middle; }
     .wrapper {
         display: inline-flex; align-items: center; gap: 6px;
         cursor: pointer; user-select: none;
@@ -27,11 +27,11 @@ const STYLES = `
         border-color: var(--wox-checkbox-checked-bg, var(--wox-accent, #00e5ff));
     }
     svg.check {
-        display: none;
+        visibility: hidden;
         width: 70%; height: 70%;
         overflow: visible;
     }
-    .box.checked svg.check { display: block; }
+    .box.checked svg.check { visibility: visible; }
     svg.check polyline {
         fill: none;
         stroke: var(--wox-checkbox-check-color, #000);
