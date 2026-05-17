@@ -114,7 +114,7 @@ const _escapeHtml = (v) => {
  *   grid.rows    = [{ key: value, ... }]
  *
  * @fires wox-sort      - { key, direction } when sort changes
- * @fires wox-row-click - { row, index } when a row is clicked
+ * @fires wox-row-click - { row, index, key } when a row is clicked (key = clicked column key, null if row padding)
  */
 class WoxDatagrid extends WoxElement {
     /** @private */
