@@ -1065,11 +1065,11 @@ modal.openState = false;
 
 ---
 
-### wox-confirmation-dialog
+### wox-dialog
 
 Modal confirmation dialog that requires an explicit button click to dismiss. Does **not** close on outside click or Escape key.
 
-**Tag:** `<wox-confirmation-dialog>` — **Class:** `WoxConfirmationDialog`
+**Tag:** `<wox-dialog>` — **Class:** `WoxDialog`
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -1089,16 +1089,16 @@ Modal confirmation dialog that requires an explicit button click to dismiss. Doe
 | `openState` | Boolean getter/setter |
 | `buttons` | JS getter/setter — array of `{ label, key, color?, textColor? }` |
 | `body` | JS getter/setter — HTML string for body content |
-| `WoxConfirmationDialog.show(opts)` | Static — creates, appends, opens dialog; returns `Promise<string>` |
+| `WoxDialog.show(opts)` | Static — creates, appends, opens dialog; returns `Promise<string>` |
 
 **Default buttons** (left → right): `[{ label: 'Ok', key: 'ok' }, { label: 'Cancel', key: 'cancel' }]`. First button uses accent color; others use neutral color.
 
 **Slot:** `default` — body content (used when `body` attribute is absent).
 
 ```html
-<wox-confirmation-dialog id="dlg" title="Discard changes?" open>
+<wox-dialog id="dlg" title="Discard changes?" open>
     <p>All unsaved work will be lost.</p>
-</wox-confirmation-dialog>
+</wox-dialog>
 <script>
     document.getElementById('dlg').addEventListener('wox-confirm', (e) => {
         if (e.detail.key === 'ok') discard();
@@ -1114,7 +1114,7 @@ dialog.buttons = [
 ];
 
 // Promise API — dialog auto-appended and removed
-const key = await WoxConfirmationDialog.show({
+const key = await WoxDialog.show({
     title: 'Delete file?',
     body: '<p>This action <strong>cannot</strong> be undone.</p>',
     buttons: [

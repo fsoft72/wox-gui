@@ -3,8 +3,8 @@
 ## [next]
 
 ### Added
-- **`src/wox-confirmation-dialog.js`**: New `<wox-confirmation-dialog>` component — modal confirmation dialog that does NOT close on outside click or Escape key. Shows title, HTML body, and a customizable button row (full width, `flex: 1` per button, `space-between`). Default buttons: Ok (left, accent color) and Cancel (right, neutral). Custom buttons accept `{ label, key, color?, textColor? }`. Fires `wox-confirm` with `{ key, label }` on any button click. Static `WoxConfirmationDialog.show(opts)` returns a `Promise<string>` for imperative use. Registered in `index.js`, `register.js`, and `cdn.js`.
-- **`docs/wox-confirmation-dialog.md`**: Documentation for the new component.
+- **`src/wox-dialog.js`**: New `<wox-dialog>` component — modal confirmation dialog that does NOT close on outside click or Escape key. Shows title, HTML body, and a customizable button row (full width, `flex: 1` per button, `space-between`). Default buttons: Ok (left, accent color) and Cancel (right, neutral). Custom buttons accept `{ label, key, color?, textColor? }`. Fires `wox-confirm` with `{ key, label }` on any button click. Static `WoxDialog.show(opts)` returns a `Promise<string>` for imperative use. Registered in `index.js`, `register.js`, and `cdn.js`.
+- **`docs/wox-dialog.md`**: Documentation for the new component.
 - **`src/wox-checkbox.js`**: New `<wox-checkbox>` component — binary checkbox with custom-drawn SVG checkmark, inline clickable label, `checked`/`disabled`/`label`/`value` attrs, fires `wox-change` with `{ checked, value }`. Themed via `--wox-checkbox-size`, `--wox-checkbox-bg`, `--wox-checkbox-border`, `--wox-checkbox-checked-bg`, `--wox-checkbox-check-color`.
 
 ### Fixed

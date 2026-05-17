@@ -25,7 +25,7 @@ import {
   WoxMenubar,
   WoxStatusbar,
   WoxModal,
-  WoxConfirmationDialog,
+  WoxDialog,
   WoxDatagrid,
   WoxToast,
   WoxContextMenu,
@@ -58,7 +58,7 @@ customElements.define('wox-panel', WoxPanel);
 customElements.define('wox-menubar', WoxMenubar);
 customElements.define('wox-statusbar', WoxStatusbar);
 customElements.define('wox-modal', WoxModal);
-customElements.define('wox-confirmation-dialog', WoxConfirmationDialog);
+customElements.define('wox-dialog', WoxDialog);
 customElements.define('wox-datagrid', WoxDatagrid);
 customElements.define('wox-toast', WoxToast);
 customElements.define('wox-context-menu', WoxContextMenu);

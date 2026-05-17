@@ -1,4 +1,4 @@
-// wox-confirmation-dialog.js — Confirmation dialog that requires explicit button click to dismiss.
+// wox-dialog.js — Confirmation dialog that requires explicit button click to dismiss.
 // Does NOT close on outside click or Escape key — forces user to choose a button.
 
 import { WoxElement } from './wox-base.js';
@@ -48,6 +48,7 @@ const STYLES = `
         border: none;
         transition: filter 0.15s;
         color: #fff;
+        user-select: none;
     }
     .btn:hover { filter: brightness(0.85); }
     .btn-ok { background: var(--wox-accent, #00e5ff); color: #000; }
@@ -61,7 +62,7 @@ const DEFAULT_BUTTONS = [
 ];
 
 /**
- * <wox-confirmation-dialog> — Modal dialog requiring an explicit button click to dismiss.
+ * <wox-dialog> — Modal dialog requiring an explicit button click to dismiss.
  * Clicking outside the dialog or pressing Escape does NOT close it.
  *
  * @attr {boolean} open  - Show/hide the dialog (presence attribute)
@@ -73,7 +74,7 @@ const DEFAULT_BUTTONS = [
  *
  * @slot default - Dialog body content (used when `body` attribute is not set)
  */
-class WoxConfirmationDialog extends WoxElement {
+class WoxDialog extends WoxElement {
     static observedAttributes = ['open', 'title', 'body', 'width'];
 
     constructor() {
@@ -217,7 +218,7 @@ class WoxConfirmationDialog extends WoxElement {
      * @returns {Promise<string>} Resolves with the `key` of the clicked button
      *
      * @example
-     * const key = await WoxConfirmationDialog.show({
+     * const key = await WoxDialog.show({
      *   title: 'Delete file?',
      *   body: '<p>This action <strong>cannot</strong> be undone.</p>',
      *   buttons: [
@@ -229,7 +230,7 @@ class WoxConfirmationDialog extends WoxElement {
      */
     static show(opts = {}) {
         return new Promise((resolve) => {
-            const dialog = document.createElement('wox-confirmation-dialog');
+            const dialog = document.createElement('wox-dialog');
 
             // Set _resolve and _buttons before connecting so _render picks them up.
             dialog._resolve = resolve;
@@ -245,4 +246,4 @@ class WoxConfirmationDialog extends WoxElement {
     }
 }
 
-export { WoxConfirmationDialog };
+export { WoxDialog };

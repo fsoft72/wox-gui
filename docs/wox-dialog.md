@@ -1,10 +1,10 @@
-# wox-confirmation-dialog
+# wox-dialog
 
 A modal confirmation dialog that requires an explicit button click to dismiss. Unlike `wox-modal`, clicking outside the overlay or pressing Escape does **not** close it — the user must choose one of the provided buttons.
 
-**Tag:** `<wox-confirmation-dialog>`
-**Source:** `src/wox-confirmation-dialog.js`
-**Class:** `WoxConfirmationDialog`
+**Tag:** `<wox-dialog>`
+**Source:** `src/wox-dialog.js`
+**Class:** `WoxDialog`
 
 ---
 
@@ -44,7 +44,7 @@ A modal confirmation dialog that requires an explicit button click to dismiss. U
 | `openState` | getter/setter | Boolean wrapper around the `open` attribute |
 | `buttons` | getter/setter | Array of button config objects (see below) |
 | `body` | getter/setter | HTML string for body content |
-| `WoxConfirmationDialog.show(opts)` | static method | Create, append, and open a dialog; returns a `Promise<string>` |
+| `WoxDialog.show(opts)` | static method | Create, append, and open a dialog; returns a `Promise<string>` |
 
 ---
 
@@ -70,9 +70,9 @@ The first button gets accent styling; subsequent buttons get neutral styling.
 ### Declarative usage
 
 ```html
-<wox-confirmation-dialog id="dlg" title="Discard changes?" open>
+<wox-dialog id="dlg" title="Discard changes?" open>
     <p>All unsaved work will be lost.</p>
-</wox-confirmation-dialog>
+</wox-dialog>
 
 <script>
     document.getElementById('dlg').addEventListener('wox-confirm', (e) => {
@@ -84,7 +84,7 @@ The first button gets accent styling; subsequent buttons get neutral styling.
 ### Custom buttons with color
 
 ```js
-const dlg = document.querySelector('wox-confirmation-dialog');
+const dlg = document.querySelector('wox-dialog');
 dlg.buttons = [
     { label: 'Delete', key: 'delete', color: 'var(--wox-danger)' },
     { label: 'Cancel', key: 'cancel' },
@@ -95,7 +95,7 @@ dlg.open();
 ### Static `show()` — Promise API
 
 ```js
-const key = await WoxConfirmationDialog.show({
+const key = await WoxDialog.show({
     title: 'Delete file?',
     body: '<p>This action <strong>cannot</strong> be undone.</p>',
     buttons: [
@@ -112,7 +112,7 @@ The dialog is auto-appended to `document.body` and removed after the user clicks
 ### Programmatic body
 
 ```js
-const dlg = document.createElement('wox-confirmation-dialog');
+const dlg = document.createElement('wox-dialog');
 dlg.setAttribute('title', 'Replace existing file?');
 dlg.body = `<p>A file named <strong>${fileName}</strong> already exists.</p>`;
 document.body.appendChild(dlg);

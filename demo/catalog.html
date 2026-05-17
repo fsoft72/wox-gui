@@ -1076,7 +1076,7 @@
 
         <!-- ── CONFIRMATION DIALOG ── -->
         <section class="component-section" id="confirmation-dialog">
-            <h2 class="section-title">Confirmation Dialog <span class="section-tag">&lt;wox-confirmation-dialog&gt;</span></h2>
+            <h2 class="section-title">Confirmation Dialog <span class="section-tag">&lt;wox-dialog&gt;</span></h2>
             <p class="section-desc">Modal dialog that only closes when the user clicks a button. Outside click and Escape are ignored.</p>
             <div class="demo-card">
                 <div class="demo-row">
@@ -1087,14 +1087,14 @@
                 </div>
             </div>
 
-            <wox-confirmation-dialog id="cd-default" title="Confirm action">
+            <wox-dialog id="cd-default" title="Confirm action">
                 <p style="font-size:13px;margin-bottom:8px;">Are you sure you want to proceed?</p>
                 <p style="font-size:12px;color:var(--wox-text-secondary)">This dialog will not close if you click outside.</p>
-            </wox-confirmation-dialog>
+            </wox-dialog>
 
-            <wox-confirmation-dialog id="cd-delete" title="Delete project?"></wox-confirmation-dialog>
+            <wox-dialog id="cd-delete" title="Delete project?"></wox-dialog>
 
-            <wox-confirmation-dialog id="cd-three" title="Save changes?"></wox-confirmation-dialog>
+            <wox-dialog id="cd-three" title="Save changes?"></wox-dialog>
         </section>
 
         <!-- ── TOAST ── -->
@@ -1424,7 +1424,7 @@ document.getElementById('open-cd-default').addEventListener('wox-click', () => c
 document.getElementById('open-cd-delete').addEventListener('wox-click', () => cdDelete.open());
 document.getElementById('open-cd-three').addEventListener('wox-click', () => cdThree.open());
 document.getElementById('open-cd-promise').addEventListener('wox-click', async () => {
-    const key = await WoxConfirmationDialog.show({
+    const key = await WoxDialog.show({
         title: 'Promise API demo',
         body: '<p style="font-size:13px;">This dialog is created and destroyed programmatically.</p>',
         buttons: [

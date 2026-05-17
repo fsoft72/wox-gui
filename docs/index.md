@@ -56,7 +56,7 @@ A dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, a
 | [wox-menubar](./wox-menubar.md) | Horizontal menu bar with keyboard navigation |
 | [wox-statusbar](./wox-statusbar.md) | Three-column bottom status bar |
 | [wox-modal](./wox-modal.md) | Dialog overlay with backdrop, escape key, and animations |
-| [wox-confirmation-dialog](./wox-confirmation-dialog.md) | Confirmation dialog that only closes on button click (no outside-click / Escape dismiss) |
+| [wox-dialog](./wox-dialog.md) | Confirmation dialog that only closes on button click (no outside-click / Escape dismiss) |
 
 ### Data
 
