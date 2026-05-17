@@ -8,7 +8,7 @@ export {
   WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
   WoxMenuItem, WoxMenu, WoxLayerItem,
   WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
-  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal,
+  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal, WoxConfirmationDialog,
   WoxDatagrid, WoxToast, WoxContextMenu,
   WoxGradientEditor, gradientToCSS, cssToGradient, WoxGradientSelector,
   WoxDatePicker,
@@ -20,7 +20,7 @@ import {
   WoxSlider, WoxColorSwatch, WoxTooltip, WoxColorPicker,
   WoxMenuItem, WoxMenu, WoxLayerItem,
   WoxSection, WoxTab, WoxTabs, WoxToolbarGroup, WoxToolbar,
-  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal,
+  WoxPanel, WoxMenubar, WoxStatusbar, WoxModal, WoxConfirmationDialog,
   WoxDatagrid, WoxToast, WoxContextMenu,
   WoxGradientEditor, WoxGradientSelector,
   WoxDatePicker,
@@ -51,6 +51,7 @@ customElements.define('wox-panel', WoxPanel);
 customElements.define('wox-menubar', WoxMenubar);
 customElements.define('wox-statusbar', WoxStatusbar);
 customElements.define('wox-modal', WoxModal);
+customElements.define('wox-confirmation-dialog', WoxConfirmationDialog);
 customElements.define('wox-datagrid', WoxDatagrid);
 customElements.define('wox-toast', WoxToast);
 customElements.define('wox-context-menu', WoxContextMenu);
@@ -181,6 +182,7 @@ window.WoxPanel = WoxPanel;
 window.WoxMenubar = WoxMenubar;
 window.WoxStatusbar = WoxStatusbar;
 window.WoxModal = WoxModal;
+window.WoxConfirmationDialog = WoxConfirmationDialog;
 window.WoxDatagrid = WoxDatagrid;
 window.WoxToast = WoxToast;
 window.WoxContextMenu = WoxContextMenu;

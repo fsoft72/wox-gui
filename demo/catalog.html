@@ -311,6 +311,7 @@
 
         <h3>Feedback</h3>
         <a class="nav-link" href="#modal">Modal</a>
+        <a class="nav-link" href="#confirmation-dialog">Confirmation Dialog</a>
         <a class="nav-link" href="#toast">Toast</a>
         <a class="nav-link" href="#themetoggle">Theme Toggle</a>
     </nav>
@@ -318,7 +319,7 @@
     <!-- Main content -->
     <main class="main-content">
         <h1 class="page-title">WoxGUI Component Showcase</h1>
-        <p class="page-subtitle">All 28 components — dark-themed Web Component library, zero dependencies.</p>
+        <p class="page-subtitle">All 30 components — dark-themed Web Component library, zero dependencies.</p>
 
         <!-- ── ICON ── -->
         <section class="component-section" id="icon">
@@ -1073,6 +1074,29 @@
             </wox-modal>
         </section>
 
+        <!-- ── CONFIRMATION DIALOG ── -->
+        <section class="component-section" id="confirmation-dialog">
+            <h2 class="section-title">Confirmation Dialog <span class="section-tag">&lt;wox-confirmation-dialog&gt;</span></h2>
+            <p class="section-desc">Modal dialog that only closes when the user clicks a button. Outside click and Escape are ignored.</p>
+            <div class="demo-card">
+                <div class="demo-row">
+                    <wox-button variant="text" icon="help" label="Default (Ok / Cancel)" id="open-cd-default"></wox-button>
+                    <wox-button variant="text" icon="delete" label="Delete (danger)" id="open-cd-delete"></wox-button>
+                    <wox-button variant="text" icon="upload" label="3 Buttons" id="open-cd-three"></wox-button>
+                    <wox-button variant="text" icon="bolt" label="Promise API" id="open-cd-promise"></wox-button>
+                </div>
+            </div>
+
+            <wox-confirmation-dialog id="cd-default" title="Confirm action">
+                <p style="font-size:13px;margin-bottom:8px;">Are you sure you want to proceed?</p>
+                <p style="font-size:12px;color:var(--wox-text-secondary)">This dialog will not close if you click outside.</p>
+            </wox-confirmation-dialog>
+
+            <wox-confirmation-dialog id="cd-delete" title="Delete project?"></wox-confirmation-dialog>
+
+            <wox-confirmation-dialog id="cd-three" title="Save changes?"></wox-confirmation-dialog>
+        </section>
+
         <!-- ── TOAST ── -->
         <section class="component-section" id="toast">
             <h2 class="section-title">Toast <span class="section-tag">WoxToast.success/error/warning/info()</span></h2>
@@ -1208,7 +1232,7 @@
 <wox-statusbar>
     <span slot="left">
         <wox-badge></wox-badge>
-        &nbsp; WoxGUI Showcase — 28 components
+        &nbsp; WoxGUI Showcase — 30 components
     </span>
     <span slot="center" id="status-zoom">Zoom: 100% &nbsp;|&nbsp; CDN v0.4.2</span>
     <span slot="right" id="status-right">Hover a component to explore</span>
@@ -1376,6 +1400,43 @@ document.getElementById('modal-custom-cancel').addEventListener('wox-click', () 
     document.getElementById(id).addEventListener('wox-cancel', () => {
         document.getElementById(id).removeAttribute('open');
     });
+});
+
+// ── Confirmation Dialogs ──
+const cdDefault = document.getElementById('cd-default');
+const cdDelete = document.getElementById('cd-delete');
+const cdThree = document.getElementById('cd-three');
+
+cdDelete.setAttribute('body', '<p style="font-size:13px;margin-bottom:8px;">You are about to permanently delete <strong>My Design.fig</strong>.</p><p style="font-size:12px;color:var(--wox-text-secondary)">All history will be removed.</p>');
+cdDelete.buttons = [
+    { label: 'Delete', key: 'delete', color: 'var(--wox-danger)' },
+    { label: 'Cancel', key: 'cancel' },
+];
+
+cdThree.setAttribute('body', '<p style="font-size:13px;">You have unsaved changes.</p>');
+cdThree.buttons = [
+    { label: 'Save', key: 'save' },
+    { label: 'Discard', key: 'discard', color: '#555' },
+    { label: 'Cancel', key: 'cancel' },
+];
+
+document.getElementById('open-cd-default').addEventListener('wox-click', () => cdDefault.open());
+document.getElementById('open-cd-delete').addEventListener('wox-click', () => cdDelete.open());
+document.getElementById('open-cd-three').addEventListener('wox-click', () => cdThree.open());
+document.getElementById('open-cd-promise').addEventListener('wox-click', async () => {
+    const key = await WoxConfirmationDialog.show({
+        title: 'Promise API demo',
+        body: '<p style="font-size:13px;">This dialog is created and destroyed programmatically.</p>',
+        buttons: [
+            { label: 'Confirm', key: 'confirm' },
+            { label: 'Cancel', key: 'cancel' },
+        ],
+    });
+    WoxToast.info(`You clicked: ${key}`);
+});
+
+[cdDefault, cdDelete, cdThree].forEach(cd => {
+    cd.addEventListener('wox-confirm', (e) => WoxToast.info(`Button: ${e.detail.key}`));
 });
 
 // ── Toast buttons ──

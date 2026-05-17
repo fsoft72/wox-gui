@@ -368,9 +368,10 @@ class WoxDatagrid extends WoxElement {
             if (!e.target.closest('.body')) return;
             const row = e.target.closest('.row');
             if (!row) return;
+            const cell = e.target.closest('.cell');
             const ri = Number(row.dataset.row);
             const sorted = this._getSortedRows();
-            this.emit('wox-row-click', { row: sorted[ri], index: ri });
+            this.emit('wox-row-click', { row: sorted[ri], index: ri, key: cell ? cell.dataset.key : null });
         });
 
         // ── Body: cell dblclick to edit ──

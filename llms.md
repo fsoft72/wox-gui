@@ -1,6 +1,6 @@
 # WOX-GUI — Complete LLM Reference
 
-WOX-GUI is a zero-dependency, dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, and CSS custom properties. 29 components. Dark and light themes. No build step required.
+WOX-GUI is a zero-dependency, dark-themed Web Component library built with vanilla JavaScript, Shadow DOM, and CSS custom properties. 30 components. Dark and light themes. No build step required.
 
 All components extend `WoxElement` (a lightweight `HTMLElement` base class with open Shadow DOM). Events follow a `wox-*` naming convention and bubble with `composed: true`.
 
@@ -1061,6 +1061,68 @@ modal.openState = true;           // property form
 modal.removeAttribute('open');
 modal.close();
 modal.openState = false;
+```
+
+---
+
+### wox-confirmation-dialog
+
+Modal confirmation dialog that requires an explicit button click to dismiss. Does **not** close on outside click or Escape key.
+
+**Tag:** `<wox-confirmation-dialog>` — **Class:** `WoxConfirmationDialog`
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `open` | `boolean` | `false` | Show/hide dialog |
+| `title` | `string` | — | Dialog title |
+| `body` | `string` | — | HTML body content (alternative to slotted children) |
+| `width` | `string` | `"400px"` | Max width (min 300px) |
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `wox-confirm` | `{ key, label }` | Fired when any button is clicked |
+
+| Method / Property | Description |
+|-------------------|-------------|
+| `open()` | Sets `open` attribute |
+| `close()` | Removes `open` attribute |
+| `openState` | Boolean getter/setter |
+| `buttons` | JS getter/setter — array of `{ label, key, color?, textColor? }` |
+| `body` | JS getter/setter — HTML string for body content |
+| `WoxConfirmationDialog.show(opts)` | Static — creates, appends, opens dialog; returns `Promise<string>` |
+
+**Default buttons** (left → right): `[{ label: 'Ok', key: 'ok' }, { label: 'Cancel', key: 'cancel' }]`. First button uses accent color; others use neutral color.
+
+**Slot:** `default` — body content (used when `body` attribute is absent).
+
+```html
+<wox-confirmation-dialog id="dlg" title="Discard changes?" open>
+    <p>All unsaved work will be lost.</p>
+</wox-confirmation-dialog>
+<script>
+    document.getElementById('dlg').addEventListener('wox-confirm', (e) => {
+        if (e.detail.key === 'ok') discard();
+    });
+</script>
+```
+
+```js
+// Custom buttons
+dialog.buttons = [
+    { label: 'Delete', key: 'delete', color: 'var(--wox-danger)' },
+    { label: 'Cancel', key: 'cancel' },
+];
+
+// Promise API — dialog auto-appended and removed
+const key = await WoxConfirmationDialog.show({
+    title: 'Delete file?',
+    body: '<p>This action <strong>cannot</strong> be undone.</p>',
+    buttons: [
+        { label: 'Delete', key: 'delete', color: 'var(--wox-danger)' },
+        { label: 'Cancel', key: 'cancel' },
+    ],
+});
+if (key === 'delete') performDelete();
 ```
 
 ---

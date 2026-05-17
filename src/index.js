@@ -25,6 +25,7 @@ export { WoxPanel } from './wox-panel.js';
 export { WoxMenubar } from './wox-menubar.js';
 export { WoxStatusbar } from './wox-statusbar.js';
 export { WoxModal } from './wox-modal.js';
+export { WoxConfirmationDialog } from './wox-confirmation-dialog.js';
 export { WoxDatagrid } from './wox-datagrid.js';
 export { WoxToast } from './wox-toast.js';
 export { WoxContextMenu } from './wox-context-menu.js';
