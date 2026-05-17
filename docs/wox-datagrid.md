@@ -36,7 +36,7 @@ An array of plain objects. Each object's keys should match the column `key` valu
 | Event | Detail | Description |
 |-------|--------|-------------|
 | `wox-sort` | `{ key, direction }` | Emitted when sort changes. `direction` is `"asc"` or `"desc"` |
-| `wox-row-click` | `{ row, index }` | Emitted when a row is clicked. `row` is the data object, `index` is the visual row index |
+| `wox-row-click` | `{ row, index, key }` | Emitted when a row is clicked. `row` is the data object, `index` is the visual row index, `key` is the clicked column key (`null` if click landed on row padding) |
 | `wox-cell-change` | `{ row, key, oldValue, newValue }` | Emitted when an inline edit is committed with a changed value |
 
 ---

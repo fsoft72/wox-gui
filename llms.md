@@ -1142,7 +1142,7 @@ Sortable data grid with resizable/reorderable columns and inline editing.
 | Event | Detail | Description |
 |-------|--------|-------------|
 | `wox-sort` | `{ key, direction }` | Sort changed (`"asc"` or `"desc"`) |
-| `wox-row-click` | `{ row, index }` | Row clicked |
+| `wox-row-click` | `{ row, index, key }` | Row clicked. `key` = clicked column key, `null` if row padding |
 | `wox-cell-change` | `{ row, key, oldValue, newValue }` | Inline edit committed |
 
 Features: click header to sort (numbers numerically, strings with localeCompare), drag header edge to resize (min 40px), drag header to reorder, double-click cell to edit inline, odd/even striping, scrollable body with fixed header.
