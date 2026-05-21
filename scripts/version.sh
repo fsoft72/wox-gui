@@ -17,6 +17,11 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
 cd "$ROOT"
 
+YELLOW="\033[1;33m"
+RESET="\033[0m"
+
+warn() { echo -e "  ${YELLOW}WARNING: $*${RESET}" >&2; }
+
 # --- Pre-flight checks ---
 
 if ! command -v npm &>/dev/null; then
@@ -43,23 +48,37 @@ echo "Version: $CURRENT_VERSION -> $NEW_VERSION"
 
 # --- Update version references ---
 
+# Warn if pattern not found in file, then substitute.
+# Usage: sed_replace <file> <pattern> <replacement>
+sed_replace() {
+  local file="$1" pattern="$2" replacement="$3"
+  if ! grep -qF "$pattern" "$file"; then
+    warn "'$pattern' not found in $file - skipping"
+    return
+  fi
+  sed -i "s/${pattern//\//\\/}/${replacement//\//\\/}/g" "$file"
+  echo "  Updated $file"
+}
+
 # CDN URLs: @0.1.5 -> @0.1.6
 for f in AGENT.md tests/cdn.html llms.md site/index.html; do
   if [ -f "$f" ]; then
-    sed -i "s/@${CURRENT_VERSION}/@${NEW_VERSION}/g" "$f"
-    echo "  Updated $f"
+    sed_replace "$f" "@${CURRENT_VERSION}" "@${NEW_VERSION}"
+  else
+    warn "file not found: $f"
   fi
 done
 
 # Footer version: v0.1.5 -> v0.1.6
 if [ -f site/index.html ]; then
-  sed -i "s/v${CURRENT_VERSION}/v${NEW_VERSION}/g" site/index.html
+  sed_replace "site/index.html" "v${CURRENT_VERSION}" "v${NEW_VERSION}"
 fi
 
 # About modal version in demo/catalog.html
 if [ -f demo/catalog.html ]; then
-  sed -i "s/v${CURRENT_VERSION}/v${NEW_VERSION}/g" demo/catalog.html
-  echo "  Updated demo/catalog.html"
+  sed_replace "demo/catalog.html" "v${CURRENT_VERSION}" "v${NEW_VERSION}"
+else
+  warn "file not found: demo/catalog.html"
 fi
 
 echo ""
