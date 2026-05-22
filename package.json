@@ -22,7 +22,8 @@
     "dev": "vite",
     "build": "vite build && vite build --config vite.config.cdn.js && cp css/wox-theme.css dist/wox-theme.css",
     "build:site": "pnpm build && bash scripts/build-site.sh",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",

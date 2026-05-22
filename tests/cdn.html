@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- CDN bundle: registers all components + injects theme -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.5.3/dist/wox-gui.cdn.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.6.0/dist/wox-gui.cdn.js"></script>
 
     <!-- NOTE: no <link> to wox-theme.css — the CDN bundle injects it -->
 
@@ -84,6 +84,13 @@
         </div>
     </div>
 
+    <!-- ── Checkbox ── -->
+    <h2>wox-checkbox</h2>
+    <div class="row">
+        <wox-checkbox label="Check me" checked></wox-checkbox>
+        <wox-checkbox label="Disabled" disabled></wox-checkbox>
+    </div>
+
     <!-- ── Slider ── -->
     <h2>wox-slider</h2>
     <div class="card">
@@ -138,6 +145,12 @@
         <div style="padding: 16px; color: var(--wox-text-secondary);">This modal was opened from the CDN bundle.</div>
     </wox-modal>
 
+    <!-- ── Dialog ── -->
+    <h2>wox-dialog</h2>
+    <div class="row">
+        <wox-button variant="text" icon="feedback" label="Open Dialog" id="dialog-trigger"></wox-button>
+    </div>
+
     <!-- ── Toast ── -->
     <h2>wox-toast</h2>
     <div class="row">
@@ -163,8 +176,6 @@
     <div id="log">Waiting for events...</div>
 
     <script type="module">
-        import { WoxToast, WoxContextMenu } from 'https://cdn.jsdelivr.net/npm/wox-gui@0.3.0/dist/wox-gui.cdn.js';
-
         // ── Automated checks ──
         const CHECKS_EL = document.getElementById('checks');
 
@@ -189,16 +200,16 @@
 
         // 3. Components registered
         const EXPECTED_TAGS = [
-            'wox-icon', 'wox-separator', 'wox-badge', 'wox-button', 'wox-input',
+            'wox-icon', 'wox-separator', 'wox-badge', 'wox-button', 'wox-checkbox', 'wox-input',
             'wox-select', 'wox-slider', 'wox-color-swatch', 'wox-tooltip',
             'wox-color-picker', 'wox-menu-item', 'wox-menu', 'wox-layer-item',
             'wox-section', 'wox-tab', 'wox-tabs', 'wox-toolbar-group', 'wox-toolbar',
-            'wox-panel', 'wox-menubar', 'wox-statusbar', 'wox-modal', 'wox-datagrid',
+            'wox-panel', 'wox-menubar', 'wox-statusbar', 'wox-modal', 'wox-dialog', 'wox-datagrid',
             'wox-toast', 'wox-context-menu', 'wox-gradient-editor',
             'wox-gradient-selector', 'wox-date-picker', 'wox-theme-toggle',
         ];
         const missing = EXPECTED_TAGS.filter(tag => !customElements.get(tag));
-        addCheck(`All 29 custom elements registered (missing: ${missing.length})`, missing.length === 0);
+        addCheck(`All 31 custom elements registered (missing: ${missing.length})`, missing.length === 0);
         if (missing.length > 0) {
             addCheck(`  Missing: ${missing.join(', ')}`, false);
         }
@@ -207,9 +218,11 @@
         const icon = document.querySelector('wox-icon');
         addCheck('wox-icon has shadowRoot', !!icon?.shadowRoot);
 
-        // 5. WoxToast and WoxContextMenu available as globals
+        // 5. WoxToast, WoxContextMenu, WoxDialog, WoxCheckbox available as globals
         addCheck('window.WoxToast available', typeof window.WoxToast === 'function');
         addCheck('window.WoxContextMenu available', typeof window.WoxContextMenu === 'function');
+        addCheck('window.WoxDialog available', typeof window.WoxDialog === 'function');
+        addCheck('window.WoxCheckbox available', typeof window.WoxCheckbox === 'function');
 
         // 6. No duplicate theme injection
         const themeCount = document.querySelectorAll('#wox-theme').length;
@@ -229,6 +242,18 @@
         // ── Modal trigger ──
         document.getElementById('modal-trigger').addEventListener('wox-click', () => {
             document.getElementById('test-modal').open();
+        });
+
+        // ── Dialog trigger ──
+        document.getElementById('dialog-trigger').addEventListener('wox-click', async () => {
+            const key = await WoxDialog.show({
+                title: 'CDN Dialog Test',
+                body: '<p>This is a modal dialog loaded from the CDN bundle.</p>',
+                buttons: [
+                    { label: 'Close', key: 'close' }
+                ]
+            });
+            log(`dialog closed with key: ${key}`);
         });
 
         // ── Toast triggers ──
