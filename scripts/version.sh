@@ -81,6 +81,10 @@ else
   warn "file not found: demo/catalog.html"
 fi
 
+if [ -f package.json ]; then
+  sed_replace "package.json" "${CURRENT_VERSION}" "${NEW_VERSION}"
+fi
+
 echo ""
 echo "Bumped to v$NEW_VERSION"
 echo "Files changed: package.json, AGENT.md, tests/cdn.html, llms.md, site/index.html, demo/catalog.html"
