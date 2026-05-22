@@ -5,3 +5,6 @@ docs/plans
 .superpowers
 dist-site
 .gitnexus
+playwright.config.js
+test-results/
+

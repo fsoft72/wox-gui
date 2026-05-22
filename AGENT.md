@@ -110,7 +110,7 @@ The CDN bundle is a **single self-contained file** (164KB) with zero imports. It
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- WOX-GUI: registers all components + injects theme CSS variables -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.5.2/dist/wox-gui.cdn.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/wox-gui@0.5.3/dist/wox-gui.cdn.js"></script>
 </head>
 <body>
     <!-- Components are immediately available -->

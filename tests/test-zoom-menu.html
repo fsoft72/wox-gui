@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoxGUI Menu Zoom Test</title>
+  <script type="module" src="../src/cdn.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      background: #1a1a2e;
+      color: #eee;
+      /* Apply page zoom */
+      zoom: 1.25;
+    }
+    
+    .zoom-container {
+      margin-top: 50px;
+      padding: 20px;
+      border: 1px dashed #555;
+      /* Apply additional nested zoom */
+      zoom: 1.2;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>WoxMenu Zoom Test Page</h2>
+  <p>This page tests `<wox-menu>` positioning when CSS zoom is applied.</p>
+
+  <h3>1. Menu under page zoom (zoom: 1.25)</h3>
+  <wox-menubar id="menubar-page-zoom">
+    <wox-menu label="File" id="menu-file">
+      <wox-menu-item label="New" id="item-new"></wox-menu-item>
+      <wox-menu-item label="Open" id="item-open"></wox-menu-item>
+      <wox-menu-item type="separator"></wox-menu-item>
+      <wox-menu-item label="Exit" id="item-exit"></wox-menu-item>
+    </wox-menu>
+    <wox-menu label="Edit" id="menu-edit">
+      <wox-menu-item label="Undo"></wox-menu-item>
+      <wox-menu-item label="Redo"></wox-menu-item>
+    </wox-menu>
+  </wox-menubar>
+
+  <div class="zoom-container">
+    <h3>2. Menu under nested zoom (cumulative zoom: 1.25 * 1.2 = 1.5)</h3>
+    <wox-menubar id="menubar-nested-zoom">
+      <wox-menu label="File" id="menu-nested-file">
+        <wox-menu-item label="New Nested" id="item-nested-new"></wox-menu-item>
+        <wox-menu-item label="Open Nested" id="item-nested-open"></wox-menu-item>
+      </wox-menu>
+    </wox-menubar>
+  </div>
+
+</body>
+</html>

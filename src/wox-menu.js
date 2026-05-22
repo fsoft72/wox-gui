@@ -2,6 +2,25 @@
 
 import { WoxElement } from './wox-base.js';
 
+function getCumulativeZoom(element) {
+    let zoom = 1;
+    let curr = element;
+    while (curr) {
+        if (curr.nodeType === Node.ELEMENT_NODE) {
+            const computedZoom = window.getComputedStyle(curr).zoom;
+            if (computedZoom && computedZoom !== 'normal') {
+                const z = parseFloat(computedZoom);
+                if (!isNaN(z) && z > 0) {
+                    zoom *= z;
+                }
+            }
+        }
+        curr = curr.parentNode || curr.host;
+    }
+    return zoom;
+}
+
+
 const STYLES = `
     :host { display: inline-block; position: relative; }
     .trigger { color: var(--wox-text-primary, #eee); padding: 3px 8px; border-radius: var(--wox-radius-sm, 3px); cursor: pointer; font-size: var(--wox-font-size-base, 12px); display: block; user-select: none; }
@@ -121,12 +140,13 @@ class WoxMenu extends WoxElement {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             const ddRect = dd.getBoundingClientRect();
+            const zoom = getCumulativeZoom(trigger) || 1;
 
             // Horizontal: align left, flip right if clipped
             if (rect.left + ddRect.width > vw) {
-                dd.style.left = `${rect.right - ddRect.width}px`;
+                dd.style.left = `${(rect.right - ddRect.width) / zoom}px`;
             } else {
-                dd.style.left = `${rect.left}px`;
+                dd.style.left = `${rect.left / zoom}px`;
             }
 
             // Vertical: place below, flip above if insufficient space
@@ -134,11 +154,11 @@ class WoxMenu extends WoxElement {
             const spaceAbove = rect.top;
 
             if (spaceBelow >= ddRect.height || spaceBelow >= spaceAbove) {
-                dd.style.top = `${rect.bottom}px`;
+                dd.style.top = `${rect.bottom / zoom}px`;
                 dd.style.bottom = '';
             } else {
                 dd.style.top = '';
-                dd.style.bottom = `${vh - rect.top}px`;
+                dd.style.bottom = `${(vh - rect.top) / zoom}px`;
             }
         });
     };
